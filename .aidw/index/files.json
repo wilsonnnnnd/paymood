@@ -1,0 +1,18 @@
+[
+    {
+        "path": "package.json",
+        "type": "config",
+        "description": "Package metadata, scripts, and CLI binary configuration.",
+        "updatedAt": "2026-05-10T08:56:09.264Z",
+        "confidence": 0.85,
+        "source": "heuristic"
+    },
+    {
+        "path": "AGENTS.md",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-10T08:56:09.223Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    }
+]

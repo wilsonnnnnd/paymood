@@ -1,0 +1,22 @@
+[
+    {
+        "path": "package.json",
+        "roleSummary": "Package metadata, scripts, and CLI binary configuration.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-10T08:56:09.264Z"
+    },
+    {
+        "path": "AGENTS.md",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-10T08:56:09.223Z"
+    }
+]

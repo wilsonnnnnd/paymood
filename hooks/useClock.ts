@@ -1,0 +1,13 @@
+import {useEffect, useState} from 'react'
+
+export function useClock(intervalMs = 1000) {
+  const [now, setNow] = useState(() => new Date())
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const id = setInterval(() => setNow(new Date()), intervalMs)
+    return () => clearInterval(id)
+  }, [intervalMs])
+
+  return now
+}

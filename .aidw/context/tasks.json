@@ -1,0 +1,12 @@
+[
+    {
+        "task": "update project documentation",
+        "files": [
+            "AGENTS.md",
+            "skill.md"
+        ],
+        "notes": "Keep user-facing paths aligned with .aidw/.",
+        "confidence": 0.65,
+        "source": "heuristic"
+    }
+]

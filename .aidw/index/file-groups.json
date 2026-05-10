@@ -1,0 +1,11 @@
+[
+    {
+        "path": ".",
+        "fileCount": 2,
+        "summary": "Repository root files and package metadata.",
+        "keyFiles": [
+            "package.json",
+            "AGENTS.md"
+        ]
+    }
+]
