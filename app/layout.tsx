@@ -3,10 +3,11 @@ import type {Metadata} from 'next'
 import '../styles/globals.css'
 
 export const metadata: Metadata = {
+  title: 'Cozy Earnings Dashboard',
   icons: {
-    icon: '/WeimengDing.png',
-    shortcut: '/WeimengDing.png',
-    apple: '/WeimengDing.png',
+    icon: '/xiaoxing_icon_white_bg.png',
+    shortcut: '/xiaoxing_icon_white_bg.png',
+    apple: '/xiaoxing_icon_white_bg.png',
   },
 }
 
