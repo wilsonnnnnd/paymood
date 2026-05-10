@@ -10,7 +10,6 @@ export default function Dashboard() {
   const {settings} = useSettings()
   const now = useClock(1000)
 
-  // parse times from settings
   const today = new Date()
   const [y, m, d] = [today.getFullYear(), today.getMonth(), today.getDate()]
   const [sh, sm] = settings.startTime.split(':').map(Number)
@@ -20,29 +19,65 @@ export default function Dashboard() {
 
   const prog = workProgress(now, start, end, settings.breakMinutes)
   const {earned, hourly} = earnedSoFar(now, start, end, settings.breakMinutes, settings.salaryAmount, settings.salaryType)
+  const percent = Math.round(prog.progress * 100)
+  const remainingMinutes = Math.max(0, Math.floor(prog.remainingSeconds / 60))
+  const workedMinutes = Math.max(0, Math.floor(prog.elapsedSeconds / 60))
 
   return (
-    <div className="bg-white rounded-xl shadow p-6">
-      <div className="flex gap-6 items-center">
-        <CircularProgress value={prog.progress} />
-        <div className="flex-1">
-          <h2 className="text-2xl font-semibold">Workday Progress</h2>
-          <p className="text-sm text-slate-500">{Math.round(prog.progress * 100)}% — {Math.max(0, Math.floor(prog.remainingSeconds / 60))} minutes remaining</p>
-          <div className="mt-4 text-lg">
-            <div>Hourly rate: {hourly.toFixed(2)}</div>
-            <div className="text-2xl font-bold">Earned so far: {earned.toFixed(2)} {settings.currency}</div>
-          </div>
+    <section className="dashboard-shell">
+      <header className="dashboard-header">
+        <div>
+          <p className="eyebrow">Workday earnings</p>
+          <h1>Today&apos;s operating view</h1>
         </div>
-      </div>
+        <div className="live-status" aria-label="Live calculation status">
+          <span />
+          Live
+        </div>
+      </header>
 
-      <div className="mt-6">
-        <details>
-          <summary className="cursor-pointer text-sm text-slate-600">Settings</summary>
-          <div className="mt-3">
-            <SettingsForm />
+      <div className="dashboard-grid">
+        <section className="progress-panel" aria-label="Workday progress">
+          <div className="progress-copy">
+            <p className="section-label">Progress</p>
+            <h2>{percent}% complete</h2>
+            <p>{remainingMinutes} minutes remaining in the active work window.</p>
           </div>
-        </details>
+          <CircularProgress value={prog.progress} size={184} />
+        </section>
+
+        <section className="earnings-panel" aria-label="Earnings summary">
+          <p className="section-label">Estimated earned</p>
+          <div className="money-line">
+            {earned.toFixed(2)}
+            <span>{settings.currency}</span>
+          </div>
+          <div className="metric-row">
+            <div>
+              <span className="metric-label">Hourly rate</span>
+              <strong>{hourly.toFixed(2)}</strong>
+            </div>
+            <div>
+              <span className="metric-label">Worked</span>
+              <strong>{workedMinutes}m</strong>
+            </div>
+            <div>
+              <span className="metric-label">Remaining</span>
+              <strong>{remainingMinutes}m</strong>
+            </div>
+          </div>
+        </section>
+
+        <section className="settings-panel" aria-label="Settings">
+          <details open>
+            <summary>
+              <span>Settings</span>
+              <span className="summary-hint">Schedule and salary inputs</span>
+            </summary>
+            <SettingsForm />
+          </details>
+        </section>
       </div>
-    </div>
+    </section>
   )
 }

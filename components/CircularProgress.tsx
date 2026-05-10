@@ -13,20 +13,35 @@ export default function CircularProgress({value, size = 140}: Props) {
   const dash = circumference * normalized
 
   return (
-    <svg width={size} height={size} viewBox="0 0 120 120">
-      <circle cx="60" cy="60" r={radius} stroke="#e6e6e6" strokeWidth={stroke} fill="none" />
+    <svg className="progress-ring" width={size} height={size} viewBox="0 0 120 120" role="img" aria-label={`${Math.round(normalized * 100)} percent complete`}>
+      <defs>
+        <linearGradient id="progressGradient" x1="18" y1="18" x2="102" y2="102" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#22d3ee" />
+          <stop offset="1" stopColor="#38bdf8" />
+        </linearGradient>
+        <filter id="progressGlow" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="3" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+      <circle cx="60" cy="60" r={radius} stroke="rgba(148, 163, 184, 0.16)" strokeWidth={stroke} fill="none" />
       <circle
         cx="60"
         cy="60"
         r={radius}
-        stroke="#0ea5e9"
+        stroke="url(#progressGradient)"
         strokeWidth={stroke}
         fill="none"
         strokeLinecap="round"
         strokeDasharray={`${dash} ${circumference - dash}`}
         transform="rotate(-90 60 60)"
+        filter="url(#progressGlow)"
       />
-      <text x="60" y="62" textAnchor="middle" fontSize="18" fill="#0f172a">{Math.round(normalized * 100)}%</text>
+      <text x="60" y="57" textAnchor="middle" fontSize="20" fontWeight="700" fill="#f8fafc">{Math.round(normalized * 100)}%</text>
+      <text x="60" y="73" textAnchor="middle" fontSize="7" letterSpacing="1.4" fill="#94a3b8">COMPLETE</text>
     </svg>
   )
 }
