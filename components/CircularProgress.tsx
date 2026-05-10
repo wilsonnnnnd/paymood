@@ -16,8 +16,9 @@ export default function CircularProgress({value, size = 140}: Props) {
     <svg className="progress-ring" width={size} height={size} viewBox="0 0 120 120" role="img" aria-label={`${Math.round(normalized * 100)} percent complete`}>
       <defs>
         <linearGradient id="progressGradient" x1="18" y1="18" x2="102" y2="102" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#22d3ee" />
-          <stop offset="1" stopColor="#38bdf8" />
+          <stop stopColor="#fb923c" />
+          <stop offset="0.52" stopColor="#facc15" />
+          <stop offset="1" stopColor="#fb7185" />
         </linearGradient>
         <filter id="progressGlow" x="-30%" y="-30%" width="160%" height="160%">
           <feGaussianBlur stdDeviation="3" result="blur" />
@@ -27,7 +28,7 @@ export default function CircularProgress({value, size = 140}: Props) {
           </feMerge>
         </filter>
       </defs>
-      <circle cx="60" cy="60" r={radius} stroke="rgba(148, 163, 184, 0.16)" strokeWidth={stroke} fill="none" />
+      <circle cx="60" cy="60" r={radius} stroke="rgba(120, 53, 15, 0.12)" strokeWidth={stroke} fill="none" />
       <circle
         cx="60"
         cy="60"
@@ -40,8 +41,8 @@ export default function CircularProgress({value, size = 140}: Props) {
         transform="rotate(-90 60 60)"
         filter="url(#progressGlow)"
       />
-      <text x="60" y="57" textAnchor="middle" fontSize="20" fontWeight="700" fill="#f8fafc">{Math.round(normalized * 100)}%</text>
-      <text x="60" y="73" textAnchor="middle" fontSize="7" letterSpacing="1.4" fill="#94a3b8">COMPLETE</text>
+      <text x="60" y="57" textAnchor="middle" fontSize="20" fontWeight="800" fill="#78350f">{Math.round(normalized * 100)}%</text>
+      <text x="60" y="73" textAnchor="middle" fontSize="7" letterSpacing="1.4" fill="#b45309">YAY</text>
     </svg>
   )
 }

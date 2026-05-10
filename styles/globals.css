@@ -9,10 +9,11 @@ html, body, #__next {
 body {
   margin: 0;
   background:
-    radial-gradient(circle at 18% 12%, rgba(34, 211, 238, 0.18), transparent 26rem),
-    radial-gradient(circle at 85% 18%, rgba(59, 130, 246, 0.16), transparent 24rem),
-    linear-gradient(135deg, #020617 0%, #08111f 48%, #020617 100%);
-  color: #e5eefb;
+    radial-gradient(circle at 13% 14%, rgba(251, 146, 60, 0.32), transparent 20rem),
+    radial-gradient(circle at 84% 12%, rgba(250, 204, 21, 0.3), transparent 18rem),
+    radial-gradient(circle at 86% 86%, rgba(251, 113, 133, 0.2), transparent 20rem),
+    linear-gradient(135deg, #fff7ed 0%, #ffedd5 44%, #fef3c7 100%);
+  color: #78350f;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
 }
 
@@ -34,12 +35,12 @@ select {
 .dashboard-shell {
   width: min(1180px, 100%);
   margin: 0 auto;
-  border: 1px solid rgba(148, 163, 184, 0.16);
-  border-radius: 28px;
+  border: 3px solid rgba(120, 53, 15, 0.1);
+  border-radius: 30px;
   background:
-    linear-gradient(180deg, rgba(15, 23, 42, 0.9), rgba(2, 6, 23, 0.92)),
-    rgba(15, 23, 42, 0.86);
-  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.44);
+    linear-gradient(180deg, rgba(255, 251, 235, 0.96), rgba(255, 247, 237, 0.96)),
+    #fff7ed;
+  box-shadow: 0 28px 70px rgba(180, 83, 9, 0.18);
   overflow: hidden;
 }
 
@@ -49,14 +50,14 @@ select {
   justify-content: space-between;
   gap: 24px;
   padding: 32px 34px 24px;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+  border-bottom: 2px dashed rgba(217, 119, 6, 0.16);
 }
 
 .eyebrow,
 .section-label,
 .metric-label {
   margin: 0;
-  color: #8aa4c0;
+  color: #b45309;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -65,7 +66,7 @@ select {
 
 .dashboard-header h1 {
   margin: 8px 0 0;
-  color: #f8fafc;
+  color: #7c2d12;
   font-size: clamp(2rem, 5vw, 4.5rem);
   line-height: 0.95;
   letter-spacing: 0;
@@ -77,10 +78,10 @@ select {
   gap: 10px;
   min-height: 40px;
   padding: 0 14px;
-  border: 1px solid rgba(34, 211, 238, 0.26);
+  border: 2px solid rgba(251, 146, 60, 0.28);
   border-radius: 999px;
-  color: #bff8ff;
-  background: rgba(8, 47, 73, 0.36);
+  color: #9a3412;
+  background: #ffedd5;
   font-size: 0.86rem;
   font-weight: 700;
 }
@@ -89,26 +90,26 @@ select {
   width: 8px;
   height: 8px;
   border-radius: 999px;
-  background: #22d3ee;
-  box-shadow: 0 0 18px #22d3ee;
+  background: #fb923c;
+  box-shadow: 0 0 0 5px rgba(251, 146, 60, 0.18);
 }
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr);
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.72fr);
   grid-template-areas:
     "progress earnings"
     "settings settings";
   gap: 1px;
-  background: rgba(148, 163, 184, 0.12);
+  background: rgba(217, 119, 6, 0.14);
 }
 
 .progress-panel,
 .earnings-panel,
 .settings-panel {
   background:
-    linear-gradient(180deg, rgba(15, 23, 42, 0.84), rgba(8, 13, 26, 0.94)),
-    #020617;
+    linear-gradient(180deg, rgba(255, 255, 247, 0.94), rgba(255, 247, 237, 0.98)),
+    #fff7ed;
 }
 
 .progress-panel {
@@ -119,12 +120,13 @@ select {
   gap: 32px;
   min-height: 360px;
   padding: 42px;
+  min-width: 0;
 }
 
 .progress-copy h2 {
   margin: 14px 0 12px;
-  color: #f8fafc;
-  font-size: clamp(2.4rem, 6vw, 6rem);
+  color: #7c2d12;
+  font-size: clamp(2.35rem, 5.3vw, 5.25rem);
   line-height: 0.95;
   letter-spacing: 0;
 }
@@ -132,14 +134,15 @@ select {
 .progress-copy p:last-child {
   max-width: 25rem;
   margin: 0;
-  color: #9fb3c9;
+  color: #9a3412;
   font-size: 1rem;
   line-height: 1.7;
 }
 
 .progress-ring {
   flex: 0 0 auto;
-  max-width: 42vw;
+  width: clamp(136px, 19vw, 184px);
+  max-width: 100%;
   height: auto;
 }
 
@@ -148,22 +151,26 @@ select {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 34px;
   min-height: 360px;
   padding: 42px 34px;
+  min-width: 0;
 }
 
 .money-line {
   color: #f8fafc;
-  font-size: clamp(3rem, 8vw, 5.7rem);
+  color: #7c2d12;
+  overflow-wrap: anywhere;
+  font-size: clamp(2.55rem, 5.2vw, 4.8rem);
   font-weight: 800;
-  line-height: 0.9;
+  line-height: 1;
   letter-spacing: 0;
 }
 
 .money-line span {
   display: block;
   margin-top: 12px;
-  color: #22d3ee;
+  color: #ea580c;
   font-size: 0.95rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -174,21 +181,21 @@ select {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1px;
   overflow: hidden;
-  border: 1px solid rgba(148, 163, 184, 0.14);
-  border-radius: 14px;
-  background: rgba(148, 163, 184, 0.14);
+  border: 2px solid rgba(217, 119, 6, 0.14);
+  border-radius: 18px;
+  background: rgba(217, 119, 6, 0.14);
 }
 
 .metric-row div {
   min-width: 0;
   padding: 16px;
-  background: rgba(15, 23, 42, 0.72);
+  background: rgba(255, 251, 235, 0.78);
 }
 
 .metric-row strong {
   display: block;
   margin-top: 8px;
-  color: #f8fafc;
+  color: #7c2d12;
   font-size: 1.15rem;
 }
 
@@ -207,7 +214,7 @@ select {
   justify-content: space-between;
   gap: 18px;
   margin-bottom: 22px;
-  color: #f8fafc;
+  color: #7c2d12;
   cursor: pointer;
   list-style: none;
   font-size: 1rem;
@@ -219,7 +226,7 @@ select {
 }
 
 .summary-hint {
-  color: #8aa4c0;
+  color: #b45309;
   font-size: 0.82rem;
   font-weight: 600;
 }
@@ -235,7 +242,7 @@ select {
   flex-direction: column;
   gap: 8px;
   min-width: 0;
-  color: #9fb3c9;
+  color: #9a3412;
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.02em;
@@ -245,23 +252,52 @@ select {
 .settings-form select {
   width: 100%;
   min-height: 48px;
-  border: 1px solid rgba(148, 163, 184, 0.18);
-  border-radius: 12px;
+  border: 2px solid rgba(217, 119, 6, 0.16);
+  border-radius: 16px;
   outline: none;
   padding: 0 13px;
-  color: #edf6ff;
-  background: rgba(2, 6, 23, 0.78);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  color: #78350f;
+  background: #fffaf0;
+  box-shadow: inset 0 -2px 0 rgba(251, 146, 60, 0.08);
+}
+
+.sensitive-input {
+  position: relative;
+}
+
+.sensitive-input input {
+  padding-right: 72px;
+}
+
+.privacy-toggle {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  min-width: 54px;
+  min-height: 34px;
+  border: 0;
+  border-radius: 999px;
+  color: #9a3412;
+  background: #fed7aa;
+  cursor: pointer;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.privacy-toggle:focus-visible {
+  outline: 3px solid rgba(251, 146, 60, 0.28);
+  outline-offset: 2px;
 }
 
 .settings-form input:focus,
 .settings-form select:focus {
-  border-color: rgba(34, 211, 238, 0.7);
-  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.13);
+  border-color: rgba(251, 146, 60, 0.7);
+  box-shadow: 0 0 0 4px rgba(251, 146, 60, 0.18);
 }
 
 .settings-form select option {
-  color: #0f172a;
+  color: #78350f;
 }
 
 @media (max-width: 900px) {
@@ -295,6 +331,10 @@ select {
     min-height: auto;
   }
 
+  .progress-ring {
+    width: 156px;
+  }
+
   .earnings-panel {
     gap: 34px;
     min-height: auto;
@@ -321,7 +361,12 @@ select {
   }
 
   .progress-copy h2 {
-    font-size: 3.35rem;
+    font-size: 2.7rem;
+    line-height: 1;
+  }
+
+  .money-line {
+    font-size: 3rem;
   }
 
   .metric-row,

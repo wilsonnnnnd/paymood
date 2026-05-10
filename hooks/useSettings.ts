@@ -21,25 +21,31 @@ const defaultSettings: Settings = {
 }
 
 export function useSettings() {
-  const [settings, setSettings] = useState<Settings>(() => {
-    try {
-      if (typeof window === 'undefined') return defaultSettings
-      const raw = localStorage.getItem(STORAGE_KEY)
-      return raw ? JSON.parse(raw) : defaultSettings
-    } catch (e) {
-      return defaultSettings
-    }
-  })
+  const [settings, setSettings] = useState<Settings>(defaultSettings)
+  const [ready, setReady] = useState(false)
 
   useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY)
+      if (raw) {
+        setSettings({...defaultSettings, ...JSON.parse(raw)})
+      }
+    } catch (e) {
+      // ignore
+    }
+    setReady(true)
+  }, [])
+
+  useEffect(() => {
+    if (!ready) return
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(settings))
     } catch (e) {
       // ignore
     }
-  }, [settings])
+  }, [ready, settings])
 
   const update = (patch: Partial<Settings>) => setSettings(prev => ({...prev, ...patch}))
 
-  return {settings, updateSettings: update}
+  return {settings, updateSettings: update, ready}
 }
