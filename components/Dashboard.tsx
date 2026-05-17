@@ -2,6 +2,7 @@
 import React, {useEffect, useRef, useState} from 'react'
 import Link from 'next/link'
 import CircularProgress from './CircularProgress'
+import ColorModeToggle from './ColorModeToggle'
 import {useSettings} from '../hooks/useSettings'
 import {useClock} from '../hooks/useClock'
 import {earnedSoFar, earnedSoFarThisMonth, earnedSoFarThisWeek, workProgress} from '../lib/earnings'
@@ -20,29 +21,8 @@ function formatHM(seconds: number) {
 
 function currencyCodeToSymbol(code: string | undefined) {
   const normalized = (code ?? '').trim().toUpperCase()
-  switch (normalized) {
-    case 'USD':
-    case 'AUD':
-    case 'CAD':
-    case 'NZD':
-    case 'SGD':
-    case 'HKD':
-      return '$'
-    case 'EUR':
-      return '€'
-    case 'GBP':
-      return '£'
-    case 'JPY':
-    case 'CNY':
-    case 'RMB':
-      return '¥'
-    case 'KRW':
-      return '₩'
-    case 'INR':
-      return '₹'
-    default:
-      return normalized || '$'
-  }
+  if (normalized === 'CNY') return '¥'
+  return '$'
 }
 
 function RollingChar({from, to, direction, animate}: {from: string; to: string; direction: number; animate: boolean}) {
@@ -174,6 +154,7 @@ export default function Dashboard() {
   const now = useClock(1000)  
   const isReady = ready && now !== null
   const workDaysPerWeek = settings.workDays?.length ? settings.workDays.length : 5
+  const isWorkDay = isReady ? (settings.workDays?.includes((now as Date).getDay()) ?? true) : true
 
   const today = now ?? new Date(0)
   const [y, m, d] = [today.getFullYear(), today.getMonth(), today.getDate()]
@@ -182,42 +163,46 @@ export default function Dashboard() {
   const start = new Date(y, m, d, sh, sm)
   const end = new Date(y, m, d, eh, em)
 
-  const prog = isReady ? workProgress(today, start, end, settings.breakMinutes) : {progress: 0, elapsedSeconds: 0, remainingSeconds: 0, totalWorkSeconds: 0}
-  const {earned, hourly} = isReady
-    ? earnedSoFar(today, start, end, settings.breakMinutes, settings.salaryAmount, settings.salaryType, {workDaysPerWeek})
-    : {earned: 0, hourly: 0}
-  const week = isReady
-    ? earnedSoFarThisWeek(today, {
-        startTime: settings.startTime,
-        endTime: settings.endTime,
-        breakMinutes: settings.breakMinutes,
-        workDays: settings.workDays,
-        salaryAmount: settings.salaryAmount,
-        salaryType: settings.salaryType,
-        opts: {workDaysPerWeek},
-      })
-    : {earned: 0, hourly: 0}
-  const month = isReady
-    ? earnedSoFarThisMonth(today, {
-        startTime: settings.startTime,
-        endTime: settings.endTime,
-        breakMinutes: settings.breakMinutes,
-        workDays: settings.workDays,
-        salaryAmount: settings.salaryAmount,
-        salaryType: settings.salaryType,
-        opts: {workDaysPerWeek},
-      })
-    : {earned: 0, hourly: 0}
-  const percent = Math.round(prog.progress * 100)
+  const prog = isReady && isWorkDay ? workProgress(today, start, end, settings.breakMinutes) : {progress: 0, elapsedSeconds: 0, remainingSeconds: 0, totalWorkSeconds: 0}
+  const {earned, hourly} =
+    isReady && isWorkDay ? earnedSoFar(today, start, end, settings.breakMinutes, settings.salaryAmount, settings.salaryType, {workDaysPerWeek}) : {earned: 0, hourly: 0}
+  const week =
+    isReady && isWorkDay
+      ? earnedSoFarThisWeek(today, {
+          startTime: settings.startTime,
+          endTime: settings.endTime,
+          breakMinutes: settings.breakMinutes,
+          workDays: settings.workDays,
+          salaryAmount: settings.salaryAmount,
+          salaryType: settings.salaryType,
+          opts: {workDaysPerWeek},
+        })
+      : {earned: 0, hourly: 0}
+  const month =
+    isReady && isWorkDay
+      ? earnedSoFarThisMonth(today, {
+          startTime: settings.startTime,
+          endTime: settings.endTime,
+          breakMinutes: settings.breakMinutes,
+          workDays: settings.workDays,
+          salaryAmount: settings.salaryAmount,
+          salaryType: settings.salaryType,
+          opts: {workDaysPerWeek},
+        })
+      : {earned: 0, hourly: 0}
+  const percent = isWorkDay ? Math.round(prog.progress * 100) : 0
   const totalsFormat = new Intl.NumberFormat(undefined, {maximumFractionDigits: 0})
-  const mood = isReady ? moodFor(today, start, end) : '热身中…'
+  const mood = isReady ? (isWorkDay ? moodFor(today, start, end) : '今天休息。') : '热身中…'
   const currencySymbol = currencyCodeToSymbol(settings.currency)
 
   return (
     <section className="hud-shell" aria-label="Workday emotional dashboard">
-      <Link className="hud-icon-button" href="/settings" aria-label="打开设置">
-        <span aria-hidden="true">⚙</span>
-      </Link>
+      <div className="hud-top-actions" aria-label="顶部操作">
+        <ColorModeToggle />
+        <Link className="hud-icon-button" href="/settings" aria-label="打开设置">
+          <span aria-hidden="true">⚙</span>
+        </Link>
+      </div>
       <header className="hud-header">
         <div className="hud-title">Cozy Earnings Dashboard</div>
         <div className="hud-mood" aria-label="状态">
@@ -225,7 +210,15 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <main className="hud-main">
+      {!isWorkDay ? (
+        <main className="hud-main hud-rest" aria-label="休息日">
+          <div className="hud-rest-panel">
+            <div className="hud-rest-title">今天不需要打卡。</div>
+            <div className="hud-rest-sub">好好休息一下吧。</div>
+          </div>
+        </main>
+      ) : (
+        <main className="hud-main">
         <div className="hud-ring-wrap" aria-label="Earnings and progress">
           <CircularProgress value={prog.progress} size={420} />
           <div className="hud-center">
@@ -260,6 +253,7 @@ export default function Dashboard() {
           </div>
         </section>
       </main>
+      )}
     </section>
   )
 }

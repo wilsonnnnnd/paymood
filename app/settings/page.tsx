@@ -2,6 +2,7 @@
 import React from 'react'
 import Link from 'next/link'
 import SettingsForm from '../../components/SettingsForm'
+import ColorModeToggle from '../../components/ColorModeToggle'
 import {useSettings} from '../../hooks/useSettings'
 
 export default function SettingsPage() {
@@ -10,9 +11,12 @@ export default function SettingsPage() {
   return (
     <main className="app-shell">
       <section className="hud-shell" aria-label="Settings">
-        <Link className="hud-icon-button" href="/" aria-label="返回仪表盘">
-          <span aria-hidden="true">←</span>
-        </Link>
+        <div className="hud-top-actions" aria-label="顶部操作">
+          <ColorModeToggle />
+          <Link className="hud-icon-button" href="/" aria-label="返回仪表盘">
+            <span aria-hidden="true">←</span>
+          </Link>
+        </div>
         <header className="hud-header">
           <div className="hud-title">Cozy Earnings Dashboard</div>
           <div className="hud-mood" aria-label="设置状态">
