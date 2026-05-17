@@ -1,6 +1,6 @@
-"use client"
-import React, {useEffect, useMemo, useState} from 'react'
-import {useReducedMotion} from 'framer-motion'
+'use client'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useReducedMotion } from 'framer-motion'
 
 import slime1Idle from '../../craftpix/PNG/Slime1/With_shadow/Slime1_Idle_with_shadow.png'
 import slime1Walk from '../../craftpix/PNG/Slime1/With_shadow/Slime1_Walk_with_shadow.png'
@@ -22,23 +22,33 @@ type Variant = 'aqua' | 'undead' | 'magma'
 type Sheet = typeof slime1Idle
 
 const sprites: Record<Variant, Record<Mode, Sheet>> = {
-  aqua: {idle: slime1Idle, walk: slime1Walk, run: slime1Run, hurt: slime1Hurt},
-  undead: {idle: slime2Idle, walk: slime2Walk, run: slime2Run, hurt: slime2Hurt},
-  magma: {idle: slime3Idle, walk: slime3Walk, run: slime3Run, hurt: slime3Hurt},
+  aqua: { idle: slime1Idle, walk: slime1Walk, run: slime1Run, hurt: slime1Hurt },
+  undead: { idle: slime2Idle, walk: slime2Walk, run: slime2Run, hurt: slime2Hurt },
+  magma: { idle: slime3Idle, walk: slime3Walk, run: slime3Run, hurt: slime3Hurt },
 }
 
-export default function PetSprite({mode, flipX, size, variant}: {mode: Mode; flipX: boolean; size: number; variant: Variant}) {
+export default function PetSprite({
+  mode,
+  flipX,
+  size,
+  variant,
+}: {
+  mode: Mode
+  flipX: boolean
+  size: number
+  variant: Variant
+}) {
   const reduceMotion = useReducedMotion()
   const [frame, setFrame] = useState(0)
   const sheet = sprites[variant]?.[mode] ?? sprites.aqua[mode]
   const rowCount = 4
   const row = 0
 
-  const {frameSize, columns, scale} = useMemo(() => {
+  const { frameSize, columns, scale } = useMemo(() => {
     const frameSize = Math.floor(sheet.height / rowCount)
     const columns = Math.max(1, Math.floor(sheet.width / frameSize))
     const scale = size / frameSize
-    return {frameSize, columns, scale}
+    return { frameSize, columns, scale }
   }, [sheet.height, sheet.width, size])
 
   useEffect(() => {
@@ -53,7 +63,7 @@ export default function PetSprite({mode, flipX, size, variant}: {mode: Mode; fli
     }
     const ms = 100
     const id = window.setInterval(() => {
-      setFrame(current => (current + 1) % maxFrame)
+      setFrame((current) => (current + 1) % maxFrame)
     }, ms)
     return () => window.clearInterval(id)
   }, [columns, mode, reduceMotion])

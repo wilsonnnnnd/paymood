@@ -5,7 +5,7 @@ type Props = {
   size?: number
 }
 
-export default function CircularProgress({value, size = 140}: Props) {
+export default function CircularProgress({ value, size = 140 }: Props) {
   const normalized = Math.max(0, Math.min(1, value))
   const radius = 112
   const stroke = 18

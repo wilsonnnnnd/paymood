@@ -1,12 +1,12 @@
-"use client"
+'use client'
 import React from 'react'
 import Link from 'next/link'
 import SettingsForm from '../../components/SettingsForm'
 import ColorModeToggle from '../../components/ColorModeToggle'
-import {useSettings} from '../../hooks/useSettings'
+import { useSettings } from '../../hooks/useSettings'
 
 export default function SettingsPage() {
-  const {settings, updateSettings, ready} = useSettings()
+  const { settings, updateSettings, ready } = useSettings()
 
   return (
     <main className="app-shell">

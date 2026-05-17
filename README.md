@@ -23,6 +23,7 @@ npx vitest --run
 ```
 
 Notes
+
 - The UI is in `app/page.tsx` and components live in `components/`.
 - Calculation helpers are in `lib/earnings.ts` and have unit tests.
 - Settings persist to `localStorage` via `hooks/useSettings.ts`.

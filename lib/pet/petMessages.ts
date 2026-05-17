@@ -1,5 +1,5 @@
-import type {PetMood, PetMoodInput} from './petMoodRules'
-import {moodMessages} from '../../content/pet/messages/moods'
+import type { PetMood, PetMoodInput } from './petMoodRules'
+import { moodMessages } from '../../content/pet/messages/moods'
 import {
   hoverDefaultMessages,
   hoverMessagesByContext as hoverMessagesByContextData,
@@ -52,7 +52,8 @@ export function getPetMessageContext(input: PetMoodInput, mood: PetMood): PetMes
   const isWorkDay = input.isWorkDay ?? true
 
   if (!isWorkDay && mood === 'offwork') return 'weekend'
-  if (input.isWorkTime && minutesUntilOffwork <= 30 && (mood === 'happy' || mood === 'excited' || mood === 'working')) return 'nearOffwork'
+  if (input.isWorkTime && minutesUntilOffwork <= 30 && (mood === 'happy' || mood === 'excited' || mood === 'working'))
+    return 'nearOffwork'
   if (isLateNight(now) && (mood === 'working' || mood === 'sleepy')) return 'night'
   if (isMorning(now) && (mood === 'idle' || mood === 'working') && progress <= 35) return 'morning'
   return 'default'
@@ -89,8 +90,7 @@ export function getHoverMessageContext(input: PetMoodInput, mood: PetMood): Hove
   return 'default'
 }
 
-const hoverMessagesByContext: Partial<Record<HoverMessageContext, readonly string[]>> =
-  hoverMessagesByContextData
+const hoverMessagesByContext: Partial<Record<HoverMessageContext, readonly string[]>> = hoverMessagesByContextData
 
 export function pickHoverMessageWithContext(context: HoverMessageContext, seed: number) {
   const list = hoverMessagesByContext[context] ?? hoverMessages

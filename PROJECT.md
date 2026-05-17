@@ -50,19 +50,23 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 ## AI Runtime Project Design (PDGL) (v1)
 
 <!-- PDGL:v1 START -->
+
 ### Project Identity
+
 - Project Name: TODO
 - One-line Summary: TODO
 - Target Users: TODO
 - Non-goals: TODO
 
 ### Product / Runtime Intent
+
 - What problem does this project solve?: TODO
 - What should AI optimize for?: TODO
 - What must AI avoid?: TODO
 - What is intentionally out of scope?: TODO
 
 ### Stack Decisions
+
 - Language: TODO
 - Framework: TODO
 - Runtime: TODO
@@ -71,6 +75,7 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 - Deployment Environment: TODO
 
 ### Runtime Constraints
+
 - Files never touch: TODO
 - Dangerous operations: TODO
 - Deployment boundaries: TODO
@@ -79,6 +84,7 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 - MCP write policy: TODO
 
 ### Development Workflow
+
 - Preferred workflow: TODO
 - Testing strategy: TODO
 - Definition of Done: TODO
@@ -86,6 +92,7 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 - Snapshot expectations: TODO
 
 ### Architecture Notes
+
 - Entry points: TODO
 - Directory conventions: TODO
 - Config sources: TODO
@@ -93,12 +100,14 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 - Shared abstractions: TODO
 
 ### Bootstrap Guidance
+
 - Recommended scaffold: TODO
 - Manual setup steps: TODO
 - Human-required setup: TODO
 - Secrets/config setup expectations: TODO
 
 ### AI Collaboration Rules
+
 - How AI should propose changes: TODO
 - How AI should ask for clarification: TODO
 - Preferred output structure: TODO
@@ -108,36 +117,48 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 ## Stable Human Context (SHC) (v1)
 
 <!-- SHC:v1 START -->
+
 ### Project Goal
+
 - TODO
 
 ### Target Users
+
 - TODO
 
 ### Non-goals
+
 - TODO
 
 ### Stack Decisions
+
 - TODO
 
 ### Runtime Constraints
+
 - TODO
 
 ### Directory Conventions
+
 - TODO
 
 ### Config Sources
+
 - TODO
 
 ### Testing Strategy
+
 - TODO
 
 ### Release Constraints
+
 - TODO
 
 ### Files Never Touch
+
 - TODO
 
 ### Deployment Boundaries
+
 - TODO
 <!-- SHC:v1 END -->

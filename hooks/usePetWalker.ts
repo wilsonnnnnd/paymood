@@ -1,5 +1,5 @@
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
-import {animate, useMotionValue} from 'framer-motion'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { animate, useMotionValue } from 'framer-motion'
 
 type Options = {
   petSize?: number
@@ -32,7 +32,7 @@ export function usePetWalker(opts?: Options) {
   const minWaitMs = opts?.minWaitMs ?? 4000
   const maxWaitMs = opts?.maxWaitMs ?? 8000
 
-  const [viewport, setViewport] = useState<{w: number; h: number} | null>(null)
+  const [viewport, setViewport] = useState<{ w: number; h: number } | null>(null)
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const [isMoving, setIsMoving] = useState(false)
@@ -40,6 +40,7 @@ export function usePetWalker(opts?: Options) {
   const pausedRef = useRef(false)
   const timeoutRef = useRef<number | null>(null)
   const animStopRef = useRef<(() => void) | null>(null)
+  const startMoveRef = useRef<(() => void) | null>(null)
 
   const bounds = useMemo(() => {
     const w = viewport?.w ?? 0
@@ -48,12 +49,12 @@ export function usePetWalker(opts?: Options) {
     const minY = padding
     const maxX = Math.max(minX, w - padding - petSize)
     const maxY = Math.max(minY, h - padding - petSize)
-    return {minX, minY, maxX, maxY, w, h}
+    return { minX, minY, maxX, maxY, w, h }
   }, [padding, petSize, viewport?.h, viewport?.w])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    const apply = () => setViewport({w: window.innerWidth, h: window.innerHeight})
+    const apply = () => setViewport({ w: window.innerWidth, h: window.innerHeight })
     apply()
     window.addEventListener('resize', apply)
     return () => window.removeEventListener('resize', apply)
@@ -87,9 +88,9 @@ export function usePetWalker(opts?: Options) {
       const inTopRightDanger = nx > bounds.w - 220 && ny < 140
       const tooClose = distance(currentX, currentY, nx, ny) < 90
       if (inTopRightDanger || tooClose) continue
-      return {nx, ny}
+      return { nx, ny }
     }
-    return {nx: clamp(currentX, bounds.minX, bounds.maxX), ny: clamp(currentY, bounds.minY, bounds.maxY)}
+    return { nx: clamp(currentX, bounds.minX, bounds.maxX), ny: clamp(currentY, bounds.minY, bounds.maxY) }
   }, [bounds.maxX, bounds.maxY, bounds.minX, bounds.minY, bounds.w, x, y])
 
   const scheduleNext = useCallback(() => {
@@ -97,14 +98,14 @@ export function usePetWalker(opts?: Options) {
     if (pausedRef.current) return
     if (!viewport) return
     if (timeoutRef.current !== null) window.clearTimeout(timeoutRef.current)
-    timeoutRef.current = window.setTimeout(startMove, randInt(minWaitMs, maxWaitMs))
+    timeoutRef.current = window.setTimeout(() => startMoveRef.current?.(), randInt(minWaitMs, maxWaitMs))
   }, [maxWaitMs, minWaitMs, viewport])
 
   const startMove = useCallback(() => {
     if (pausedRef.current) return
     if (!viewport) return
 
-    const {nx, ny} = pickNext()
+    const { nx, ny } = pickNext()
     const cx = x.get()
     const cy = y.get()
     setFlipX(nx < cx)
@@ -113,8 +114,8 @@ export function usePetWalker(opts?: Options) {
     const dist = distance(cx, cy, nx, ny)
     const speed = 42
     const duration = clamp(dist / speed, 3.2, 7.5)
-    const ax = animate(x, nx, {duration, ease: [0.22, 1, 0.36, 1]})
-    const ay = animate(y, ny, {duration, ease: [0.22, 1, 0.36, 1]})
+    const ax = animate(x, nx, { duration, ease: [0.22, 1, 0.36, 1] })
+    const ay = animate(y, ny, { duration, ease: [0.22, 1, 0.36, 1] })
     animStopRef.current = () => {
       ax.stop()
       ay.stop()
@@ -129,6 +130,10 @@ export function usePetWalker(opts?: Options) {
         scheduleNext()
       })
   }, [pickNext, scheduleNext, viewport, x, y])
+
+  useEffect(() => {
+    startMoveRef.current = startMove
+  }, [startMove])
 
   useEffect(() => {
     if (!viewport) return
@@ -146,5 +151,5 @@ export function usePetWalker(opts?: Options) {
     scheduleNext()
   }
 
-  return {x, y, isMoving, flipX, pause, resume, petSize}
+  return { x, y, isMoving, flipX, pause, resume, petSize }
 }

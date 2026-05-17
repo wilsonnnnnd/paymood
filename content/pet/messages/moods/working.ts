@@ -67,4 +67,3 @@ export const contexts: Record<string, readonly string[]> = {
     '把咖啡留到需要的时候。',
   ],
 }
-

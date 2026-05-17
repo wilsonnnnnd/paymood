@@ -30,4 +30,3 @@ export const defaultMessages: readonly string[] = [
   '明天也会继续。',
   '睡意来了就别硬撑。',
 ]
-

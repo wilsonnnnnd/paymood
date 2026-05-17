@@ -1,11 +1,17 @@
-"use client"
-import React, {useEffect, useRef, useState} from 'react'
+'use client'
+import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import CircularProgress from './CircularProgress'
 import ColorModeToggle from './ColorModeToggle'
-import {useSettings} from '../hooks/useSettings'
-import {useClock} from '../hooks/useClock'
-import {earnedSoFar, earnedSoFarThisMonth, earnedSoFarThisWeek, workProgress} from '../lib/earnings'
+import { useSettings } from '../hooks/useSettings'
+import { useClock } from '../hooks/useClock'
+import {
+  earnedSoFar,
+  earnedSoFarThisMonth,
+  earnedSoFarThisWeek,
+  getWorkWindowForNow,
+  workProgress,
+} from '../lib/earnings'
 
 function prefersReducedMotion() {
   if (typeof window === 'undefined' || !('matchMedia' in window)) return false
@@ -25,7 +31,17 @@ function currencyCodeToSymbol(code: string | undefined) {
   return '$'
 }
 
-function RollingChar({from, to, direction, animate}: {from: string; to: string; direction: number; animate: boolean}) {
+function RollingChar({
+  from,
+  to,
+  direction,
+  animate,
+}: {
+  from: string
+  to: string
+  direction: number
+  animate: boolean
+}) {
   const isStatic = !animate || from === to || to === '.' || from === '.' || to === ' ' || from === ' '
   const [yEm, setYEm] = useState(0)
 
@@ -50,7 +66,7 @@ function RollingChar({from, to, direction, animate}: {from: string; to: string; 
 
   return (
     <span className="roll-char" aria-hidden="true">
-      <span className="roll-stack" style={{transform: `translate3d(0, ${yEm}em, 0)`}}>
+      <span className="roll-stack" style={{ transform: `translate3d(0, ${yEm}em, 0)` }}>
         <span className="roll-item">{stack[0]}</span>
         <span className="roll-item">{stack[1]}</span>
       </span>
@@ -60,7 +76,7 @@ function RollingChar({from, to, direction, animate}: {from: string; to: string; 
 
 const defaultMoneyFormat = (v: number) => v.toFixed(2)
 
-function RollingNumber({value, format = defaultMoneyFormat}: {value: number; format?: (v: number) => string}) {
+function RollingNumber({ value, format = defaultMoneyFormat }: { value: number; format?: (v: number) => string }) {
   const timerRef = useRef<number | null>(null)
   const prevValueRef = useRef(value)
   const formatRef = useRef(format)
@@ -97,7 +113,7 @@ function RollingNumber({value, format = defaultMoneyFormat}: {value: number; for
     setFromText(toText)
     setToText(next)
     setAnimating(true)
-    setMaxLen(current => Math.max(current, next.length))
+    setMaxLen((current) => Math.max(current, next.length))
 
     timerRef.current = window.setTimeout(() => {
       setFromText(next)
@@ -117,9 +133,15 @@ function RollingNumber({value, format = defaultMoneyFormat}: {value: number; for
   const nextPadded = toText.padStart(len, ' ')
 
   return (
-    <span className="roll-number" aria-label={toText} style={{width: `${len}ch`}}>
-      {Array.from({length: len}).map((_, index) => (
-        <RollingChar key={index} from={prevPadded[index]} to={nextPadded[index]} direction={direction} animate={animating} />
+    <span className="roll-number" aria-label={toText} style={{ width: `${len}ch` }}>
+      {Array.from({ length: len }).map((_, index) => (
+        <RollingChar
+          key={index}
+          from={prevPadded[index]}
+          to={nextPadded[index]}
+          direction={direction}
+          animate={animating}
+        />
       ))}
     </span>
   )
@@ -150,48 +172,50 @@ function moodFor(now: Date, start: Date, end: Date) {
 }
 
 export default function Dashboard() {
-  const {settings, ready} = useSettings()
-  const now = useClock(1000)  
+  const { settings, ready } = useSettings()
+  const now = useClock(1000)
   const isReady = ready && now !== null
   const workDaysPerWeek = settings.workDays?.length ? settings.workDays.length : 5
-  const isWorkDay = isReady ? (settings.workDays?.includes((now as Date).getDay()) ?? true) : true
 
   const today = now ?? new Date(0)
-  const [y, m, d] = [today.getFullYear(), today.getMonth(), today.getDate()]
-  const [sh, sm] = settings.startTime.split(':').map(Number)
-  const [eh, em] = settings.endTime.split(':').map(Number)
-  const start = new Date(y, m, d, sh, sm)
-  const end = new Date(y, m, d, eh, em)
+  const { start, end } = getWorkWindowForNow(today, settings.startTime, settings.endTime)
+  const isWorkDay = isReady ? settings.workDays?.includes(start.getDay()) ?? true : true
 
-  const prog = isReady && isWorkDay ? workProgress(today, start, end, settings.breakMinutes) : {progress: 0, elapsedSeconds: 0, remainingSeconds: 0, totalWorkSeconds: 0}
-  const {earned, hourly} =
-    isReady && isWorkDay ? earnedSoFar(today, start, end, settings.breakMinutes, settings.salaryAmount, settings.salaryType, {workDaysPerWeek}) : {earned: 0, hourly: 0}
-  const week =
+  const prog =
     isReady && isWorkDay
-      ? earnedSoFarThisWeek(today, {
-          startTime: settings.startTime,
-          endTime: settings.endTime,
-          breakMinutes: settings.breakMinutes,
-          workDays: settings.workDays,
-          salaryAmount: settings.salaryAmount,
-          salaryType: settings.salaryType,
-          opts: {workDaysPerWeek},
-        })
-      : {earned: 0, hourly: 0}
-  const month =
-    isReady && isWorkDay
-      ? earnedSoFarThisMonth(today, {
-          startTime: settings.startTime,
-          endTime: settings.endTime,
-          breakMinutes: settings.breakMinutes,
-          workDays: settings.workDays,
-          salaryAmount: settings.salaryAmount,
-          salaryType: settings.salaryType,
-          opts: {workDaysPerWeek},
-        })
-      : {earned: 0, hourly: 0}
+      ? workProgress(today, start, end, settings.breakMinutes)
+      : { progress: 0, elapsedSeconds: 0, remainingSeconds: 0, totalWorkSeconds: 0 }
+  const dayEarnings = isReady
+    ? earnedSoFar(today, start, end, settings.breakMinutes, settings.salaryAmount, settings.salaryType, {
+        workDaysPerWeek,
+      })
+    : { earned: 0, hourly: 0 }
+  const earned = isWorkDay ? dayEarnings.earned : 0
+  const hourly = dayEarnings.hourly
+  const week = isReady
+    ? earnedSoFarThisWeek(today, {
+        startTime: settings.startTime,
+        endTime: settings.endTime,
+        breakMinutes: settings.breakMinutes,
+        workDays: settings.workDays,
+        salaryAmount: settings.salaryAmount,
+        salaryType: settings.salaryType,
+        opts: { workDaysPerWeek },
+      })
+    : { earned: 0, hourly: 0 }
+  const month = isReady
+    ? earnedSoFarThisMonth(today, {
+        startTime: settings.startTime,
+        endTime: settings.endTime,
+        breakMinutes: settings.breakMinutes,
+        workDays: settings.workDays,
+        salaryAmount: settings.salaryAmount,
+        salaryType: settings.salaryType,
+        opts: { workDaysPerWeek },
+      })
+    : { earned: 0, hourly: 0 }
   const percent = isWorkDay ? Math.round(prog.progress * 100) : 0
-  const totalsFormat = new Intl.NumberFormat(undefined, {maximumFractionDigits: 0})
+  const totalsFormat = new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 })
   const mood = isReady ? (isWorkDay ? moodFor(today, start, end) : '今天休息。') : '热身中…'
   const currencySymbol = currencyCodeToSymbol(settings.currency)
 
@@ -216,43 +240,57 @@ export default function Dashboard() {
             <div className="hud-rest-title">今天不需要打卡。</div>
             <div className="hud-rest-sub">好好休息一下吧。</div>
           </div>
+          <section className="hud-metrics" aria-label="摘要">
+            <div className="hud-metric">
+              <span className="hud-metric-label">本周</span>
+              <span className="hud-metric-value">{totalsFormat.format(week.earned)}</span>
+            </div>
+            <div className="hud-metric">
+              <span className="hud-metric-label">本月</span>
+              <span className="hud-metric-value">{totalsFormat.format(month.earned)}</span>
+            </div>
+            <div className="hud-metric">
+              <span className="hud-metric-label">时薪</span>
+              <span className="hud-metric-value">{hourly.toFixed(2)}/h</span>
+            </div>
+          </section>
         </main>
       ) : (
         <main className="hud-main">
-        <div className="hud-ring-wrap" aria-label="Earnings and progress">
-          <CircularProgress value={prog.progress} size={420} />
-          <div className="hud-center">
-            <div className="hud-amount-line">
-              <span className="hud-currency-symbol" aria-hidden="true">
-                {currencySymbol}
-              </span>
-              <span className="hud-amount">
-                <RollingNumber value={earned} />
-              </span>
+          <div className="hud-ring-wrap" aria-label="Earnings and progress">
+            <CircularProgress value={prog.progress} size={420} />
+            <div className="hud-center">
+              <div className="hud-amount-line">
+                <span className="hud-currency-symbol" aria-hidden="true">
+                  {currencySymbol}
+                </span>
+                <span className="hud-amount">
+                  <RollingNumber value={earned} />
+                </span>
+              </div>
+              <div className="hud-percent">{percent}% 已完成</div>
             </div>
-            <div className="hud-percent">{percent}% 已完成</div>
           </div>
-        </div>
 
-        <section className="hud-metrics" aria-label="摘要">
-          <div className="hud-metric">
-            <span className="hud-metric-label">剩余</span>
-            <span className="hud-metric-value">{formatHM(prog.remainingSeconds)}</span>
-          </div>
-          <div className="hud-metric">
-            <span className="hud-metric-label">本周</span>
-            <span className="hud-metric-value">{totalsFormat.format(week.earned)}</span>
-          </div>
-          <div className="hud-metric">
-            <span className="hud-metric-label">本月</span>
-            <span className="hud-metric-value">{totalsFormat.format(month.earned)}</span>
-          </div>
-          <div className="hud-metric">
-            <span className="hud-metric-label">时薪</span>
-            <span className="hud-metric-value">{hourly.toFixed(2)}/h</span>
-          </div>
-        </section>
-      </main>
+          <section className="hud-metrics" aria-label="摘要">
+            <div className="hud-metric">
+              <span className="hud-metric-label">剩余</span>
+              <span className="hud-metric-value">{formatHM(prog.remainingSeconds)}</span>
+            </div>
+            <div className="hud-metric">
+              <span className="hud-metric-label">本周</span>
+              <span className="hud-metric-value">{totalsFormat.format(week.earned)}</span>
+            </div>
+            <div className="hud-metric">
+              <span className="hud-metric-label">本月</span>
+              <span className="hud-metric-value">{totalsFormat.format(month.earned)}</span>
+            </div>
+            <div className="hud-metric">
+              <span className="hud-metric-label">时薪</span>
+              <span className="hud-metric-value">{hourly.toFixed(2)}/h</span>
+            </div>
+          </section>
+        </main>
       )}
     </section>
   )

@@ -1,9 +1,9 @@
-"use client"
-import {useEffect} from 'react'
-import {useSettings} from '../hooks/useSettings'
+'use client'
+import { useEffect } from 'react'
+import { useSettings } from '../hooks/useSettings'
 
 export default function ThemeSync() {
-  const {settings, ready} = useSettings()
+  const { settings, ready } = useSettings()
 
   useEffect(() => {
     if (!ready) return
@@ -18,4 +18,3 @@ export default function ThemeSync() {
 
   return null
 }
-

@@ -1,10 +1,10 @@
 @layer theme, base, components, utilities;
 
-@import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/utilities.css" layer(utilities);
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
 
 :root,
-:root[data-theme="cozy"] {
+:root[data-theme='cozy'] {
   --bg0: #fbfbf9;
   --bg1: #f2f2ef;
   --text: #0f172a;
@@ -13,7 +13,8 @@
   --surface-strong: rgba(255, 255, 255, 0.72);
   --border: rgba(15, 23, 42, 0.1);
   --shadow: 0 26px 70px rgba(15, 23, 42, 0.12);
-  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   --ring-track: rgba(15, 23, 42, 0.1);
   --ring-ink: rgba(90, 147, 201, 0.92);
@@ -21,9 +22,9 @@
   --focus: rgba(90, 147, 201, 0.35);
   --accent: rgba(245, 158, 11, 0.9);
   --accent-glow: rgba(245, 158, 11, 0.18);
- }
+}
 
-:root[data-theme="light"] {
+:root[data-theme='light'] {
   --bg0: #fffdf6;
   --bg1: #f7f1e5;
   --text: #1f2937;
@@ -39,8 +40,8 @@
   --accent: rgba(245, 158, 11, 0.94);
   --accent-glow: rgba(245, 158, 11, 0.16);
 }
- 
-:root[data-color-mode="dark"] {
+
+:root[data-color-mode='dark'] {
   --bg0: #070a10;
   --bg1: #0b1220;
   --text: rgba(248, 250, 252, 0.9);
@@ -57,7 +58,7 @@
   --accent-glow: rgba(245, 158, 11, 0.22);
 }
 
-:root[data-color-mode="light"] {
+:root[data-color-mode='light'] {
   --bg0: #fbfbf9;
   --bg1: #f2f2ef;
   --text: #0f172a;
@@ -75,7 +76,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-color-mode="light"]):not([data-color-mode="dark"]) {
+  :root:not([data-color-mode='light']):not([data-color-mode='dark']) {
     --bg0: #070a10;
     --bg1: #0b1220;
     --text: rgba(248, 250, 252, 0.9);
@@ -105,8 +106,7 @@ body,
 
 body {
   margin: 0;
-  background:
-    radial-gradient(900px 600px at 18% 10%, rgba(56, 189, 248, 0.16), transparent 60%),
+  background: radial-gradient(900px 600px at 18% 10%, rgba(56, 189, 248, 0.16), transparent 60%),
     radial-gradient(700px 520px at 82% 18%, rgba(249, 115, 22, 0.07), transparent 60%),
     linear-gradient(180deg, var(--bg0), var(--bg1));
   color: var(--text);
@@ -186,8 +186,7 @@ select {
   content: '';
   position: absolute;
   inset: -40%;
-  background:
-    radial-gradient(circle at 28% 24%, rgba(56, 189, 248, 0.22), transparent 52%),
+  background: radial-gradient(circle at 28% 24%, rgba(56, 189, 248, 0.22), transparent 52%),
     radial-gradient(circle at 72% 18%, rgba(34, 211, 238, 0.14), transparent 54%),
     radial-gradient(circle at 50% 78%, rgba(249, 115, 22, 0.08), transparent 58%);
   filter: blur(24px);
@@ -541,7 +540,7 @@ fieldset.hud-control {
   -webkit-backdrop-filter: blur(10px);
 }
 
-.hud-weekday[aria-pressed="true"] {
+.hud-weekday[aria-pressed='true'] {
   border-color: var(--accent);
   color: var(--text);
   background: rgba(245, 158, 11, 0.22);
@@ -578,12 +577,12 @@ fieldset.hud-control {
   padding: 6px 10px;
 }
 
-:root[data-color-mode="light"] .hud-locked-text {
+:root[data-color-mode='light'] .hud-locked-text {
   color: rgba(15, 23, 42, 0.52);
   background: rgba(15, 23, 42, 0.06);
 }
 
-:root[data-color-mode="light"] .hud-weekday:not([aria-pressed="true"]) {
+:root[data-color-mode='light'] .hud-weekday:not([aria-pressed='true']) {
   color: rgba(15, 23, 42, 0.42);
   background: rgba(15, 23, 42, 0.035);
   border-color: rgba(15, 23, 42, 0.08);

@@ -1,6 +1,6 @@
-import {useEffect, useRef, useState} from 'react'
-import type {PetMood, PetMoodInput} from '../lib/pet/petMoodRules'
-import {getPetMessageContext, pickPetMessageWithContext} from '../lib/pet/petMessages'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import type { PetMood, PetMoodInput } from '../lib/pet/petMoodRules'
+import { getPetMessageContext, pickPetMessageWithContext } from '../lib/pet/petMessages'
 
 export function usePetMessage({
   mood,
@@ -16,18 +16,18 @@ export function usePetMessage({
   const seedRef = useRef(0)
   const [message, setMessage] = useState(() => pickPetMessageWithContext(mood, 'default', seedRef.current))
 
-  const next = () => {
+  const next = useCallback(() => {
     seedRef.current = seedRef.current + 1
     const context = getPetMessageContext(input, mood)
     setMessage(pickPetMessageWithContext(mood, context, seedRef.current))
-  }
+  }, [input, mood])
 
   useEffect(() => {
     const base = input.currentTime ?? new Date()
     seedRef.current = Math.floor(base.getTime() / 1000)
     const context = getPetMessageContext(input, mood)
     setMessage(pickPetMessageWithContext(mood, context, seedRef.current))
-  }, [input.currentTime, input.isWorkDay, input.isWorkTime, input.minutesUntilOffwork, input.workProgress, mood])
+  }, [input, mood])
 
   useEffect(() => {
     if (timerRef.current !== null) {
@@ -43,7 +43,7 @@ export function usePetMessage({
       if (timerRef.current !== null) window.clearInterval(timerRef.current)
       timerRef.current = null
     }
-  }, [mood, rotate])
+  }, [next, rotate])
 
   return message
 }

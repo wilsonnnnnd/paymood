@@ -1,32 +1,32 @@
-"use client"
+'use client'
 import React from 'react'
-import {AnimatePresence, motion} from 'framer-motion'
-import type {PetMood} from '../../lib/pet/petMoodRules'
+import { AnimatePresence, motion } from 'framer-motion'
+import type { PetMood } from '../../lib/pet/petMoodRules'
 
-export default function PetBubble({mood, text, emphasize}: {mood: PetMood; text: string; emphasize: boolean}) {
+export default function PetBubble({ mood, text, emphasize }: { mood: PetMood; text: string; emphasize: boolean }) {
   const moodHue =
     mood === 'excited'
       ? 'bg-amber-400/18'
       : mood === 'happy'
-        ? 'bg-amber-400/14'
-        : mood === 'sleepy'
-          ? 'bg-sky-400/10'
-          : mood === 'tired'
-            ? 'bg-rose-400/10'
-            : mood === 'working'
-              ? 'bg-sky-400/8'
-              : mood === 'offwork'
-                ? 'bg-slate-400/8'
-                : 'bg-white/10'
+      ? 'bg-amber-400/14'
+      : mood === 'sleepy'
+      ? 'bg-sky-400/10'
+      : mood === 'tired'
+      ? 'bg-rose-400/10'
+      : mood === 'working'
+      ? 'bg-sky-400/8'
+      : mood === 'offwork'
+      ? 'bg-slate-400/8'
+      : 'bg-white/10'
 
   return (
     <AnimatePresence mode="wait" initial={false}>
       <motion.div
         key={`${mood}:${text}`}
-        initial={{opacity: 0, y: 6, filter: 'blur(4px)'}}
-        animate={{opacity: 1, y: 0, filter: 'blur(0px)'}}
-        exit={{opacity: 0, y: 6, filter: 'blur(4px)'}}
-        transition={{duration: 0.22, ease: [0.22, 1, 0.36, 1]}}
+        initial={{ opacity: 0, y: 6, filter: 'blur(4px)' }}
+        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        exit={{ opacity: 0, y: 6, filter: 'blur(4px)' }}
+        transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
         className={[
           'pointer-events-none select-none',
           'max-w-[180px] rounded-2xl border border-[var(--border)] sm:max-w-[220px]',
@@ -47,7 +47,7 @@ export default function PetBubble({mood, text, emphasize}: {mood: PetMood; text:
             'border-r border-b border-[var(--border)]',
             'bg-[var(--surface)]',
           ].join(' ')}
-          style={{borderBottomRightRadius: 3}}
+          style={{ borderBottomRightRadius: 3 }}
         />
       </motion.div>
     </AnimatePresence>

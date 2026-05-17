@@ -30,4 +30,3 @@ export const defaultMessages: readonly string[] = [
   '慢一点也很体面。',
   '现在这样就很好。',
 ]
-

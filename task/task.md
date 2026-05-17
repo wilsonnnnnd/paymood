@@ -12,5 +12,5 @@
 
 ## Tasks
 
-| ID | Title | Status | Priority | Owner | Dependencies | File |
-|----|------|--------|----------|-------|--------------|------|
+| ID  | Title | Status | Priority | Owner | Dependencies | File |
+| --- | ----- | ------ | -------- | ----- | ------------ | ---- |

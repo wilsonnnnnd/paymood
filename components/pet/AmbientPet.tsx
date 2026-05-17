@@ -1,16 +1,16 @@
-"use client"
-import React, {useMemo, useState} from 'react'
-import {motion, useReducedMotion} from 'framer-motion'
-import {useClock} from '../../hooks/useClock'
-import {useSettings} from '../../hooks/useSettings'
-import {earnedSoFar, workProgress} from '../../lib/earnings'
-import {usePetMessage} from '../../hooks/usePetMessage'
-import {usePetMood} from '../../hooks/usePetMood'
+'use client'
+import React, { useMemo, useState } from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
+import { useClock } from '../../hooks/useClock'
+import { useSettings } from '../../hooks/useSettings'
+import { earnedSoFar, workProgress } from '../../lib/earnings'
+import { usePetMessage } from '../../hooks/usePetMessage'
+import { usePetMood } from '../../hooks/usePetMood'
 import PetAvatar from './PetAvatar'
 import PetBubble from './PetBubble'
 
 export default function AmbientPet() {
-  const {settings, ready} = useSettings()
+  const { settings, ready } = useSettings()
   const now = useClock(1000)
   const reduceMotion = useReducedMotion()
   const [hovered, setHovered] = useState(false)
@@ -39,10 +39,14 @@ export default function AmbientPet() {
 
     const p = isWorkTime ? workProgress(now, start, end, settings.breakMinutes).progress : 0
     const earned = isWorkTime
-      ? earnedSoFar(now, start, end, settings.breakMinutes, settings.salaryAmount, settings.salaryType, {workDaysPerWeek}).earned
+      ? earnedSoFar(now, start, end, settings.breakMinutes, settings.salaryAmount, settings.salaryType, {
+          workDaysPerWeek,
+        }).earned
       : 0
     const minutesUntilOffwork = isWorkTime ? Math.max(0, Math.floor((end.getTime() - now.getTime()) / 60000)) : 0
-    const minutesSinceWorkStart = isWorkTime ? Math.max(0, Math.floor((now.getTime() - start.getTime()) / 60000)) : undefined
+    const minutesSinceWorkStart = isWorkTime
+      ? Math.max(0, Math.floor((now.getTime() - start.getTime()) / 60000))
+      : undefined
 
     return {
       workProgress: p * 100,
@@ -65,7 +69,7 @@ export default function AmbientPet() {
   ])
 
   const mood = usePetMood(petInput)
-  const message = usePetMessage({mood, input: petInput, rotateMs: null})
+  const message = usePetMessage({ mood, input: petInput, rotateMs: null })
 
   return (
     <div className="pointer-events-none fixed bottom-4 right-4 z-50 flex items-end gap-2 sm:bottom-6 sm:right-6 sm:gap-3">
@@ -87,8 +91,8 @@ export default function AmbientPet() {
                 scale: [1, 1.01, 1],
               }
         }
-        transition={reduceMotion ? undefined : {duration: 4.6, ease: 'easeInOut', repeat: Infinity}}
-        whileHover={reduceMotion ? undefined : {y: -8, scale: 1.02}}
+        transition={reduceMotion ? undefined : { duration: 4.6, ease: 'easeInOut', repeat: Infinity }}
+        whileHover={reduceMotion ? undefined : { y: -8, scale: 1.02 }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         onFocus={() => setHovered(true)}
@@ -105,8 +109,8 @@ export default function AmbientPet() {
             'bg-gradient-to-tr from-sky-300/20 via-white/5 to-amber-300/20',
             'blur-2xl',
           ].join(' ')}
-          animate={reduceMotion ? undefined : {opacity: [0.45, 0.7, 0.45]}}
-          transition={reduceMotion ? undefined : {duration: 6, ease: 'easeInOut', repeat: Infinity}}
+          animate={reduceMotion ? undefined : { opacity: [0.45, 0.7, 0.45] }}
+          transition={reduceMotion ? undefined : { duration: 6, ease: 'easeInOut', repeat: Infinity }}
         />
       </motion.div>
     </div>

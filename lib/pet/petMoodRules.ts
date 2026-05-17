@@ -36,7 +36,13 @@ export function getPetMood(input: PetMoodInput): PetMood {
   if (isLateNight(input.currentTime)) return 'sleepy'
 
   const minutesSinceWorkStart = input.minutesSinceWorkStart
-  if (progress < 30 && typeof minutesSinceWorkStart === 'number' && isFinite(minutesSinceWorkStart) && minutesSinceWorkStart >= 180) return 'tired'
+  if (
+    progress < 30 &&
+    typeof minutesSinceWorkStart === 'number' &&
+    isFinite(minutesSinceWorkStart) &&
+    minutesSinceWorkStart >= 180
+  )
+    return 'tired'
 
   return progress <= 0 ? 'idle' : 'working'
 }

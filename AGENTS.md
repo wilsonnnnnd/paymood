@@ -7,6 +7,7 @@ Single workflow entry point for AI coding tools in this repository.
 Primary context: `.aidw/project.md`. Do not proceed without reading it.
 
 ## Read first
+
 - .aidw/project.md
 - .aidw/rules.md
 - .aidw/workflow.md
@@ -17,12 +18,15 @@ Primary context: `.aidw/project.md`. Do not proceed without reading it.
 - the current task file, when one exists
 
 ## Workflow role
+
 Classify requests into:
+
 - Clarify (vague): ask focused boundary questions, then stop
 - Implement (clear): draft a task → wait for confirmation → implement → verify
 - Review: refine an existing prompt/plan/task/implementation against Task/AC
 
 ## Required behavior
+
 1. Understand the project before suggesting implementation
 2. Reuse first; keep changes minimal; preserve backward compatibility
 3. If vague: clarify only (no implementation)
@@ -31,6 +35,7 @@ Classify requests into:
 6. Review requests: review/refine against Task/AC (draft minimal Task/AC if missing)
 
 ## Never
+
 - write code directly unless explicitly requested
 - skip clarification for ambiguous requests
 - create duplicate structures unnecessarily

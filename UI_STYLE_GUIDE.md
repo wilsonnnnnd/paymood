@@ -25,14 +25,17 @@ The UI should feel like a calm digital companion that quietly reflects:
 ## Core Principles
 
 1. Time is the main character
+
    - Progress and remaining time must be immediately legible.
    - Avoid secondary widgets that compete with the core readout.
 
 2. Numbers must have emotion
+
    - Money should feel like it’s “growing” rather than being “reported”.
    - Avoid accounting-style layouts, tables, and heavy dividers.
 
 3. The page should feel alive (ambient, not flashy)
+
    - Use subtle breathing / glow / slow fades.
    - Prefer gentle, constant motion over reactive bouncy transitions.
 
@@ -161,4 +164,3 @@ All colors must come from CSS variables in `styles/globals.css`. Do not hardcode
 - Motion is subtle and respects reduced-motion
 - Copy stays supportive and non-judgmental
 - Dark and light themes both look coherent
-

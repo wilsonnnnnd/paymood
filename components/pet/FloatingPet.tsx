@@ -1,21 +1,23 @@
-"use client"
-import React, {useEffect, useMemo, useState} from 'react'
-import {motion} from 'framer-motion'
-import {usePetWalker} from '../../hooks/usePetWalker'
-import {useClock} from '../../hooks/useClock'
-import {useSettings} from '../../hooks/useSettings'
-import {earnedSoFar, workProgress} from '../../lib/earnings'
-import {getHoverMessageContext, pickHoverMessageWithContext} from '../../lib/pet/petMessages'
-import {usePetMood} from '../../hooks/usePetMood'
+'use client'
+import React, { useEffect, useMemo, useState } from 'react'
+import { motion } from 'framer-motion'
+import { usePetWalker } from '../../hooks/usePetWalker'
+import { useClock } from '../../hooks/useClock'
+import { useSettings } from '../../hooks/useSettings'
+import { earnedSoFar, getWorkWindowForNow, workProgress } from '../../lib/earnings'
+import { getHoverMessageContext, pickHoverMessageWithContext } from '../../lib/pet/petMessages'
+import { usePetMood } from '../../hooks/usePetMood'
 import PetSprite from './PetSprite'
 import PetMessageBubble from './PetMessageBubble'
 
 export default function FloatingPet() {
-  const {settings, ready} = useSettings()
+  const { settings, ready } = useSettings()
   const now = useClock(1000)
   const [compact, setCompact] = useState(false)
-  const {x, y, isMoving, flipX, pause, resume} = usePetWalker(
-    compact ? {petSize: 64, padding: 14, minWaitMs: 4500, maxWaitMs: 8500} : {petSize: 84, padding: 24, minWaitMs: 4000, maxWaitMs: 8000},
+  const { x, y, isMoving, flipX, pause, resume } = usePetWalker(
+    compact
+      ? { petSize: 64, padding: 14, minWaitMs: 4500, maxWaitMs: 8500 }
+      : { petSize: 84, padding: 24, minWaitMs: 4000, maxWaitMs: 8000 },
   )
   const [hovered, setHovered] = useState(false)
   const [message, setMessage] = useState('')
@@ -43,21 +45,21 @@ export default function FloatingPet() {
       }
     }
 
-    const isWorkDay = settings.workDays?.includes(now.getDay()) ?? true
     const workDaysPerWeek = settings.workDays?.length ? settings.workDays.length : 5
-    const [yy, mm, dd] = [now.getFullYear(), now.getMonth(), now.getDate()]
-    const [sh, sm] = settings.startTime.split(':').map(Number)
-    const [eh, em] = settings.endTime.split(':').map(Number)
-    const start = new Date(yy, mm, dd, sh, sm)
-    const end = new Date(yy, mm, dd, eh, em)
+    const { start, end } = getWorkWindowForNow(now, settings.startTime, settings.endTime)
+    const isWorkDay = settings.workDays?.includes(start.getDay()) ?? true
     const isWorkTime = isWorkDay && now.getTime() >= start.getTime() && now.getTime() < end.getTime()
 
     const p = isWorkTime ? workProgress(now, start, end, settings.breakMinutes).progress : 0
     const earned = isWorkTime
-      ? earnedSoFar(now, start, end, settings.breakMinutes, settings.salaryAmount, settings.salaryType, {workDaysPerWeek}).earned
+      ? earnedSoFar(now, start, end, settings.breakMinutes, settings.salaryAmount, settings.salaryType, {
+          workDaysPerWeek,
+        }).earned
       : 0
     const minutesUntilOffwork = isWorkTime ? Math.max(0, Math.floor((end.getTime() - now.getTime()) / 60000)) : 0
-    const minutesSinceWorkStart = isWorkTime ? Math.max(0, Math.floor((now.getTime() - start.getTime()) / 60000)) : undefined
+    const minutesSinceWorkStart = isWorkTime
+      ? Math.max(0, Math.floor((now.getTime() - start.getTime()) / 60000))
+      : undefined
 
     return {
       workProgress: p * 100,
@@ -81,10 +83,7 @@ export default function FloatingPet() {
 
   const mood = usePetMood(petInput)
 
-  const hoverContext = useMemo(
-    () => getHoverMessageContext(petInput, mood),
-    [mood, petInput.currentTime, petInput.isWorkDay, petInput.isWorkTime, petInput.minutesUntilOffwork],
-  )
+  const hoverContext = useMemo(() => getHoverMessageContext(petInput, mood), [mood, petInput])
 
   useEffect(() => {
     if (!hovered) {
@@ -113,7 +112,7 @@ export default function FloatingPet() {
   return (
     <motion.div
       className="pointer-events-auto fixed left-0 top-0 z-40"
-      style={{x, y}}
+      style={{ x, y }}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
       onFocus={onEnter}
