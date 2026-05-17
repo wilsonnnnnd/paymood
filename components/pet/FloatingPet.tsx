@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import { usePetWalker } from '../../hooks/usePetWalker'
 import { useClock } from '../../hooks/useClock'
-import { useSettings } from '../../hooks/useSettings'
+import { useSettings, type Settings } from '../../hooks/useSettings'
 import { earnedSoFar, getWorkWindowForNow, workProgress } from '../../lib/earnings'
 import { getHoverMessageContext, pickHoverMessageWithContext } from '../../lib/pet/petMessages'
 import { usePetMood } from '../../hooks/usePetMood'
@@ -12,6 +12,12 @@ import PetMessageBubble from './PetMessageBubble'
 
 export default function FloatingPet() {
   const { settings, ready } = useSettings()
+  const enabled = settings.petEnabled !== false
+  if (!ready || !enabled) return null
+  return <FloatingPetImpl settings={settings} />
+}
+
+function FloatingPetImpl({ settings }: { settings: Settings }) {
   const now = useClock(1000)
   const [compact, setCompact] = useState(false)
   const { x, y, isMoving, flipX, pause, resume } = usePetWalker(
@@ -33,7 +39,7 @@ export default function FloatingPet() {
   }, [])
 
   const petInput = useMemo(() => {
-    if (!ready || !now) {
+    if (!now) {
       return {
         workProgress: 0,
         earnedAmount: 0,
@@ -72,7 +78,6 @@ export default function FloatingPet() {
     }
   }, [
     now,
-    ready,
     settings.breakMinutes,
     settings.endTime,
     settings.salaryAmount,
@@ -110,15 +115,14 @@ export default function FloatingPet() {
   }
 
   return (
-    <motion.div
-      className="pointer-events-auto fixed left-0 top-0 z-40"
+    <motion.button
+      type="button"
+      className="pointer-events-auto fixed left-0 top-0 z-40 border-0 bg-transparent p-0"
       style={{ x, y }}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
       onFocus={onEnter}
       onBlur={onLeave}
-      role="button"
-      tabIndex={0}
       aria-label="桌宠"
     >
       <div className="relative h-[84px] w-[84px]">
@@ -129,6 +133,6 @@ export default function FloatingPet() {
           </div>
         </div>
       </div>
-    </motion.div>
+    </motion.button>
   )
 }

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSettings } from '../hooks/useSettings'
 import type { Settings } from '../hooks/useSettings'
+import { salaryBoundsByType } from '../lib/settings'
 import ConfirmModal from './ui/ConfirmModal'
 import {
   SettingAction,
@@ -18,20 +19,6 @@ import {
 import slime1Idle from '../craftpix/PNG/Slime1/With_shadow/Slime1_Idle_with_shadow.png'
 import slime2Idle from '../craftpix/PNG/Slime2/With_shadow/Slime2_Idle_with_shadow.png'
 import slime3Idle from '../craftpix/PNG/Slime3/With_shadow/Slime3_Idle_with_shadow.png'
-
-type Props = {
-  settings?: Settings
-  updateSettings?: (patch: Partial<Settings>) => void
-}
-
-const salaryBounds = {
-  hourly: { min: 0, max: 10_000 },
-  daily: { min: 0, max: 100_000 },
-  weekly: { min: 0, max: 500_000 },
-  fortnightly: { min: 0, max: 1_000_000 },
-  monthly: { min: 0, max: 2_000_000 },
-  annually: { min: 0, max: 10_000_000 },
-} satisfies Record<Settings['salaryType'], { min: number; max: number }>
 
 const salaryTypeOptions: Array<{ value: Settings['salaryType']; label: string }> = [
   { value: 'hourly', label: '时薪' },
@@ -63,10 +50,8 @@ function PetIcon({ sheet }: { sheet: { height: number; width: number; src: strin
   )
 }
 
-export default function SettingsForm(props: Props) {
-  const localSettings = useSettings()
-  const settings = props.settings ?? localSettings.settings
-  const updateSettings = props.updateSettings ?? localSettings.updateSettings
+export default function SettingsForm() {
+  const { settings, updateSettings } = useSettings()
   const [salaryDraft, setSalaryDraft] = useState('')
   const [salaryTypeDraft, setSalaryTypeDraft] = useState<Settings['salaryType']>(() => settings.salaryType ?? 'hourly')
   const [salaryConfirmOpen, setSalaryConfirmOpen] = useState(false)
@@ -75,9 +60,10 @@ export default function SettingsForm(props: Props) {
   const workDays = settings.workDays ?? []
   const payLocked = settings.payLocked === true
   const colorMode = settings.colorMode ?? 'system'
+  const petEnabled = settings.petEnabled !== false
   const petVariant = settings.petVariant ?? 'aqua'
   const salaryAmountNumber = Number(salaryDraft)
-  const activeSalaryBounds = salaryBounds[salaryTypeDraft]
+  const activeSalaryBounds = salaryBoundsByType[salaryTypeDraft]
   const salaryDraftValid =
     Number.isFinite(salaryAmountNumber) && salaryAmountNumber > 0 && salaryAmountNumber <= activeSalaryBounds.max
 
@@ -121,39 +107,65 @@ export default function SettingsForm(props: Props) {
         <SettingSection title="Workspace" description="让界面保持安静，只在需要时给你一点回应。" tone="quiet">
           <SettingRow label="主题模式" description="当前颜色模式会跟随系统或固定为你选择的状态。" value={colorModeLabel} />
 
-          <SettingRow label="陪伴角色" description="选择一个在工作日里安静陪着你的角色。" density="quiet">
-            <div className="setting-pet-grid">
-              {[
-                { key: 'aqua' as const, label: 'Aqua Slime', sheet: slime1Idle },
-                { key: 'undead' as const, label: 'Undead Slime', sheet: slime2Idle },
-                { key: 'magma' as const, label: 'Magma Slime', sheet: slime3Idle },
-              ].map((item) => (
-                <SettingToggle
-                  key={item.key}
-                  className="setting-pet-choice"
-                  aria-label={item.label}
-                  pressed={petVariant === item.key}
-                  onClick={() => updateSettings({ petVariant: item.key })}
-                >
-                  <PetIcon sheet={item.sheet} />
-                </SettingToggle>
-              ))}
-            </div>
+          <SettingRow
+            label="桌宠"
+            description="默认开启。关闭后将不再显示，也不会消耗动画与计时性能。"
+            value={petEnabled ? '开启' : '关闭'}
+            density="quiet"
+          >
+            <SettingToggle
+              aria-label={petEnabled ? '关闭桌宠' : '开启桌宠'}
+              pressed={petEnabled}
+              onClick={() => updateSettings({ petEnabled: !petEnabled })}
+            >
+              {petEnabled ? '开' : '关'}
+            </SettingToggle>
           </SettingRow>
+
+          {petEnabled ? (
+            <SettingRow label="陪伴角色" description="选择一个在工作日里安静陪着你的角色。" density="quiet">
+              <div className="setting-pet-grid">
+                {[
+                  { key: 'aqua' as const, label: 'Aqua Slime', sheet: slime1Idle },
+                  { key: 'undead' as const, label: 'Undead Slime', sheet: slime2Idle },
+                  { key: 'magma' as const, label: 'Magma Slime', sheet: slime3Idle },
+                ].map((item) => (
+                  <SettingToggle
+                    key={item.key}
+                    className="setting-pet-choice"
+                    aria-label={item.label}
+                    pressed={petVariant === item.key}
+                    onClick={() => updateSettings({ petVariant: item.key })}
+                  >
+                    <PetIcon sheet={item.sheet} />
+                  </SettingToggle>
+                ))}
+              </div>
+            </SettingRow>
+          ) : null}
         </SettingSection>
 
         <SettingSection title="Work rhythm" description="一天的边界和呼吸感。" tone="default">
           <SettingGroup>
-            <SettingRow label="上班时间">
-              <SettingTimeInput value={settings.startTime} onChange={(e) => updateSettings({ startTime: e.target.value })} />
+            <SettingRow label="上班时间" controlId="settings-start-time">
+              <SettingTimeInput
+                id="settings-start-time"
+                value={settings.startTime}
+                onChange={(e) => updateSettings({ startTime: e.target.value })}
+              />
             </SettingRow>
 
-            <SettingRow label="下班时间">
-              <SettingTimeInput value={settings.endTime} onChange={(e) => updateSettings({ endTime: e.target.value })} />
+            <SettingRow label="下班时间" controlId="settings-end-time">
+              <SettingTimeInput
+                id="settings-end-time"
+                value={settings.endTime}
+                onChange={(e) => updateSettings({ endTime: e.target.value })}
+              />
             </SettingRow>
 
-            <SettingRow label="休息时间" description="以分钟计算，会从工作进度里扣除。">
+            <SettingRow label="休息时间" description="以分钟计算，会从工作进度里扣除。" controlId="settings-break-minutes">
               <SettingInput
+                id="settings-break-minutes"
                 value={String(settings.breakMinutes)}
                 onChange={(e) => updateSettings({ breakMinutes: Number(e.target.value) || 0 })}
                 type="number"
@@ -220,11 +232,13 @@ export default function SettingsForm(props: Props) {
                   max={activeSalaryBounds.max}
                   step="any"
                   placeholder="输入一次"
+                  aria-label="薪资金额"
                 />
                 <SettingSelect
                   tone="vault"
                   value={salaryTypeDraft}
                   onChange={(e) => setSalaryTypeDraft(e.target.value as Settings['salaryType'])}
+                  aria-label="薪资类型"
                 >
                   {salaryTypeOptions.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -242,10 +256,11 @@ export default function SettingsForm(props: Props) {
         </SettingSection>
 
         <SettingSection title="Display" description="影响收入展示方式，不改变你的原始薪资设置。" tone="quiet">
-          <SettingRow label="货币">
+          <SettingRow label="货币" controlId="settings-currency">
             <SettingSelect
+              id="settings-currency"
               value={(settings.currency ?? 'AUD').toUpperCase()}
-              onChange={(e) => updateSettings({ currency: e.target.value })}
+              onChange={(e) => updateSettings({ currency: e.target.value as Settings['currency'] })}
             >
               <option value="AUD">澳元（AUD）</option>
               <option value="CNY">人民币（CNY）</option>

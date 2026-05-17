@@ -12,6 +12,7 @@ import {
   getWorkWindowForNow,
   workProgress,
 } from '../lib/earnings'
+import { currencySymbols } from '../lib/settings'
 
 function prefersReducedMotion() {
   if (typeof window === 'undefined' || !('matchMedia' in window)) return false
@@ -27,7 +28,8 @@ function formatHM(seconds: number) {
 
 function currencyCodeToSymbol(code: string | undefined) {
   const normalized = (code ?? '').trim().toUpperCase()
-  if (normalized === 'CNY') return '¥'
+  const key = normalized as keyof typeof currencySymbols
+  if (key in currencySymbols) return currencySymbols[key]
   return '$'
 }
 
@@ -237,7 +239,7 @@ export default function Dashboard() {
       </header>
 
       {!isWorkDay ? (
-        <main className="hud-main hud-rest" aria-label="休息日">
+        <div className="hud-main hud-rest" aria-label="休息日">
           <div className="hud-rest-panel">
             <div className="hud-rest-title">今天就先休息。</div>
             <div className="hud-rest-sub">周/月累计还在这里。</div>
@@ -252,9 +254,9 @@ export default function Dashboard() {
               <span className="hud-metric-value">{totalsFormat.format(month.earned)}</span>
             </div>
           </section>
-        </main>
+        </div>
       ) : (
-        <main className="hud-main">
+        <div className="hud-main">
           <div className="hud-ring-wrap" aria-label="收入与进度">
             <CircularProgress value={prog.progress} size={420} />
             <div className="hud-center">
@@ -286,7 +288,7 @@ export default function Dashboard() {
               <span className="hud-metric-value">{totalsFormat.format(month.earned)}</span>
             </div>
           </section>
-        </main>
+        </div>
       )}
     </section>
   )

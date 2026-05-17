@@ -6,7 +6,7 @@ import ColorModeToggle from '../../components/ColorModeToggle'
 import { useSettings } from '../../hooks/useSettings'
 
 export default function SettingsPage() {
-  const { settings, updateSettings, ready } = useSettings()
+  const { ready } = useSettings()
 
   return (
     <main className="app-shell settings-page">
@@ -29,14 +29,13 @@ export default function SettingsPage() {
         </header>
 
         {/* Settings system */}
-        <main className="settings-stage" aria-label="设置">
-          <SettingsForm settings={settings} updateSettings={updateSettings} />
+        <section className="settings-stage" aria-label="设置">
+          <SettingsForm />
           <p className="settings-footnote" aria-label="货币提示">
             货币与工作时间会影响你的进度与收入展示。
           </p>
-        </main>
+        </section>
       </section>
     </main>
   )
 }
-

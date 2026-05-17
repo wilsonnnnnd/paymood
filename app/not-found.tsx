@@ -19,12 +19,12 @@ export default function NotFound() {
             404
           </div>
         </header>
-        <main className="hud-main hud-rest" aria-label="内容">
+      <div className="hud-main hud-rest" aria-label="内容">
           <div className="hud-rest-panel">
             <div className="hud-rest-title">页面不在这里。</div>
             <div className="hud-rest-sub">点右上角回到仪表盘。</div>
           </div>
-        </main>
+      </div>
       </section>
     </main>
   )

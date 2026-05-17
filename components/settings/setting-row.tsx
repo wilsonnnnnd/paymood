@@ -16,15 +16,22 @@ const rowVariants = cva('setting-row', {
 export type SettingRowProps = React.HTMLAttributes<HTMLDivElement> &
   VariantProps<typeof rowVariants> & {
     label: React.ReactNode
+    controlId?: string
     description?: React.ReactNode
     value?: React.ReactNode
   }
 
-export function SettingRow({ label, description, value, density, className, children, ...props }: SettingRowProps) {
+export function SettingRow({ label, controlId, description, value, density, className, children, ...props }: SettingRowProps) {
   return (
     <div className={cn(rowVariants({ density }), className)} {...props}>
       <div className="setting-row__copy">
-        <div className="setting-row__label">{label}</div>
+        {controlId ? (
+          <label className="setting-row__label" htmlFor={controlId}>
+            {label}
+          </label>
+        ) : (
+          <div className="setting-row__label">{label}</div>
+        )}
         {description ? <div className="setting-row__description">{description}</div> : null}
       </div>
       <div className="setting-row__control">

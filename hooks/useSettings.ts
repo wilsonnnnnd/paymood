@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
+import type { SalaryType } from '../lib/earnings'
+import { salaryBoundsByType, supportedCurrencies, type SupportedCurrency } from '../lib/settings'
 
 export type Settings = {
   startTime: string // ISO time like '09:00'
@@ -8,16 +10,17 @@ export type Settings = {
   payLocked?: boolean
   themePreset?: 'cozy' | 'light'
   colorMode?: 'system' | 'light' | 'dark'
+  petEnabled?: boolean
   petVariant?: 'aqua' | 'undead' | 'magma'
-  salaryType: 'hourly' | 'daily' | 'weekly' | 'fortnightly' | 'monthly' | 'annually'
+  salaryType: SalaryType
   salaryAmount: number
-  currency?: string
+  currency?: SupportedCurrency
 }
 
-const STORAGE_KEY = 'workday-settings-v1'
-const SETTINGS_EVENT = 'cozy-earnings-settings'
+export const STORAGE_KEY = 'workday-settings-v1'
+export const SETTINGS_EVENT = 'cozy-earnings-settings'
 
-const defaultSettings: Settings = {
+export const defaultSettings: Settings = {
   startTime: '09:00',
   endTime: '17:00',
   breakMinutes: 0,
@@ -25,26 +28,17 @@ const defaultSettings: Settings = {
   payLocked: false,
   themePreset: 'cozy',
   colorMode: 'system',
+  petEnabled: true,
   petVariant: 'aqua',
   salaryType: 'hourly',
   salaryAmount: 0,
   currency: 'AUD',
 }
 
-const salaryTypes: Settings['salaryType'][] = ['hourly', 'daily', 'weekly', 'fortnightly', 'monthly', 'annually']
+const salaryTypes: SalaryType[] = ['hourly', 'daily', 'weekly', 'fortnightly', 'monthly', 'annually']
 const themePresets: NonNullable<Settings['themePreset']>[] = ['cozy', 'light']
 const colorModes: NonNullable<Settings['colorMode']>[] = ['system', 'light', 'dark']
 const petVariants: NonNullable<Settings['petVariant']>[] = ['aqua', 'undead', 'magma']
-const currencies = ['AUD', 'CNY']
-
-const salaryBoundsByType: Record<Settings['salaryType'], { min: number; max: number }> = {
-  hourly: { min: 0, max: 10_000 },
-  daily: { min: 0, max: 100_000 },
-  weekly: { min: 0, max: 500_000 },
-  fortnightly: { min: 0, max: 1_000_000 },
-  monthly: { min: 0, max: 2_000_000 },
-  annually: { min: 0, max: 10_000_000 },
-}
 
 function normalizeTime(value: unknown, fallback: string) {
   if (typeof value !== 'string') return fallback
@@ -76,18 +70,21 @@ function normalizeWorkDays(value: unknown, fallback: number[]) {
   return unique.length ? unique : fallback
 }
 
-function sanitizeSettings(input: unknown): Settings {
+export function sanitizeSettings(input: unknown): Settings {
   const raw = (input ?? {}) as any
-  const salaryType: Settings['salaryType'] = salaryTypes.includes(raw.salaryType)
-    ? (raw.salaryType as Settings['salaryType'])
+  const salaryType: SalaryType = salaryTypes.includes(raw.salaryType)
+    ? (raw.salaryType as SalaryType)
     : defaultSettings.salaryType
   const salaryBounds = salaryBoundsByType[salaryType] ?? salaryBoundsByType[defaultSettings.salaryType]
   const salaryAmount = normalizeNumber(raw.salaryAmount, defaultSettings.salaryAmount, salaryBounds)
-  const currency = currencies.includes(String(raw.currency ?? '').toUpperCase())
-    ? String(raw.currency).toUpperCase()
+  const currencyValue = String(raw.currency ?? '').toUpperCase()
+  const currency = (supportedCurrencies as readonly string[]).includes(currencyValue)
+    ? (currencyValue as SupportedCurrency)
     : defaultSettings.currency
+
   const payLocked =
-    typeof raw.payLocked === 'boolean' ? raw.payLocked : typeof raw.payLocked === 'undefined' ? salaryAmount > 0 : false
+    typeof raw.payLocked === 'boolean' ? raw.payLocked : raw.payLocked == null ? salaryAmount > 0 : defaultSettings.payLocked
+  const petEnabled = typeof raw.petEnabled === 'boolean' ? raw.petEnabled : defaultSettings.petEnabled
 
   return {
     ...defaultSettings,
@@ -98,6 +95,7 @@ function sanitizeSettings(input: unknown): Settings {
     payLocked,
     themePreset: themePresets.includes(raw.themePreset) ? raw.themePreset : defaultSettings.themePreset,
     colorMode: colorModes.includes(raw.colorMode) ? raw.colorMode : defaultSettings.colorMode,
+    petEnabled,
     petVariant: petVariants.includes(raw.petVariant) ? raw.petVariant : defaultSettings.petVariant,
     salaryType,
     salaryAmount,
@@ -105,22 +103,39 @@ function sanitizeSettings(input: unknown): Settings {
   }
 }
 
+export type SettingsContextValue = {
+  settings: Settings
+  updateSettings: (patch: Partial<Settings>) => void
+  ready: boolean
+}
+
+export const SettingsContext = createContext<SettingsContextValue | null>(null)
+
+export function readSettingsFromStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    if (!raw) return defaultSettings
+    return sanitizeSettings(JSON.parse(raw))
+  } catch {
+    return defaultSettings
+  }
+}
+
+export function writeSettingsToStorage(next: Settings) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
+  } catch {}
+}
+
 export function useSettings() {
+  const ctx = useContext(SettingsContext)
+  if (ctx) return ctx
+
   const [settings, setSettings] = useState<Settings>(defaultSettings)
   const [ready, setReady] = useState(false)
 
-  const readFromStorage = () => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY)
-      if (!raw) return defaultSettings
-      return sanitizeSettings(JSON.parse(raw))
-    } catch (e) {
-      return defaultSettings
-    }
-  }
-
   useEffect(() => {
-    setSettings(readFromStorage())
+    setSettings(readSettingsFromStorage())
     setReady(true)
   }, [])
 
@@ -129,12 +144,12 @@ export function useSettings() {
 
     const onStorage = (e: StorageEvent) => {
       if (e.key !== STORAGE_KEY) return
-      setSettings(readFromStorage())
+      setSettings(readSettingsFromStorage())
     }
 
     const onCustom = () => {
       setTimeout(() => {
-        setSettings(readFromStorage())
+        setSettings(readSettingsFromStorage())
       }, 0)
     }
 
@@ -146,30 +161,15 @@ export function useSettings() {
     }
   }, [ready])
 
-  useEffect(() => {
-    if (!ready) return
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings))
-    } catch (e) {
-      // ignore
-    }
-  }, [ready, settings])
-
   const update = (patch: Partial<Settings>) =>
     setSettings((prev) => {
       const next = sanitizeSettings({ ...prev, ...patch })
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
-      } catch (e) {
-        // ignore
-      }
+      writeSettingsToStorage(next)
       try {
         setTimeout(() => {
           window.dispatchEvent(new Event(SETTINGS_EVENT))
         }, 0)
-      } catch (e) {
-        // ignore
-      }
+      } catch {}
       return next
     })
 

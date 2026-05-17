@@ -1,5 +1,6 @@
 import React from 'react'
 import type { Metadata, Viewport } from 'next'
+import SettingsProvider from '../components/SettingsProvider'
 import ThemeSync from '../components/ThemeSync'
 import FloatingPet from '../components/pet/FloatingPet'
 import '../styles/globals.css'
@@ -23,9 +24,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="zh-CN">
       <head />
       <body>
-        <ThemeSync />
-        {children}
-        <FloatingPet />
+        <SettingsProvider>
+          <ThemeSync />
+          {children}
+          <FloatingPet />
+        </SettingsProvider>
       </body>
     </html>
   )

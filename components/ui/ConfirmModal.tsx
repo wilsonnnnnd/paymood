@@ -179,9 +179,13 @@ export default function ConfirmModal({
     }
   }
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (confirmDisabled) return
-    onConfirm?.()
+    try {
+      await onConfirm?.()
+    } catch {
+      return
+    }
     onOpenChange(false)
   }
 
