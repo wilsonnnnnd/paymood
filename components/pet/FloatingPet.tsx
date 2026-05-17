@@ -13,10 +13,22 @@ import PetMessageBubble from './PetMessageBubble'
 export default function FloatingPet() {
   const {settings, ready} = useSettings()
   const now = useClock(1000)
-  const {x, y, isMoving, flipX, pause, resume} = usePetWalker({petSize: 84, padding: 24, minWaitMs: 4000, maxWaitMs: 8000})
+  const [compact, setCompact] = useState(false)
+  const {x, y, isMoving, flipX, pause, resume} = usePetWalker(
+    compact ? {petSize: 64, padding: 14, minWaitMs: 4500, maxWaitMs: 8500} : {petSize: 84, padding: 24, minWaitMs: 4000, maxWaitMs: 8000},
+  )
   const [hovered, setHovered] = useState(false)
   const [message, setMessage] = useState('')
   const variant = settings.petVariant ?? 'aqua'
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !('matchMedia' in window)) return
+    const media = window.matchMedia('(max-width: 420px)')
+    const handler = () => setCompact(media.matches)
+    handler()
+    media.addEventListener('change', handler)
+    return () => media.removeEventListener('change', handler)
+  }, [])
 
   const petInput = useMemo(() => {
     if (!ready || !now) {

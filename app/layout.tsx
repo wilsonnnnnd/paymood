@@ -1,5 +1,5 @@
 import React from 'react'
-import type {Metadata} from 'next'
+import type {Metadata, Viewport} from 'next'
 import ThemeSync from '../components/ThemeSync'
 import FloatingPet from '../components/pet/FloatingPet'
 import '../styles/globals.css'
@@ -11,6 +11,11 @@ export const metadata: Metadata = {
     shortcut: '/xiaoxing_icon_white_bg.png',
     apple: '/xiaoxing_icon_white_bg.png',
   },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 }
 
 export default function RootLayout({children}: {children: React.ReactNode}) {

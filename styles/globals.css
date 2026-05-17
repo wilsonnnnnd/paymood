@@ -111,6 +111,7 @@ body {
     linear-gradient(180deg, var(--bg0), var(--bg1));
   color: var(--text);
   font-family: var(--font-sans);
+  overflow-x: hidden;
 }
 
 a {
@@ -247,6 +248,7 @@ select {
   line-height: 1.35;
   font-weight: 600;
   color: var(--text);
+  overflow-wrap: anywhere;
 }
 
 .hud-main {
@@ -694,5 +696,127 @@ fieldset.hud-control {
 
   .hud-weekdays {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .app-shell {
+    padding: 12px 10px;
+  }
+
+  .hud-shell {
+    padding: 18px 12px 14px;
+    border-radius: 24px;
+  }
+
+  .hud-top-actions {
+    top: 12px;
+    right: 12px;
+    gap: 8px;
+  }
+
+  .hud-icon-button {
+    width: 36px;
+    height: 36px;
+    font-size: 0.95rem;
+  }
+
+  .hud-header {
+    gap: 8px;
+    padding: 46px 4px 0;
+  }
+
+  .hud-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+  }
+
+  .hud-mood {
+    font-size: 0.98rem;
+  }
+
+  .hud-main {
+    gap: 14px;
+    padding: 4px 4px 0;
+  }
+
+  .hud-center {
+    gap: 10px;
+  }
+
+  .hud-amount-line {
+    gap: 8px;
+  }
+
+  .hud-currency-symbol {
+    font-size: 1.3rem;
+  }
+
+  .hud-amount {
+    font-size: clamp(2.6rem, 10vw, 4.6rem);
+  }
+
+  .hud-percent {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+  }
+
+  .hud-metrics {
+    gap: 8px;
+  }
+
+  .hud-metric {
+    padding: 10px 12px;
+    border-radius: 16px;
+  }
+
+  .hud-metric-label {
+    letter-spacing: 0.14em;
+  }
+
+  .hud-metric-value {
+    font-size: 1rem;
+  }
+
+  .hud-controls {
+    padding: 14px 0 0;
+  }
+
+  .settings-metric {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .settings-metric-control {
+    justify-content: flex-start;
+    min-width: 0;
+  }
+
+  .settings-metric-control .hud-control-input {
+    min-width: 0;
+  }
+
+  .settings-metric-control .hud-sensitive.hud-control-input {
+    min-width: 0;
+  }
+
+  .hud-sensitive {
+    padding-right: 66px;
+  }
+
+  .hud-privacy-toggle {
+    right: 8px;
+    min-width: 52px;
+  }
+
+  .hud-weekdays {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .hud-weekday {
+    min-height: 42px;
+    border-radius: 14px;
   }
 }
