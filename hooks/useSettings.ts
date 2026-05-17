@@ -4,6 +4,8 @@ export type Settings = {
   startTime: string // ISO time like '09:00'
   endTime: string
   breakMinutes: number
+  workDays: number[] // 0..6 (Sun..Sat)
+  payLocked?: boolean
   salaryType: 'hourly' | 'daily' | 'weekly' | 'fortnightly' | 'monthly' | 'annually'
   salaryAmount: number
   currency?: string
@@ -15,6 +17,8 @@ const defaultSettings: Settings = {
   startTime: '09:00',
   endTime: '17:00',
   breakMinutes: 0,
+  workDays: [1, 2, 3, 4, 5],
+  payLocked: false,
   salaryType: 'hourly',
   salaryAmount: 0,
   currency: 'AUD',
