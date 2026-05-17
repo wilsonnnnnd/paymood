@@ -1,15 +1,5 @@
 [
     {
-        "path": "package.json",
-        "roleSummary": "Package metadata, scripts, and CLI binary configuration.",
-        "exports": [],
-        "keySymbols": [],
-        "imports": [],
-        "calls": [],
-        "risks": [],
-        "updatedAt": "2026-05-10T08:56:09.264Z"
-    },
-    {
         "path": "AGENTS.md",
         "roleSummary": "Project file relevant to repository structure.",
         "exports": [],
@@ -18,5 +8,475 @@
         "calls": [],
         "risks": [],
         "updatedAt": "2026-05-10T08:56:09.223Z"
+    },
+    {
+        "path": "app/layout.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.195Z"
+    },
+    {
+        "path": "app/page.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-10T14:11:18.981Z"
+    },
+    {
+        "path": "app/settings/page.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T03:50:27.789Z"
+    },
+    {
+        "path": "components/CircularProgress.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T03:50:27.799Z"
+    },
+    {
+        "path": "components/ColorModeToggle.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T03:51:57.422Z"
+    },
+    {
+        "path": "components/Dashboard.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T03:58:02.893Z"
+    },
+    {
+        "path": "components/pet/AmbientPet.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:10:10.190Z"
+    },
+    {
+        "path": "components/pet/FloatingPet.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.195Z"
+    },
+    {
+        "path": "components/pet/PetAvatar.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.234Z"
+    },
+    {
+        "path": "components/pet/PetBubble.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.234Z"
+    },
+    {
+        "path": "components/pet/PetMessageBubble.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.019Z"
+    },
+    {
+        "path": "components/pet/PetSprite.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:03:02.325Z"
+    },
+    {
+        "path": "components/SettingsForm.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.234Z"
+    },
+    {
+        "path": "components/ThemeSync.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T03:50:27.799Z"
+    },
+    {
+        "path": "content/pet/messages/hover/default.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.195Z"
+    },
+    {
+        "path": "content/pet/messages/hover/index.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.234Z"
+    },
+    {
+        "path": "content/pet/messages/hover/nearOffwork.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.234Z"
+    },
+    {
+        "path": "content/pet/messages/hover/night.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.195Z"
+    },
+    {
+        "path": "content/pet/messages/hover/offwork.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.195Z"
+    },
+    {
+        "path": "content/pet/messages/hover/working.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.017Z"
+    },
+    {
+        "path": "content/pet/messages/moods/excited.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.021Z"
+    },
+    {
+        "path": "content/pet/messages/moods/happy.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.029Z"
+    },
+    {
+        "path": "content/pet/messages/moods/idle.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.195Z"
+    },
+    {
+        "path": "content/pet/messages/moods/index.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.234Z"
+    },
+    {
+        "path": "content/pet/messages/moods/offwork.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.042Z"
+    },
+    {
+        "path": "content/pet/messages/moods/sleepy.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.195Z"
+    },
+    {
+        "path": "content/pet/messages/moods/tired.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.195Z"
+    },
+    {
+        "path": "content/pet/messages/moods/working.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:13:36.317Z"
+    },
+    {
+        "path": "global.d.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-10T14:56:21.520Z"
+    },
+    {
+        "path": "hooks/useClock.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-10T14:35:37.620Z"
+    },
+    {
+        "path": "hooks/usePetMessage.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.195Z"
+    },
+    {
+        "path": "hooks/usePetMood.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.234Z"
+    },
+    {
+        "path": "hooks/usePetWalker.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.234Z"
+    },
+    {
+        "path": "hooks/useSettings.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.195Z"
+    },
+    {
+        "path": "lib/earnings.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T03:50:27.816Z"
+    },
+    {
+        "path": "lib/pet/getPetMood.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.234Z"
+    },
+    {
+        "path": "lib/pet/petMessages.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.234Z"
+    },
+    {
+        "path": "lib/pet/petMoodRules.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:08:46.060Z"
+    },
+    {
+        "path": "next-env.d.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-10T09:33:15.616Z"
+    },
+    {
+        "path": "next.config.js",
+        "roleSummary": "Project configuration file.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-10T09:30:05.715Z"
+    },
+    {
+        "path": "package.json",
+        "roleSummary": "Package metadata, scripts, and CLI binary configuration.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.195Z"
+    },
+    {
+        "path": "postcss.config.cjs",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.195Z"
+    },
+    {
+        "path": "README.md",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:31:52.566Z"
+    },
+    {
+        "path": "tailwind.config.cjs",
+        "roleSummary": "Project configuration file.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-10T09:30:05.715Z"
+    },
+    {
+        "path": "test/earnings.test.ts",
+        "roleSummary": "Automated test coverage for CLI behavior.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T03:50:27.847Z"
+    },
+    {
+        "path": "test/petMoodRules.test.ts",
+        "roleSummary": "Automated test coverage for CLI behavior.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T06:47:11.234Z"
+    },
+    {
+        "path": "tsconfig.json",
+        "roleSummary": "Project configuration file.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-10T09:33:15.614Z"
     }
 ]

@@ -1,18 +1,386 @@
 [
     {
-        "path": "package.json",
-        "type": "config",
-        "description": "Package metadata, scripts, and CLI binary configuration.",
-        "updatedAt": "2026-05-10T08:56:09.264Z",
-        "confidence": 0.85,
-        "source": "heuristic"
-    },
-    {
         "path": "AGENTS.md",
         "type": "other",
         "description": "Project file relevant to repository structure.",
         "updatedAt": "2026-05-10T08:56:09.223Z",
         "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "app/layout.tsx",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.195Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "app/page.tsx",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-10T14:11:18.981Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "app/settings/page.tsx",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T03:50:27.789Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "components/CircularProgress.tsx",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T03:50:27.799Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "components/ColorModeToggle.tsx",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T03:51:57.422Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "components/Dashboard.tsx",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T03:58:02.893Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "components/pet/AmbientPet.tsx",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:10:10.190Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "components/pet/FloatingPet.tsx",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.195Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "components/pet/PetAvatar.tsx",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.234Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "components/pet/PetBubble.tsx",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.234Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "components/pet/PetMessageBubble.tsx",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.019Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "components/pet/PetSprite.tsx",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:03:02.325Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "components/SettingsForm.tsx",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.234Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "components/ThemeSync.tsx",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T03:50:27.799Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "content/pet/messages/hover/default.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.195Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "content/pet/messages/hover/index.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.234Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "content/pet/messages/hover/nearOffwork.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.234Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "content/pet/messages/hover/night.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.195Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "content/pet/messages/hover/offwork.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.195Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "content/pet/messages/hover/working.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.017Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "content/pet/messages/moods/excited.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.021Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "content/pet/messages/moods/happy.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.029Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "content/pet/messages/moods/idle.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.195Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "content/pet/messages/moods/index.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.234Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "content/pet/messages/moods/offwork.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.042Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "content/pet/messages/moods/sleepy.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.195Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "content/pet/messages/moods/tired.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.195Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "content/pet/messages/moods/working.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:13:36.317Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "global.d.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-10T14:56:21.520Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "hooks/useClock.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-10T14:35:37.620Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "hooks/usePetMessage.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.195Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "hooks/usePetMood.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.234Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "hooks/usePetWalker.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.234Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "hooks/useSettings.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.195Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "lib/earnings.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T03:50:27.816Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "lib/pet/getPetMood.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.234Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "lib/pet/petMessages.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.234Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "lib/pet/petMoodRules.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:08:46.060Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "next-env.d.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-10T09:33:15.616Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "next.config.js",
+        "type": "config",
+        "description": "Project configuration file.",
+        "updatedAt": "2026-05-10T09:30:05.715Z",
+        "confidence": 0.85,
+        "source": "heuristic"
+    },
+    {
+        "path": "package.json",
+        "type": "config",
+        "description": "Package metadata, scripts, and CLI binary configuration.",
+        "updatedAt": "2026-05-17T06:47:11.195Z",
+        "confidence": 0.85,
+        "source": "heuristic"
+    },
+    {
+        "path": "postcss.config.cjs",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:47:11.195Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "README.md",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-17T06:31:52.566Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "tailwind.config.cjs",
+        "type": "config",
+        "description": "Project configuration file.",
+        "updatedAt": "2026-05-10T09:30:05.715Z",
+        "confidence": 0.85,
+        "source": "heuristic"
+    },
+    {
+        "path": "test/earnings.test.ts",
+        "type": "test",
+        "description": "Automated test coverage for CLI behavior.",
+        "updatedAt": "2026-05-17T03:50:27.847Z",
+        "confidence": 0.75,
+        "source": "heuristic"
+    },
+    {
+        "path": "test/petMoodRules.test.ts",
+        "type": "test",
+        "description": "Automated test coverage for CLI behavior.",
+        "updatedAt": "2026-05-17T06:47:11.234Z",
+        "confidence": 0.75,
+        "source": "heuristic"
+    },
+    {
+        "path": "tsconfig.json",
+        "type": "config",
+        "description": "Project configuration file.",
+        "updatedAt": "2026-05-10T09:33:15.614Z",
+        "confidence": 0.85,
         "source": "heuristic"
     }
 ]

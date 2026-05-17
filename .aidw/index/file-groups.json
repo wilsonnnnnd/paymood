@@ -1,11 +1,78 @@
 [
     {
         "path": ".",
-        "fileCount": 2,
+        "fileCount": 9,
         "summary": "Repository root files and package metadata.",
         "keyFiles": [
+            "next.config.js",
             "package.json",
-            "AGENTS.md"
+            "tailwind.config.cjs"
+        ]
+    },
+    {
+        "path": "components",
+        "fileCount": 11,
+        "summary": "Reusable UI components.",
+        "keyFiles": [
+            "components/CircularProgress.tsx",
+            "components/ColorModeToggle.tsx",
+            "components/Dashboard.tsx"
+        ]
+    },
+    {
+        "path": "app/settings",
+        "fileCount": 1,
+        "summary": "Project files grouped by directory.",
+        "keyFiles": [
+            "app/settings/page.tsx"
+        ]
+    },
+    {
+        "path": "test",
+        "fileCount": 2,
+        "summary": "Automated tests and regression coverage.",
+        "keyFiles": [
+            "test/earnings.test.ts",
+            "test/petMoodRules.test.ts"
+        ]
+    },
+    {
+        "path": "content",
+        "fileCount": 14,
+        "summary": "Project files grouped by directory.",
+        "keyFiles": [
+            "content/pet/messages/hover/default.ts",
+            "content/pet/messages/hover/index.ts",
+            "content/pet/messages/hover/nearOffwork.ts"
+        ]
+    },
+    {
+        "path": "hooks",
+        "fileCount": 5,
+        "summary": "Project files grouped by directory.",
+        "keyFiles": [
+            "hooks/useClock.ts",
+            "hooks/usePetMessage.ts",
+            "hooks/usePetMood.ts"
+        ]
+    },
+    {
+        "path": "lib",
+        "fileCount": 4,
+        "summary": "Project files grouped by directory.",
+        "keyFiles": [
+            "lib/earnings.ts",
+            "lib/pet/getPetMood.ts",
+            "lib/pet/petMessages.ts"
+        ]
+    },
+    {
+        "path": "app",
+        "fileCount": 2,
+        "summary": "Python backend application package.",
+        "keyFiles": [
+            "app/layout.tsx",
+            "app/page.tsx"
         ]
     }
 ]

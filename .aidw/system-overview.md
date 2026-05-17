@@ -8,7 +8,8 @@ This file summarizes the AI-readable context system for this repository.
 
 ## Context Sources
 
-- `.aidw/project.md` - status: present - Generated project summary and durable manual notes
+- `PROJECT.md` - status: present - Human-owned project brief and requirements
+- `.aidw/AI_project.md` - status: present - Generated AI project context compiled from scan data and PROJECT.md
 - `.aidw/index/summary.json` - status: present - Scan metadata and index counts
 - `.aidw/index/entrypoints.json` - status: present - Detected CLI, app, and execution entry points
 - `.aidw/index/file-groups.json` - status: present - Directory-level groups and key files
@@ -19,8 +20,9 @@ This file summarizes the AI-readable context system for this repository.
 ## Rule Sources
 
 - `AGENTS.md` - status: present - Main AI workflow entry point
+- `PROJECT.md` - status: present - Human-owned project purpose, stack, and requirements
 - `.aidw/rules.md` - status: present - Repository engineering rules and constraints
-- `.aidw/confirmation-protocol.md` - status: present - Click-to-confirm execution protocol and output templates
+- `.aidw/confirmation-protocol.md` - status: present - Click-to-confirm execution protocol and compact presentation rules
 - `.aidw/workflow.md` - status: present - Standard AI-assisted development workflow
 - `.aidw/safety.md` - status: present - Protected areas and AI change safety rules
 - `.aidw/lessons.json` - status: present - Learned hard-blocking rules derived from recent failures
@@ -75,21 +77,18 @@ This file summarizes the AI-readable context system for this repository.
 ## Execution Loop (Optional)
 
 - `.aidw/confirmation-gate.json` - status: missing - Local gate state for task/test confirmations (runtime file)
-- `.aidw/context-loop.jsonl` - status: missing - Append-only context loop log for recent confirmations and test runs (runtime file)
+- `.aidw/context-loop.jsonl` - status: present - Append-only context loop log for recent confirmations and test runs (runtime file)
 - `.aidw/context-cache.md` - status: missing - Cached token-efficient brief context output (runtime file)
-- `repo-context-kit loop report` - status: missing - Summarize constraints and derived patterns from recent loop events
-- `repo-context-kit scan --plan` - status: missing - Preview scan writes before running scan (no writes)
-- `repo-context-kit learn ingest` - status: missing - Derive lessons from recent failures into .aidw/lessons.pending.json
-- `repo-context-kit learn approve` - status: missing - Apply pending lessons into .aidw/lessons.json
+- `repo-context-kit metrics` - status: missing - Print compact runtime metrics JSON
 - `repo-context-kit check` - status: missing - Run checks derived from lessons (blocker rules fail by default)
-- `repo-context-kit decision explain` - status: missing - Explain recent automatic decisions (budget/output expansion)
 
 ## Recommended AI Workflow
 
 1. Read AGENTS.md first.
-2. Read .aidw/project.md for project context.
-3. Read .aidw/rules.md for repository rules.
-4. Read .aidw/system-overview.md to understand available context sources.
-5. Read the current task file before making changes.
-6. Use .aidw/index/* files to locate relevant code.
-7. Preserve project structure and update tests.
+2. Read PROJECT.md for human project intent.
+3. Read .aidw/AI_project.md for generated AI context.
+4. Read .aidw/rules.md for repository rules.
+5. Read .aidw/system-overview.md to understand available context sources.
+6. Read the current task file before making changes.
+7. Use .aidw/index/* files to locate relevant code.
+8. Preserve project structure and update tests.

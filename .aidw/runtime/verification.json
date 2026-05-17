@@ -1,0 +1,26 @@
+{
+    "generatedAt": "2026-05-17T06:47:56.470Z",
+    "kind": "verification",
+    "payload": {
+        "requiredChecks": [
+            "scan --check",
+            "check"
+        ],
+        "taskHealth": {
+            "count": 0,
+            "withAcceptanceCriteria": 0,
+            "withDefinitionOfDone": 0,
+            "withTestCommand": 0
+        },
+        "warnings": []
+    },
+    "schemaVersion": "runtime/v1",
+    "source": {
+        "generatedBy": "repo-context-kit scan",
+        "inputs": [
+            "task/task.md",
+            "task/*.md",
+            ".aidw/rules-canonical.md"
+        ]
+    }
+}

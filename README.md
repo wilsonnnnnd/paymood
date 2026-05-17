@@ -13,13 +13,13 @@ npm install
 2. Run development server:
 
 ```bash
-npm run dev
+npx next dev
 ```
 
 3. Run tests:
 
 ```bash
-npm run test
+npx vitest --run
 ```
 
 Notes

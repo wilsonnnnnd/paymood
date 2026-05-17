@@ -2,6 +2,7 @@
     {
         "task": "update project documentation",
         "files": [
+            "README.md",
             "AGENTS.md",
             "skill.md"
         ],

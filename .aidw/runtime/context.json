@@ -1,0 +1,315 @@
+{
+    "generatedAt": "2026-05-17T06:47:56.470Z",
+    "kind": "context",
+    "payload": {
+        "entrypoints": [],
+        "fileGroups": [
+            {
+                "description": "",
+                "label": "."
+            },
+            {
+                "description": "",
+                "label": "components"
+            },
+            {
+                "description": "",
+                "label": "app/settings"
+            },
+            {
+                "description": "",
+                "label": "test"
+            },
+            {
+                "description": "",
+                "label": "content"
+            },
+            {
+                "description": "",
+                "label": "hooks"
+            },
+            {
+                "description": "",
+                "label": "lib"
+            },
+            {
+                "description": "",
+                "label": "app"
+            }
+        ],
+        "index": {
+            "fileGroups": 8,
+            "indexedFiles": 48,
+            "indexedSymbols": 0,
+            "truncated": false
+        },
+        "projectType": "web-app",
+        "riskAreas": [
+            "routing and page entry points affect navigation and screen-level behavior",
+            "shared layout wrappers can impact many routes at once",
+            "global styles and spacing tokens can create broad visual regressions"
+        ],
+        "techStack": [
+            "npm package",
+            "ESM",
+            "TypeScript",
+            "Next.js",
+            "Tailwind CSS",
+            "Vitest",
+            "ESLint",
+            "Prettier"
+        ],
+        "topFiles": [
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "AGENTS.md",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "app/layout.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "app/page.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "app/settings/page.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/CircularProgress.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/ColorModeToggle.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/Dashboard.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/pet/AmbientPet.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/pet/FloatingPet.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/pet/PetAvatar.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/pet/PetBubble.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/pet/PetMessageBubble.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/pet/PetSprite.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/SettingsForm.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/ThemeSync.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "content/pet/messages/hover/default.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "content/pet/messages/hover/index.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "content/pet/messages/hover/nearOffwork.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "content/pet/messages/hover/night.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "content/pet/messages/hover/offwork.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "content/pet/messages/hover/working.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "content/pet/messages/moods/excited.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "content/pet/messages/moods/happy.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "content/pet/messages/moods/idle.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "content/pet/messages/moods/index.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "content/pet/messages/moods/offwork.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "content/pet/messages/moods/sleepy.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "content/pet/messages/moods/tired.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "content/pet/messages/moods/working.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "global.d.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "hooks/useClock.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "hooks/usePetMessage.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "hooks/usePetMood.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "hooks/usePetWalker.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "hooks/useSettings.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "lib/earnings.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "lib/pet/getPetMood.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "lib/pet/petMessages.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "lib/pet/petMoodRules.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "next-env.d.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project configuration file.",
+                "path": "next.config.js",
+                "type": "config"
+            },
+            {
+                "description": "Package metadata, scripts, and CLI binary configuration.",
+                "path": "package.json",
+                "type": "config"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "postcss.config.cjs",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "README.md",
+                "type": "other"
+            },
+            {
+                "description": "Project configuration file.",
+                "path": "tailwind.config.cjs",
+                "type": "config"
+            },
+            {
+                "description": "Automated test coverage for CLI behavior.",
+                "path": "test/earnings.test.ts",
+                "type": "test"
+            },
+            {
+                "description": "Automated test coverage for CLI behavior.",
+                "path": "test/petMoodRules.test.ts",
+                "type": "test"
+            },
+            {
+                "description": "Project configuration file.",
+                "path": "tsconfig.json",
+                "type": "config"
+            }
+        ]
+    },
+    "schemaVersion": "runtime/v1",
+    "source": {
+        "generatedBy": "repo-context-kit scan",
+        "inputs": [
+            ".aidw/index/summary.json",
+            ".aidw/index/files.json",
+            ".aidw/index/entrypoints.json",
+            ".aidw/index/file-groups.json"
+        ]
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "generatedAt": "2026-05-17T06:47:56.470Z",
+    "kind": "task",
+    "payload": {
+        "registryPath": "task/task.md",
+        "tasks": []
+    },
+    "schemaVersion": "runtime/v1",
+    "source": {
+        "generatedBy": "repo-context-kit scan",
+        "inputs": [
+            "task/task.md",
+            "task/*.md",
+            ".aidw/context/tasks.json"
+        ]
+    }
+}

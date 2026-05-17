@@ -4,12 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
-    "test": "vitest",
-    "format": "prettier --write ."
+    "dev": "npx next dev",
+    "build": "npx next build",
+    "start": "npx next start",
+    "lint": "npx eslint . --ext .ts,.tsx,.js,.jsx",
+    "test": "npx vitest",
+    "format": "npx prettier --write ."
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
