@@ -37,6 +37,15 @@ const colorModes: NonNullable<Settings['colorMode']>[] = ['system', 'light', 'da
 const petVariants: NonNullable<Settings['petVariant']>[] = ['aqua', 'undead', 'magma']
 const currencies = ['AUD', 'CNY']
 
+const salaryBoundsByType: Record<Settings['salaryType'], { min: number; max: number }> = {
+  hourly: { min: 0, max: 10_000 },
+  daily: { min: 0, max: 100_000 },
+  weekly: { min: 0, max: 500_000 },
+  fortnightly: { min: 0, max: 1_000_000 },
+  monthly: { min: 0, max: 2_000_000 },
+  annually: { min: 0, max: 10_000_000 },
+}
+
 function normalizeTime(value: unknown, fallback: string) {
   if (typeof value !== 'string') return fallback
   const parts = value.split(':')
@@ -69,11 +78,16 @@ function normalizeWorkDays(value: unknown, fallback: number[]) {
 
 function sanitizeSettings(input: unknown): Settings {
   const raw = (input ?? {}) as any
-  const salaryType = salaryTypes.includes(raw.salaryType) ? raw.salaryType : defaultSettings.salaryType
-  const salaryAmount = normalizeNumber(raw.salaryAmount, defaultSettings.salaryAmount, { min: 0 })
+  const salaryType: Settings['salaryType'] = salaryTypes.includes(raw.salaryType)
+    ? (raw.salaryType as Settings['salaryType'])
+    : defaultSettings.salaryType
+  const salaryBounds = salaryBoundsByType[salaryType] ?? salaryBoundsByType[defaultSettings.salaryType]
+  const salaryAmount = normalizeNumber(raw.salaryAmount, defaultSettings.salaryAmount, salaryBounds)
   const currency = currencies.includes(String(raw.currency ?? '').toUpperCase())
     ? String(raw.currency).toUpperCase()
     : defaultSettings.currency
+  const payLocked =
+    typeof raw.payLocked === 'boolean' ? raw.payLocked : typeof raw.payLocked === 'undefined' ? salaryAmount > 0 : false
 
   return {
     ...defaultSettings,
@@ -81,7 +95,7 @@ function sanitizeSettings(input: unknown): Settings {
     endTime: normalizeTime(raw.endTime, defaultSettings.endTime),
     breakMinutes: normalizeNumber(raw.breakMinutes, defaultSettings.breakMinutes, { min: 0, max: 24 * 60 }),
     workDays: normalizeWorkDays(raw.workDays, defaultSettings.workDays),
-    payLocked: Boolean(raw.payLocked) && salaryAmount > 0,
+    payLocked,
     themePreset: themePresets.includes(raw.themePreset) ? raw.themePreset : defaultSettings.themePreset,
     colorMode: colorModes.includes(raw.colorMode) ? raw.colorMode : defaultSettings.colorMode,
     petVariant: petVariants.includes(raw.petVariant) ? raw.petVariant : defaultSettings.petVariant,
@@ -119,7 +133,9 @@ export function useSettings() {
     }
 
     const onCustom = () => {
-      setSettings(readFromStorage())
+      setTimeout(() => {
+        setSettings(readFromStorage())
+      }, 0)
     }
 
     window.addEventListener('storage', onStorage)
@@ -148,7 +164,9 @@ export function useSettings() {
         // ignore
       }
       try {
-        window.dispatchEvent(new Event(SETTINGS_EVENT))
+        setTimeout(() => {
+          window.dispatchEvent(new Event(SETTINGS_EVENT))
+        }, 0)
       } catch (e) {
         // ignore
       }

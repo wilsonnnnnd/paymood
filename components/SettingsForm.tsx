@@ -2,6 +2,18 @@
 import React, { useEffect, useState } from 'react'
 import { useSettings } from '../hooks/useSettings'
 import type { Settings } from '../hooks/useSettings'
+import ConfirmModal from './ui/ConfirmModal'
+import {
+  SettingAction,
+  SettingDescription,
+  SettingGroup,
+  SettingInput,
+  SettingRow,
+  SettingSection,
+  SettingSelect,
+  SettingTimeInput,
+  SettingToggle,
+} from './settings'
 
 import slime1Idle from '../craftpix/PNG/Slime1/With_shadow/Slime1_Idle_with_shadow.png'
 import slime2Idle from '../craftpix/PNG/Slime2/With_shadow/Slime2_Idle_with_shadow.png'
@@ -12,16 +24,68 @@ type Props = {
   updateSettings?: (patch: Partial<Settings>) => void
 }
 
+const salaryBounds = {
+  hourly: { min: 0, max: 10_000 },
+  daily: { min: 0, max: 100_000 },
+  weekly: { min: 0, max: 500_000 },
+  fortnightly: { min: 0, max: 1_000_000 },
+  monthly: { min: 0, max: 2_000_000 },
+  annually: { min: 0, max: 10_000_000 },
+} satisfies Record<Settings['salaryType'], { min: number; max: number }>
+
+const salaryTypeOptions: Array<{ value: Settings['salaryType']; label: string }> = [
+  { value: 'hourly', label: '时薪' },
+  { value: 'daily', label: '日薪' },
+  { value: 'weekly', label: '周薪' },
+  { value: 'fortnightly', label: '双周薪' },
+  { value: 'monthly', label: '月薪' },
+  { value: 'annually', label: '年薪' },
+]
+
+function PetIcon({ sheet }: { sheet: { height: number; width: number; src: string } }) {
+  const rowCount = 4
+  const frameSize = Math.floor(sheet.height / rowCount)
+  const size = 40
+  const scale = size / frameSize
+  return (
+    <span
+      aria-hidden="true"
+      className="block"
+      style={{
+        width: size,
+        height: size,
+        backgroundImage: `url(${sheet.src})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: `${sheet.width * scale}px ${sheet.height * scale}px`,
+        backgroundPosition: '0px 0px',
+      }}
+    />
+  )
+}
+
 export default function SettingsForm(props: Props) {
   const localSettings = useSettings()
   const settings = props.settings ?? localSettings.settings
   const updateSettings = props.updateSettings ?? localSettings.updateSettings
-  const [showPaySeed, setShowPaySeed] = useState(false)
-  const workDays = settings.workDays ?? []
-  const payLocked = settings.payLocked === true || (settings.salaryAmount ?? 0) > 0
+  const [salaryDraft, setSalaryDraft] = useState('')
+  const [salaryTypeDraft, setSalaryTypeDraft] = useState<Settings['salaryType']>(() => settings.salaryType ?? 'hourly')
+  const [salaryConfirmOpen, setSalaryConfirmOpen] = useState(false)
   const [prefersDark, setPrefersDark] = useState(false)
+
+  const workDays = settings.workDays ?? []
+  const payLocked = settings.payLocked === true
   const colorMode = settings.colorMode ?? 'system'
   const petVariant = settings.petVariant ?? 'aqua'
+  const salaryAmountNumber = Number(salaryDraft)
+  const activeSalaryBounds = salaryBounds[salaryTypeDraft]
+  const salaryDraftValid =
+    Number.isFinite(salaryAmountNumber) && salaryAmountNumber > 0 && salaryAmountNumber <= activeSalaryBounds.max
+
+  useEffect(() => {
+    if (payLocked) return
+    setSalaryDraft('')
+    setSalaryTypeDraft(settings.salaryType ?? 'hourly')
+  }, [payLocked, settings.salaryType])
 
   useEffect(() => {
     if (typeof window === 'undefined' || !('matchMedia' in window)) return
@@ -32,43 +96,8 @@ export default function SettingsForm(props: Props) {
     return () => media.removeEventListener('change', handler)
   }, [])
 
-  const effectiveDark = colorMode === 'dark' || (colorMode === 'system' && prefersDark)
   const colorModeLabel =
-    colorMode === 'system'
-      ? prefersDark
-        ? '跟随系统（深色）'
-        : '跟随系统（浅色）'
-      : colorMode === 'light'
-      ? '浅色'
-      : '深色'
-
-  const MetricRow = ({ label, children }: { label: string; children: React.ReactNode }) => (
-    <div className="hud-metric settings-metric">
-      <span className="hud-metric-label">{label}</span>
-      <div className="settings-metric-control">{children}</div>
-    </div>
-  )
-
-  const PetIcon = ({ sheet }: { sheet: typeof slime1Idle }) => {
-    const rowCount = 4
-    const frameSize = Math.floor(sheet.height / rowCount)
-    const size = 40
-    const scale = size / frameSize
-    return (
-      <span
-        aria-hidden="true"
-        className="block"
-        style={{
-          width: size,
-          height: size,
-          backgroundImage: `url(${sheet.src})`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: `${sheet.width * scale}px ${sheet.height * scale}px`,
-          backgroundPosition: '0px 0px',
-        }}
-      />
-    )
-  }
+    colorMode === 'system' ? (prefersDark ? '跟随系统（深色）' : '跟随系统（浅色）') : colorMode === 'light' ? '浅色' : '深色'
 
   const weekdayChoices = [
     { label: '一', value: 1 },
@@ -80,162 +109,161 @@ export default function SettingsForm(props: Props) {
     { label: '日', value: 0 },
   ]
 
+  const saveSalary = () => {
+    if (!salaryDraftValid) return
+    updateSettings({ salaryType: salaryTypeDraft, salaryAmount: salaryAmountNumber, payLocked: true })
+    setSalaryDraft('')
+  }
+
   return (
-    <form className="settings-metric-list">
-      <MetricRow label="主题模式">
-        <span className="settings-metric-value">{colorModeLabel}</span>
-      </MetricRow>
+    <>
+      <form className="settings-system" aria-label="设置表单">
+        <SettingSection title="Workspace" description="让界面保持安静，只在需要时给你一点回应。" tone="quiet">
+          <SettingRow label="主题模式" description="当前颜色模式会跟随系统或固定为你选择的状态。" value={colorModeLabel} />
 
-      <MetricRow label="宠物">
-        <div className="flex items-center gap-2">
-          {[
-            { key: 'aqua' as const, label: 'Aqua Slime', sheet: slime1Idle },
-            { key: 'undead' as const, label: 'Undead Slime', sheet: slime2Idle },
-            { key: 'magma' as const, label: 'Magma Slime', sheet: slime3Idle },
-          ].map((item) => {
-            const selected = petVariant === item.key
-            return (
-              <button
-                key={item.key}
-                type="button"
-                aria-label={item.label}
-                aria-pressed={selected}
-                onClick={() => updateSettings({ petVariant: item.key })}
-                className={[
-                  'grid h-12 w-12 place-items-center rounded-2xl border',
-                  'bg-[var(--surface-strong)] backdrop-blur-xl',
-                  selected
-                    ? 'border-[color:var(--accent)] shadow-[0_0_0_1px_rgba(245,158,11,0.35),_0_16px_36px_var(--accent-glow)]'
-                    : 'border-[var(--border)]',
-                ].join(' ')}
-              >
-                <PetIcon sheet={item.sheet} />
-              </button>
-            )
-          })}
-        </div>
-      </MetricRow>
-
-      <MetricRow label="上班时间">
-        <input
-          className="hud-control-input"
-          value={settings.startTime}
-          onChange={(e) => updateSettings({ startTime: e.target.value })}
-          type="time"
-        />
-      </MetricRow>
-
-      <MetricRow label="下班时间">
-        <input
-          className="hud-control-input"
-          value={settings.endTime}
-          onChange={(e) => updateSettings({ endTime: e.target.value })}
-          type="time"
-        />
-      </MetricRow>
-
-      <MetricRow label="休息（分钟）">
-        <input
-          className="hud-control-input"
-          value={String(settings.breakMinutes)}
-          onChange={(e) => updateSettings({ breakMinutes: Number(e.target.value) || 0 })}
-          type="number"
-          min={0}
-          inputMode="numeric"
-        />
-      </MetricRow>
-
-      {payLocked ? (
-        <MetricRow label="薪资">
-          <div className="hud-locked-row">
-            <span className="hud-locked-text">已锁定</span>
-            <button
-              type="button"
-              className="hud-reset"
-              onClick={() => {
-                const ok = window.confirm('要重置薪资吗？这会清空已保存的薪资金额。')
-                if (!ok) return
-                updateSettings({ salaryAmount: 0, salaryType: 'hourly', payLocked: false })
-              }}
-            >
-              重置薪资
-            </button>
-          </div>
-        </MetricRow>
-      ) : (
-        <>
-          <MetricRow label="薪资金额">
-            <div className="hud-sensitive hud-control-input">
-              <input
-                className="hud-control-input-inner"
-                value={String(settings.salaryAmount)}
-                onChange={(e) => {
-                  const next = Number(e.target.value) || 0
-                  updateSettings({ salaryAmount: next, payLocked: next > 0 ? true : false })
-                }}
-                type={showPaySeed ? 'number' : 'password'}
-                inputMode="decimal"
-                min={0}
-              />
-              <button
-                type="button"
-                className="hud-privacy-toggle"
-                onClick={() => setShowPaySeed((current) => !current)}
-              >
-                {showPaySeed ? '隐藏' : '查看'}
-              </button>
+          <SettingRow label="陪伴角色" description="选择一个在工作日里安静陪着你的角色。" density="quiet">
+            <div className="setting-pet-grid">
+              {[
+                { key: 'aqua' as const, label: 'Aqua Slime', sheet: slime1Idle },
+                { key: 'undead' as const, label: 'Undead Slime', sheet: slime2Idle },
+                { key: 'magma' as const, label: 'Magma Slime', sheet: slime3Idle },
+              ].map((item) => (
+                <SettingToggle
+                  key={item.key}
+                  className="setting-pet-choice"
+                  aria-label={item.label}
+                  pressed={petVariant === item.key}
+                  onClick={() => updateSettings({ petVariant: item.key })}
+                >
+                  <PetIcon sheet={item.sheet} />
+                </SettingToggle>
+              ))}
             </div>
-          </MetricRow>
+          </SettingRow>
+        </SettingSection>
 
-          <MetricRow label="薪资类型">
-            <select
-              className="hud-control-input"
-              value={settings.salaryType}
-              onChange={(e) => updateSettings({ salaryType: e.target.value as any })}
+        <SettingSection title="Work rhythm" description="一天的边界和呼吸感。" tone="default">
+          <SettingGroup>
+            <SettingRow label="上班时间">
+              <SettingTimeInput value={settings.startTime} onChange={(e) => updateSettings({ startTime: e.target.value })} />
+            </SettingRow>
+
+            <SettingRow label="下班时间">
+              <SettingTimeInput value={settings.endTime} onChange={(e) => updateSettings({ endTime: e.target.value })} />
+            </SettingRow>
+
+            <SettingRow label="休息时间" description="以分钟计算，会从工作进度里扣除。">
+              <SettingInput
+                value={String(settings.breakMinutes)}
+                onChange={(e) => updateSettings({ breakMinutes: Number(e.target.value) || 0 })}
+                type="number"
+                min={0}
+                inputMode="numeric"
+              />
+            </SettingRow>
+          </SettingGroup>
+
+          <SettingRow label="工作日" description="用于估算周/月收入，不会制造任何提醒。">
+            <div className="setting-weekdays" role="group" aria-label="工作日">
+              {weekdayChoices.map((day) => {
+                const pressed = workDays.includes(day.value)
+                return (
+                  <SettingToggle
+                    key={day.label}
+                    pressed={pressed}
+                    size="compact"
+                    onClick={() => {
+                      const next = pressed ? workDays.filter((d) => d !== day.value) : [...workDays, day.value]
+                      updateSettings({ workDays: next })
+                    }}
+                  >
+                    {day.label}
+                  </SettingToggle>
+                )
+              })}
+            </div>
+          </SettingRow>
+        </SettingSection>
+
+        <SettingSection title="Privacy vault" description="薪资只用于本机估算，保存后不回显具体金额。" tone="vault">
+          {payLocked ? (
+            <SettingGroup density="loose">
+              <div className="setting-vault-state">
+                <div>
+                  <div className="setting-vault-state__label">薪资已保存</div>
+                  <SettingDescription tone="quiet">具体金额已隐藏。若要修改，需要先重置后重新输入。</SettingDescription>
+                </div>
+                <SettingAction
+                  variant="quiet"
+                  onClick={() => {
+                    setSalaryDraft('')
+                    setSalaryTypeDraft('hourly')
+                    updateSettings({ salaryAmount: 0, salaryType: 'hourly', payLocked: false })
+                  }}
+                >
+                  重置薪资
+                </SettingAction>
+              </div>
+              <SettingDescription tone="quiet">数据仅保存在当前设备，不会上传服务器。</SettingDescription>
+              <SettingDescription tone="quiet">清除缓存、隐身模式或更换设备会导致数据丢失。</SettingDescription>
+            </SettingGroup>
+          ) : (
+            <SettingGroup density="loose">
+              <div className="setting-salary-entry">
+                <SettingInput
+                  tone="vault"
+                  value={salaryDraft}
+                  onChange={(e) => setSalaryDraft(e.target.value)}
+                  type="number"
+                  inputMode="decimal"
+                  min={0}
+                  max={activeSalaryBounds.max}
+                  step="any"
+                  placeholder="输入一次"
+                />
+                <SettingSelect
+                  tone="vault"
+                  value={salaryTypeDraft}
+                  onChange={(e) => setSalaryTypeDraft(e.target.value as Settings['salaryType'])}
+                >
+                  {salaryTypeOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </SettingSelect>
+                <SettingAction variant="primary" disabled={!salaryDraftValid} onClick={() => setSalaryConfirmOpen(true)}>
+                  保存
+                </SettingAction>
+              </div>
+              <SettingDescription tone="quiet">保存后将无法再次查看具体薪资金额，只能重置后重新输入。</SettingDescription>
+            </SettingGroup>
+          )}
+        </SettingSection>
+
+        <SettingSection title="Display" description="影响收入展示方式，不改变你的原始薪资设置。" tone="quiet">
+          <SettingRow label="货币">
+            <SettingSelect
+              value={(settings.currency ?? 'AUD').toUpperCase()}
+              onChange={(e) => updateSettings({ currency: e.target.value })}
             >
-              <option value="hourly">时薪</option>
-              <option value="daily">日薪</option>
-              <option value="weekly">周薪</option>
-              <option value="fortnightly">双周薪</option>
-              <option value="monthly">月薪</option>
-              <option value="annually">年薪</option>
-            </select>
-          </MetricRow>
-        </>
-      )}
+              <option value="AUD">澳元（AUD）</option>
+              <option value="CNY">人民币（CNY）</option>
+            </SettingSelect>
+          </SettingRow>
+        </SettingSection>
+      </form>
 
-      <MetricRow label="货币">
-        <select
-          className="hud-control-input"
-          value={(settings.currency ?? 'AUD').toUpperCase()}
-          onChange={(e) => updateSettings({ currency: e.target.value })}
-        >
-          <option value="AUD">澳元（AUD）</option>
-          <option value="CNY">人民币（CNY）</option>
-        </select>
-      </MetricRow>
-
-      <MetricRow label="工作日">
-        <div className="hud-weekdays" role="group" aria-label="工作日">
-          {weekdayChoices.map((day) => {
-            const pressed = workDays.includes(day.value)
-            return (
-              <button
-                key={day.label}
-                type="button"
-                className="hud-weekday"
-                aria-pressed={pressed}
-                onClick={() => {
-                  const next = pressed ? workDays.filter((d) => d !== day.value) : [...workDays, day.value]
-                  updateSettings({ workDays: next })
-                }}
-              >
-                {day.label}
-              </button>
-            )
-          })}
-        </div>
-      </MetricRow>
-    </form>
+      <ConfirmModal
+        open={salaryConfirmOpen}
+        onOpenChange={setSalaryConfirmOpen}
+        title="保存薪资到本机"
+        description="保存后具体金额不会在设置页再次显示。之后如需修改，请先重置再重新输入。"
+        confirmText="保存"
+        cancelText="再想想"
+        variant="success"
+        onConfirm={saveSalary}
+      />
+    </>
   )
 }

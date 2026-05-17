@@ -3,9 +3,9 @@ import type { Metadata, Viewport } from 'next'
 import ThemeSync from '../components/ThemeSync'
 import FloatingPet from '../components/pet/FloatingPet'
 import '../styles/globals.css'
-import { Analytics } from '@vercel/analytics/next'
 export const metadata: Metadata = {
-  title: 'Cozy Earnings Dashboard',
+  title: 'PayMood',
+  description: 'paymood.work — a calm workday progress and salary mood dashboard for everyday workers.',
   icons: {
     icon: '/xiaoxing_icon_white_bg.png',
     shortcut: '/xiaoxing_icon_white_bg.png',
@@ -26,7 +26,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeSync />
         {children}
         <FloatingPet />
-        <Analytics />
       </body>
     </html>
   )

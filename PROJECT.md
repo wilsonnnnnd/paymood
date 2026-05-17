@@ -6,33 +6,36 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 
 ## Project Purpose
 
-- TODO
+- Build PayMood (paymood.work): a calm, cozy workday progress + earned income progress dashboard with subtle “salary mood”.
 
 ## Tech Stack
 
-- Language: TODO
-- Framework: TODO
-- Runtime: TODO
-- Package manager: TODO
-- Database: TODO
-- Deployment: TODO
+- Language: TypeScript
+- Framework: Next.js (App Router)
+- Runtime: Browser-first (no backend)
+- Package manager: npm
+- Database: None (localStorage for settings)
+- Deployment: Static-compatible Next.js deploy (e.g. Vercel)
 
 ## Product / Domain Requirements
 
-- TODO
+- Show work time progress, remaining time, and estimated earned amount based on user schedule and pay settings.
+- Keep UI calm, ambient, soft; Apple-like breathing motion; avoid enterprise dashboard tone.
+- Not a game, not a pet-raising product, not an enterprise admin or finance tool.
+- China-friendly: avoid Google fonts/analytics and fragile external resources.
 
 ## Architecture Notes
 
-- Entry points: TODO
-- Important directories: TODO
-- Shared abstractions: TODO
-- Integration boundaries: TODO
+- Entry points: `app/page.tsx` (dashboard), `app/settings/page.tsx` (settings)
+- Important directories: `components/`, `hooks/`, `lib/`, `styles/`
+- Shared abstractions: pure calculation helpers in `lib/`, persistent settings in `hooks/useSettings.ts`
+- Integration boundaries: no external APIs; local-only persistence
 
 ## Development Requirements
 
-- Testing strategy: TODO
-- Definition of done: TODO
-- Review expectations: TODO
+- Testing strategy: vitest for calculation helpers and critical UI logic; keep build green.
+- Definition of done: user can set schedule/pay and see live progress + earned amount; design matches PayMood direction.
+- Review expectations: keep changes minimal, tokenized, responsive, accessible, production-ready.
 
 ## Safety / Boundaries
 

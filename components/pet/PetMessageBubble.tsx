@@ -15,9 +15,9 @@ export default function PetMessageBubble({ visible, text }: { visible: boolean; 
           className={[
             'pointer-events-none',
             'absolute left-1/2 -translate-x-1/2 -top-2 -translate-y-full',
-            'min-w-[100px] max-w-[280px] rounded-2xl border border-[var(--border)]',
-            'bg-[var(--surface)]/90 backdrop-blur-xl shadow-[0_18px_60px_rgba(0,0,0,0.10)]',
-            'px-3 py-2 text-[0.82rem] leading-snug text-[color:var(--text)]',
+            'min-w-25 max-w-70 rounded-2xl border border-(--border-ghost)',
+            'bg-(--surface-raised)/90 backdrop-blur-xl shadow-[0_18px_60px_rgba(0,0,0,0.10)]',
+            'px-3 py-2 text-[0.82rem] leading-snug text-(--text)',
             'select-none',
           ].join(' ')}
           role="status"
@@ -28,7 +28,7 @@ export default function PetMessageBubble({ visible, text }: { visible: boolean; 
             aria-hidden="true"
             className={[
               'absolute left-1/2 -translate-x-1/2 -bottom-1.5 h-3 w-3 rotate-45',
-              'border-r border-b border-[var(--border)] bg-[var(--surface)]/90',
+              'border-r border-b border-(--border-ghost) bg-(--surface-raised)/90',
             ].join(' ')}
             style={{ borderBottomRightRadius: 3 }}
           />

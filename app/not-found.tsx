@@ -11,7 +11,10 @@ export default function NotFound() {
           </Link>
         </div>
         <header className="hud-header">
-          <div className="hud-title">Cozy Earnings Dashboard</div>
+          <div className="hud-title">PayMood</div>
+          <div className="hud-subtitle" aria-label="域名">
+            paymood.work
+          </div>
           <div className="hud-mood" aria-label="状态">
             404
           </div>
@@ -19,7 +22,7 @@ export default function NotFound() {
         <main className="hud-main hud-rest" aria-label="内容">
           <div className="hud-rest-panel">
             <div className="hud-rest-title">页面不在这里。</div>
-            <div className="hud-rest-sub">点右上角返回仪表盘。</div>
+            <div className="hud-rest-sub">点右上角回到仪表盘。</div>
           </div>
         </main>
       </section>

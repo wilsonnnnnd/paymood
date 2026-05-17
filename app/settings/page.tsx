@@ -9,28 +9,34 @@ export default function SettingsPage() {
   const { settings, updateSettings, ready } = useSettings()
 
   return (
-    <main className="app-shell">
-      <section className="hud-shell" aria-label="Settings">
+    <main className="app-shell settings-page">
+      <section className="settings-shell" aria-label="Settings">
+        {/* Top-bar actions — float above the hero */}
         <div className="hud-top-actions" aria-label="顶部操作">
           <ColorModeToggle />
           <Link className="hud-icon-button" href="/" aria-label="返回仪表盘">
             <span aria-hidden="true">←</span>
           </Link>
         </div>
-        <header className="hud-header">
-          <div className="hud-title">Cozy Earnings Dashboard</div>
-          <div className="hud-mood" aria-label="设置状态">
-            {ready ? '设置' : '热身中…'}
+
+        {/* Hero — big, quiet title */}
+        <header className="settings-hero">
+          <div className="settings-hero__eyebrow">PayMood</div>
+          <h1 className="settings-hero__title">{ready ? 'Settings' : 'Warming up…'}</h1>
+          <div className="settings-hero__subtitle" aria-label="域名">
+            paymood.work
           </div>
         </header>
 
-        <main className="hud-controls" aria-label="Controls">
+        {/* Settings system */}
+        <main className="settings-stage" aria-label="设置">
           <SettingsForm settings={settings} updateSettings={updateSettings} />
-          <div className="hud-footnote" aria-label="货币提示">
-            货币从下拉选择（AUD / CNY）。
-          </div>
+          <p className="settings-footnote" aria-label="货币提示">
+            货币与工作时间会影响你的进度与收入展示。
+          </p>
         </main>
       </section>
     </main>
   )
 }
+

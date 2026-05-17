@@ -1,20 +1,23 @@
-# Cozy Earnings Dashboard — UI Style Guide
+# PayMood — UI Style Guide
 
 This document is the source of truth for the product’s UI direction. Read this before adding new UI or changing visuals.
 
-## Product Name (Fixed)
+## Brand
 
-- The product name is `Cozy Earnings Dashboard`.
-- Do not rename it in UI copy, metadata, repository docs, or marketing surfaces.
+- Product name: `PayMood`
+- Domain label: `paymood.work`
+- Positioning: a calm workday progress + earned income progress dashboard with a soft “salary mood”.
 
 ## Product Intent
 
-This is a “workday emotional dashboard” for everyday workers.
+This is a “salary mood dashboard” for everyday workers.
 
 - Not a KPI tool.
 - Not an enterprise dashboard.
 - Not an admin system.
 - Not a dense analytics product.
+- Not a game.
+- Not a pet-raising product.
 
 The UI should feel like a calm digital companion that quietly reflects:
 
@@ -81,10 +84,10 @@ All colors must come from CSS variables in `styles/globals.css`. Do not hardcode
 
 ### Light Theme Targets
 
-- ultra light background
-- warm whites
-- soft blue ambient light
-- frosted glass
+- ultra soft white background
+- cool daylight gradient
+- ambient light (subtle, slow)
+- minimal glass (avoid strong glassmorphism)
 
 ### Dark Theme Targets
 

@@ -148,26 +148,26 @@ function RollingNumber({ value, format = defaultMoneyFormat }: { value: number; 
 }
 
 function moodFor(now: Date, start: Date, end: Date) {
-  if (now.getTime() < start.getTime()) return '系统启动中…'
-  if (now.getTime() >= end.getTime()) return '下班啦。'
+  if (now.getTime() < start.getTime()) return '准备开工。'
+  if (now.getTime() >= end.getTime()) return '可以下班了。'
 
   const hour = now.getHours()
-  if (hour >= 12 && hour < 14) return '充电模式。'
+  if (hour >= 12 && hour < 14) return '午休中。'
 
   const weekday = now.getDay()
   switch (weekday) {
     case 1:
       return '慢慢进入状态。'
     case 2:
-      return '稳定推进。'
+      return '稳一点。'
     case 3:
-      return '周三生存模式。'
+      return '周三。'
     case 4:
-      return '快到啦。'
+      return '快到周五了。'
     case 5:
-      return '逃离速度接近中。'
+      return '准备收工。'
     default:
-      return '默默计算中…'
+      return '今天也在慢慢赚钱。'
   }
 }
 
@@ -191,7 +191,6 @@ export default function Dashboard() {
       })
     : { earned: 0, hourly: 0 }
   const earned = isWorkDay ? dayEarnings.earned : 0
-  const hourly = dayEarnings.hourly
   const week = isReady
     ? earnedSoFarThisWeek(today, {
         startTime: settings.startTime,
@@ -220,7 +219,7 @@ export default function Dashboard() {
   const currencySymbol = currencyCodeToSymbol(settings.currency)
 
   return (
-    <section className="hud-shell" aria-label="Workday emotional dashboard">
+    <section className="hud-shell" aria-label="PayMood 仪表盘">
       <div className="hud-top-actions" aria-label="顶部操作">
         <ColorModeToggle />
         <Link className="hud-icon-button" href="/settings" aria-label="打开设置">
@@ -228,7 +227,10 @@ export default function Dashboard() {
         </Link>
       </div>
       <header className="hud-header">
-        <div className="hud-title">Cozy Earnings Dashboard</div>
+        <div className="hud-title">PayMood</div>
+        <div className="hud-subtitle" aria-label="域名">
+          paymood.work
+        </div>
         <div className="hud-mood" aria-label="状态">
           {mood}
         </div>
@@ -237,8 +239,8 @@ export default function Dashboard() {
       {!isWorkDay ? (
         <main className="hud-main hud-rest" aria-label="休息日">
           <div className="hud-rest-panel">
-            <div className="hud-rest-title">今天不需要打卡。</div>
-            <div className="hud-rest-sub">好好休息一下吧。</div>
+            <div className="hud-rest-title">今天就先休息。</div>
+            <div className="hud-rest-sub">周/月累计还在这里。</div>
           </div>
           <section className="hud-metrics" aria-label="摘要">
             <div className="hud-metric">
@@ -249,15 +251,11 @@ export default function Dashboard() {
               <span className="hud-metric-label">本月</span>
               <span className="hud-metric-value">{totalsFormat.format(month.earned)}</span>
             </div>
-            <div className="hud-metric">
-              <span className="hud-metric-label">时薪</span>
-              <span className="hud-metric-value">{hourly.toFixed(2)}/h</span>
-            </div>
           </section>
         </main>
       ) : (
         <main className="hud-main">
-          <div className="hud-ring-wrap" aria-label="Earnings and progress">
+          <div className="hud-ring-wrap" aria-label="收入与进度">
             <CircularProgress value={prog.progress} size={420} />
             <div className="hud-center">
               <div className="hud-amount-line">
@@ -268,7 +266,9 @@ export default function Dashboard() {
                   <RollingNumber value={earned} />
                 </span>
               </div>
-              <div className="hud-percent">{percent}% 已完成</div>
+              <div className="hud-percent" aria-label="工作进度">
+                {percent}%
+              </div>
             </div>
           </div>
 
@@ -284,10 +284,6 @@ export default function Dashboard() {
             <div className="hud-metric">
               <span className="hud-metric-label">本月</span>
               <span className="hud-metric-value">{totalsFormat.format(month.earned)}</span>
-            </div>
-            <div className="hud-metric">
-              <span className="hud-metric-label">时薪</span>
-              <span className="hud-metric-value">{hourly.toFixed(2)}/h</span>
             </div>
           </section>
         </main>

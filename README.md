@@ -1,6 +1,6 @@
-# Cozy Earnings Dashboard (MVP)
+# PayMood (paymood.work)
 
-This repository contains an in-repo prototype of a browser-first dashboard that shows today’s work progress and estimated earnings.
+PayMood is a browser-first, calm dashboard for everyday workers: workday progress + earned income progress + a soft “salary mood”.
 
 Quick start
 

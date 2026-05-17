@@ -79,9 +79,9 @@ export default function AmbientPet() {
         className={[
           'pointer-events-auto',
           'relative grid place-items-center',
-          'h-[66px] w-[66px] rounded-[22px] sm:h-[76px] sm:w-[76px] sm:rounded-[26px]',
-          'border border-[var(--border)] bg-[var(--surface-strong)] backdrop-blur-xl',
-          'shadow-[0_28px_80px_rgba(0,0,0,0.18)]',
+          'h-16.5 w-16.5 rounded-[22px] sm:h-19 sm:w-19 sm:rounded-[26px]',
+          'border border-(--border-ghost) bg-(--surface-raised) backdrop-blur-xl',
+          'shadow-[0_22px_60px_rgba(0,0,0,0.15)]',
         ].join(' ')}
         animate={
           reduceMotion
@@ -106,7 +106,7 @@ export default function AmbientPet() {
           aria-hidden="true"
           className={[
             'absolute -inset-6 -z-10 rounded-[40px]',
-            'bg-gradient-to-tr from-sky-300/20 via-white/5 to-amber-300/20',
+            'bg-linear-to-tr from-sky-300/20 via-white/5 to-indigo-300/14',
             'blur-2xl',
           ].join(' ')}
           animate={reduceMotion ? undefined : { opacity: [0.45, 0.7, 0.45] }}
