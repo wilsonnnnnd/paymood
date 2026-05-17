@@ -3,6 +3,10 @@ import React, {useEffect, useState} from 'react'
 import {useSettings} from '../hooks/useSettings'
 import type {Settings} from '../hooks/useSettings'
 
+import slime1Idle from '../craftpix/PNG/Slime1/With_shadow/Slime1_Idle_with_shadow.png'
+import slime2Idle from '../craftpix/PNG/Slime2/With_shadow/Slime2_Idle_with_shadow.png'
+import slime3Idle from '../craftpix/PNG/Slime3/With_shadow/Slime3_Idle_with_shadow.png'
+
 type Props = {
   settings?: Settings
   updateSettings?: (patch: Partial<Settings>) => void
@@ -17,6 +21,7 @@ export default function SettingsForm(props: Props) {
   const payLocked = settings.payLocked === true || (settings.salaryAmount ?? 0) > 0
   const [prefersDark, setPrefersDark] = useState(false)
   const colorMode = settings.colorMode ?? 'system'
+  const petVariant = settings.petVariant ?? 'aqua'
 
   useEffect(() => {
     if (typeof window === 'undefined' || !('matchMedia' in window)) return
@@ -38,6 +43,27 @@ export default function SettingsForm(props: Props) {
     </div>
   )
 
+  const PetIcon = ({sheet}: {sheet: typeof slime1Idle}) => {
+    const rowCount = 4
+    const frameSize = Math.floor(sheet.height / rowCount)
+    const size = 40
+    const scale = size / frameSize
+    return (
+      <span
+        aria-hidden="true"
+        className="block"
+        style={{
+          width: size,
+          height: size,
+          backgroundImage: `url(${sheet.src})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: `${sheet.width * scale}px ${sheet.height * scale}px`,
+          backgroundPosition: '0px 0px',
+        }}
+      />
+    )
+  }
+
   const weekdayChoices = [
     {label: '一', value: 1},
     {label: '二', value: 2},
@@ -52,6 +78,34 @@ export default function SettingsForm(props: Props) {
     <form className="settings-metric-list">
       <MetricRow label="主题模式">
         <span className="settings-metric-value">{colorModeLabel}</span>
+      </MetricRow>
+
+      <MetricRow label="宠物">
+        <div className="flex items-center gap-2">
+          {[
+            {key: 'aqua' as const, label: 'Aqua Slime', sheet: slime1Idle},
+            {key: 'undead' as const, label: 'Undead Slime', sheet: slime2Idle},
+            {key: 'magma' as const, label: 'Magma Slime', sheet: slime3Idle},
+          ].map(item => {
+            const selected = petVariant === item.key
+            return (
+              <button
+                key={item.key}
+                type="button"
+                aria-label={item.label}
+                aria-pressed={selected}
+                onClick={() => updateSettings({petVariant: item.key})}
+                className={[
+                  'grid h-12 w-12 place-items-center rounded-2xl border',
+                  'bg-[var(--surface-strong)] backdrop-blur-xl',
+                  selected ? 'border-[color:var(--accent)] shadow-[0_0_0_1px_rgba(245,158,11,0.35),_0_16px_36px_var(--accent-glow)]' : 'border-[var(--border)]',
+                ].join(' ')}
+              >
+                <PetIcon sheet={item.sheet} />
+              </button>
+            )
+          })}
+        </div>
       </MetricRow>
 
       <MetricRow label="上班时间">

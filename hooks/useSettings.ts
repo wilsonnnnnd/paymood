@@ -8,6 +8,7 @@ export type Settings = {
   payLocked?: boolean
   themePreset?: 'cozy' | 'light'
   colorMode?: 'system' | 'light' | 'dark'
+  petVariant?: 'aqua' | 'undead' | 'magma'
   salaryType: 'hourly' | 'daily' | 'weekly' | 'fortnightly' | 'monthly' | 'annually'
   salaryAmount: number
   currency?: string
@@ -24,6 +25,7 @@ const defaultSettings: Settings = {
   payLocked: false,
   themePreset: 'cozy',
   colorMode: 'system',
+  petVariant: 'aqua',
   salaryType: 'hourly',
   salaryAmount: 0,
   currency: 'AUD',

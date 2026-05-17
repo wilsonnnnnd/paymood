@@ -1,8 +1,9 @@
 import React from 'react'
 import type {Metadata} from 'next'
 import ThemeSync from '../components/ThemeSync'
+import FloatingPet from '../components/pet/FloatingPet'
 import '../styles/globals.css'
-
+import { Analytics } from "@vercel/analytics/next"
 export const metadata: Metadata = {
   title: 'Cozy Earnings Dashboard',
   icons: {
@@ -19,6 +20,8 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       <body>
         <ThemeSync />
         {children}
+        <FloatingPet />
+        <Analytics />
       </body>
     </html>
   )
