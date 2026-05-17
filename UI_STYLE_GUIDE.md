@@ -1,169 +1,187 @@
 # PayMood — UI Style Guide
 
-This document is the source of truth for the product’s UI direction. Read this before adding new UI or changing visuals.
+This document is the source of truth for the product UI system.
+Use it before adding or changing visuals on both Dashboard and Settings pages.
 
-## Brand
+## Product Universe
+
+PayMood is one coherent "emotional productivity OS" with two views:
+
+- Dashboard: live progress + earnings focus.
+- Settings: calm system-control panel.
+
+They must feel like the same product universe, not two separate themes.
+
+## Brand Positioning
 
 - Product name: `PayMood`
 - Domain label: `paymood.work`
-- Positioning: a calm workday progress + earned income progress dashboard with a soft “salary mood”.
+- Positioning: a calm workday companion that visualizes time flow and income growth.
 
 ## Product Intent
 
-This is a “salary mood dashboard” for everyday workers.
+This product is intentionally not:
 
-- Not a KPI tool.
-- Not an enterprise dashboard.
-- Not an admin system.
-- Not a dense analytics product.
-- Not a game.
-- Not a pet-raising product.
+- a KPI tool
+- an enterprise admin dashboard
+- a dense analytics surface
+- a game-centric UI
 
-The UI should feel like a calm digital companion that quietly reflects:
+It should quietly reflect:
 
 - time passing
-- money earned so far
-- time remaining until finish
+- earned income progression
+- remaining time to offwork
 
-## Core Principles
+## Core Experience Principles
 
-1. Time is the main character
+1. Time is the first signal
 
-   - Progress and remaining time must be immediately legible.
-   - Avoid secondary widgets that compete with the core readout.
+- Progress and remaining time are instantly readable.
+- Secondary modules cannot compete with the ring + money center.
 
-2. Numbers must have emotion
+2. Numbers carry emotion
 
-   - Money should feel like it’s “growing” rather than being “reported”.
-   - Avoid accounting-style layouts, tables, and heavy dividers.
+- Earnings should feel "alive" and gradually growing.
+- Avoid accounting/table-like visual language.
 
-3. The page should feel alive (ambient, not flashy)
+3. Ambient motion, never flashy
 
-   - Use subtle breathing / glow / slow fades.
-   - Prefer gentle, constant motion over reactive bouncy transitions.
+- Breathing glow and soft fades are preferred.
+- No jumpy, playful, or noisy transitions.
 
-4. Extreme focus and whitespace
-   - Fewer surfaces, fewer labels, bigger hierarchy gaps.
-   - If a new feature adds UI, it must earn its place.
+4. Sparse hierarchy
 
-## Visual Language
+- Fewer surfaces, more intentional spacing.
+- New UI must justify its existence.
+
+## Unified Visual Language
 
 ### Layout
 
-- Centered single view, “hangable” like a widget.
-- Primary focus is a large circular progress ring with a centered readout.
-- Secondary info uses a simple vertical stack (Remaining / Week / Month / Rate).
-- Controls live at the bottom as a light control strip.
+- Single centered shell as the core stage.
+- Circular progress and money value remain the hero.
+- Supporting metrics are compact and restrained.
+- Controls and settings are service layers, not visual heroes.
 
-### Shapes
+### Shape and Density
 
-- Round and soft, but not playful.
-- Prefer large radius for main container and medium radius for controls.
+- Rounded, soft geometry.
+- Large radius for shells, medium radius for controls.
+- Avoid grid-heavy dashboards, dense cards, complex charts.
 
-### Density
+## Theme Strategy
 
-- Avoid multi-column dashboards, card grids, or many boxed sections.
-- No complex charts.
+### Light mode (morning workspace)
 
-## Color & Theme
+- airy white glass surfaces
+- cool daylight gradients
+- soft ambient glow
 
-### Non-negotiables
+### Dark mode (midnight workspace)
 
-- No enterprise “dashboard” palettes.
-- No harsh neon, no RGB glow, no cyberpunk.
-- Dark theme must stay calm and airy, not heavy “tech black”.
+- deep navy background
+- cool blue glow hierarchy
+- sky-blue accent
+- no amber as primary accent
 
-### Token System
+Amber is reserved only for semantic warning states.
 
-All colors must come from CSS variables in `styles/globals.css`. Do not hardcode new colors in components.
+## Token System (Mandatory)
 
-- Background gradients are subtle and soft.
-- Glass surfaces are translucent with blur.
-- Borders are light, low-contrast.
-- Rings use a calm cyan/blue ink with a softer glow layer.
+All component colors must come from CSS variables in `styles/globals.css`.
+Do not hardcode brand colors in TSX components.
 
-### Light Theme Targets
+### Semantic token groups
 
-- ultra soft white background
-- cool daylight gradient
-- ambient light (subtle, slow)
-- minimal glass (avoid strong glassmorphism)
+- Surface: `--surface-base`, `--surface-raised`, `--surface-floating`, `--surface-overlay`
+- Text: `--text-primary`, `--text-secondary`, `--text-muted`
+- Border: `--border-ghost`, `--border-soft`, `--border-active`
+- Glow: `--glow-ambient`, `--glow-accent`, `--glow-ring`, `--glow-focus`, `--glow-success`, `--glow-danger`, `--glow-warning`
+- State: `--state-hover`, `--state-active`
+- Motion: `--ease`, `--ease-spring`, `--dur`, `--dur-fast`, `--dur-slow`
 
-### Dark Theme Targets
+### Compatibility aliases
 
-- dim, calm background
-- soft cyan accent
-- muted warm glow as secondary
+Legacy aliases still exist (`--surface`, `--surface-strong`, `--border`, `--text`, `--muted`, `--focus`) but new styles should prefer semantic tokens above.
+
+### Settings tokens
+
+`--s-*` tokens are now semantic wrappers over the same shared token layer.
+Do not add separate dark-mode-only `--s-*` override blocks unless there is a clear exception.
+
+## Component Rules
+
+### Shells and cards
+
+- Use surface hierarchy:
+  - base: everyday sections
+  - raised: elevated controls / bubbles
+  - floating: modals and top-layer panels
+- Use ghost/soft borders instead of high-contrast lines.
+
+### Ring and hero center
+
+- Ring uses `--ring-track`, `--ring-ink`, `--ring-glow`.
+- Keep the ring clean: no ticks, no chart overlays.
+- Money readout remains center anchor.
+
+### Interactive states
+
+- pressed/selected states use `--state-active` + `--border-active`.
+- hover states use `--state-hover`.
+- avoid hardcoded yellow/orange state backgrounds.
+
+### Pet UI (ambient layer)
+
+- Mood tinting must use semantic glows (`--glow-warning`, `--glow-ambient`, `--glow-danger`, etc.).
+- Bubble backgrounds and borders must use semantic surface/border tokens.
+- No hardcoded amber utility classes for positive states.
 
 ## Typography
 
-### Numbers
+- Key numeric values use `var(--font-mono)`.
+- Numeric alignment uses `font-variant-numeric: tabular-nums`.
+- Label tone is calm and compact, not enterprise-reporting style.
 
-- Use mono font for key numbers: `var(--font-mono)`.
-- Use tabular numerals for alignment: `font-variant-numeric: tabular-nums`.
-- Money is huge; everything else is smaller and calmer.
+## Motion and Accessibility
 
-### Labels
+Allowed:
 
-- Small, uppercase, airy tracking.
-- Emotion-first copy; avoid “business dashboard” tone.
+- slow breathing glow
+- soft opacity/blur transitions
+- restrained ambient looping
 
-## Motion
+Avoid:
 
-### Allowed
+- bouncy spring-heavy UI motion as dominant behavior
+- playful wobble animation language
+- high-frequency micro-interaction noise
 
-- breathing animation (slow)
-- ambient glow / soft light movement
-- slow fades
+Accessibility:
 
-### Not allowed
+- Respect `prefers-reduced-motion` for non-essential animation.
 
-- spring animation
-- overshoot / bounce
-- playful wobble
+## Tailwind v4 Conventions
 
-### Accessibility
+Use Tailwind v4 variable syntax for arbitrary values:
 
-- Must respect `prefers-reduced-motion` by disabling non-essential animation.
-
-## Components
-
-### Circular Progress Ring
-
-- Large circle, calm track + ink stroke, soft glow behind ink.
-- The ring is the hero; it should frame the money readout.
-- Keep it minimal: no tick marks, no charts, no extra labels on the ring.
-
-### Money Readout
-
-- Centered inside the ring.
-- Large mono number with gentle “alive” breathing.
-- Currency is smaller, subdued, and aligned to the number.
-
-### Metrics (Remaining / Week / Month / Rate)
-
-- Simple stacked lines or a minimal list.
-- Use light glass surface; no “metric cards” grid feeling.
-- Avoid heavy separators and strong borders.
-
-### Controls
-
-- Feels like a compact control strip, not a settings panel.
-- Inputs are translucent, softly bordered, mono numerals.
-- Avoid exposing too many controls; prefer the minimum required.
+- Prefer `border-(--token)` over `border-[var(--token)]`
+- Prefer `bg-(--token)` over `bg-[var(--token)]`
+- Prefer utility scale equivalents (for example `max-w-70`) where available
 
 ## Copy Tone
 
-- Calm, supportive, human.
-- Never imply pressure, productivity guilt, KPI, or performance evaluation.
-- Short phrases. Low drama. Friendly.
+- calm, supportive, human
+- no productivity guilt or performance pressure language
+- short and emotionally stable phrasing
 
-## Adding New UI: Checklist
+## UI Change Checklist
 
-- Uses existing tokens and CSS variables (no new hardcoded colors)
-- Keeps the page single-focus (does not turn into a multi-panel dashboard)
-- Maintains big money + ring as the primary hierarchy
-- Adds minimal text, preserves whitespace
-- Motion is subtle and respects reduced-motion
-- Copy stays supportive and non-judgmental
-- Dark and light themes both look coherent
+- Uses semantic tokens from `styles/globals.css`
+- Keeps Dashboard and Settings in one visual universe
+- Preserves ring + money as dashboard primary hierarchy
+- Uses blue-cool dark mode accenting (no amber primary accent)
+- Maintains low-density, whitespace-first layout
+- Motion is subtle and reduced-motion safe
+- Copy remains supportive and non-judgmental
