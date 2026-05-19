@@ -1,0 +1,48 @@
+{
+  "name": "paymood",
+  "displayName": "paymood",
+  "description": "Workday earnings dashboard in VS Code: status bar progress + earnings and a settings webview.",
+  "version": "0.1.0",
+  "publisher": "paymood",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:paymood.openDashboard",
+    "onCommand:paymood.toggleStatusBar",
+    "onCommand:paymood.resetSettings"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "paymood.openDashboard",
+        "title": "paymood: Open Dashboard"
+      },
+      {
+        "command": "paymood.toggleStatusBar",
+        "title": "paymood: Toggle Status Bar"
+      },
+      {
+        "command": "paymood.resetSettings",
+        "title": "paymood: Reset Settings"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "npx esbuild src/extension.ts --bundle --platform=node --format=cjs --target=node18 --external:vscode --outfile=dist/extension.js",
+    "watch": "npx esbuild src/extension.ts --bundle --platform=node --format=cjs --target=node18 --external:vscode --outfile=dist/extension.js --watch",
+    "typecheck": "npx tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "^1.90.0",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.0.0"
+  }
+}
+
