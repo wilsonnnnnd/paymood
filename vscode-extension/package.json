@@ -1,10 +1,11 @@
 {
   "name": "paymood",
-  "displayName": "paymood",
+  "displayName": "PayMood",
   "description": "Workday earnings dashboard in VS Code: status bar progress + earnings and a settings webview.",
   "version": "0.1.2",
   "publisher": "WilsonnnnD",
   "license": "MIT",
+  "icon": "media/paymood_icon_white_bg.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/wilsonnnnnd/paymood.git"
@@ -26,15 +27,15 @@
     "commands": [
       {
         "command": "paymood.openDashboard",
-        "title": "paymood: Open Dashboard"
+        "title": "PayMood: Open Dashboard"
       },
       {
         "command": "paymood.toggleStatusBar",
-        "title": "paymood: Toggle Status Bar"
+        "title": "PayMood: Toggle Status Bar"
       },
       {
         "command": "paymood.resetSettings",
-        "title": "paymood: Reset Settings"
+        "title": "PayMood: Reset Settings"
       }
     ]
   },
