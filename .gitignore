@@ -17,4 +17,6 @@ dist/
 .DS_Store
 node_modules
 .claude
-.github
+.github/*
+!.github/workflows/
+!.github/workflows/**

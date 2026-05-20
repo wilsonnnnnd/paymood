@@ -25,6 +25,8 @@ const els = {
   salaryType: document.getElementById('salaryType'),
   salaryAmount: document.getElementById('salaryAmount'),
   currency: document.getElementById('currency'),
+  statusToggle: document.getElementById('statusToggle'),
+  resetSettings: document.getElementById('resetSettings'),
   earnedText: document.getElementById('earnedText'),
   progressBar: document.getElementById('progressBar'),
   progressPill: document.getElementById('progressPill'),
@@ -32,6 +34,8 @@ const els = {
   hourlyPill: document.getElementById('hourlyPill'),
   weekText: document.getElementById('weekText'),
   monthText: document.getElementById('monthText'),
+  codingTodayText: document.getElementById('codingTodayText'),
+  codingSessionText: document.getElementById('codingSessionText'),
 }
 
 function persistState() {
@@ -47,6 +51,14 @@ function currencyToSymbol(currency) {
   if (normalized === 'AUD') return 'A$'
   if (normalized === 'CNY') return 'CNY '
   return '$'
+}
+
+function formatDuration(seconds) {
+  const totalSeconds = Math.max(0, Math.floor(Number(seconds) || 0))
+  const hours = Math.floor(totalSeconds / 3600)
+  const minutes = Math.floor((totalSeconds % 3600) / 60)
+  if (hours > 0) return `${hours}h ${String(minutes).padStart(2, '0')}m`
+  return `${minutes}m`
 }
 
 function renderWorkDays(selected) {
@@ -101,6 +113,12 @@ function bind() {
   bindControl('salaryType', 'change', (el) => ({ salaryType: el.value }))
   bindControl('salaryAmount', 'input', (el) => ({ salaryAmount: Number(el.value) }))
   bindControl('currency', 'change', (el) => ({ currency: el.value }))
+  els.statusToggle.addEventListener('click', () => {
+    vscode.postMessage({ type: 'toggleStatusBar' })
+  })
+  els.resetSettings.addEventListener('click', () => {
+    vscode.postMessage({ type: 'resetSettings' })
+  })
 }
 
 function restoreFocus() {
@@ -133,10 +151,14 @@ function applySnapshot(snapshot) {
   els.earnedText.textContent = currencySymbol + earnedText
   els.progressPill.textContent = `${pct}%`
   els.progressBar.style.width = `${pct}%`
-  els.remainingPill.textContent = `Remaining ${snapshot.isWorkDay ? snapshot.remainingHuman : '00h 00m'}`
-  els.hourlyPill.textContent = `Hourly ${currencySymbol}${hourlyText}`
+  els.remainingPill.textContent = snapshot.isWorkDay ? snapshot.remainingHuman : '00h 00m'
+  els.hourlyPill.textContent = currencySymbol + hourlyText
   els.weekText.textContent = currencySymbol + weekText
   els.monthText.textContent = currencySymbol + monthText
+  els.codingTodayText.textContent = formatDuration(snapshot.codingTodaySeconds)
+  els.codingSessionText.textContent = formatDuration(snapshot.codingSessionSeconds)
+  els.statusToggle.textContent = snapshot.statusVisible ? 'Status on' : 'Status off'
+  els.statusToggle.setAttribute('aria-pressed', snapshot.statusVisible ? 'true' : 'false')
 }
 
 window.addEventListener('message', (event) => {

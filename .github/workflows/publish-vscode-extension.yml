@@ -1,0 +1,90 @@
+name: Publish VS Code Extension
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "vscode-extension/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-vscode-extension
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Build and publish
+    if: github.event_name != 'push' || !contains(github.event.head_commit.message, '[skip vscode publish]')
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: vscode-extension
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Bump extension patch version
+        id: bump
+        run: |
+          node <<'NODE'
+          const fs = require('fs')
+
+          const packagePath = 'package.json'
+          const lockPath = 'package-lock.json'
+          const pkg = JSON.parse(fs.readFileSync(packagePath, 'utf8'))
+          const parts = String(pkg.version).split('.').map((part) => Number(part))
+
+          if (parts.length !== 3 || parts.some((part) => !Number.isInteger(part) || part < 0)) {
+            throw new Error(`Invalid package version: ${pkg.version}`)
+          }
+
+          parts[2] += 1
+          const nextVersion = parts.join('.')
+          pkg.version = nextVersion
+          fs.writeFileSync(packagePath, `${JSON.stringify(pkg, null, 2)}\n`)
+
+          const lock = JSON.parse(fs.readFileSync(lockPath, 'utf8'))
+          lock.version = nextVersion
+          if (lock.packages && lock.packages['']) {
+            lock.packages[''].version = nextVersion
+          }
+          fs.writeFileSync(lockPath, `${JSON.stringify(lock, null, 2)}\n`)
+
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `version=${nextVersion}\n`)
+          console.log(`Bumped vscode-extension to ${nextVersion}`)
+          NODE
+
+      - name: Commit bumped version
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add vscode-extension/package.json vscode-extension/package-lock.json
+          git commit -m "chore(vscode-extension): bump version to ${{ steps.bump.outputs.version }} [skip vscode publish]"
+          git push
+        working-directory: .
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: vscode-extension/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Publish to VS Code Marketplace
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: npx @vscode/vsce publish -p "$VSCE_PAT"
