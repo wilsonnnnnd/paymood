@@ -173,6 +173,32 @@ function moodFor(now: Date, start: Date, end: Date) {
   }
 }
 
+function liveStatusFor({
+  isReady,
+  isWorkDay,
+  now,
+  start,
+  end,
+  remainingSeconds,
+}: {
+  isReady: boolean
+  isWorkDay: boolean
+  now: Date
+  start: Date
+  end: Date
+  remainingSeconds: number
+}) {
+  if (!isReady) return 'Warming up'
+  if (!isWorkDay) return 'Off today'
+  if (now.getTime() < start.getTime()) return `Before shift · starts at ${formatTime(start)}`
+  if (now.getTime() >= end.getTime()) return 'Shift complete'
+  return `In shift · ${formatHM(remainingSeconds)} left`
+}
+
+function formatTime(date: Date) {
+  return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`
+}
+
 export default function Dashboard() {
   const { settings, ready } = useSettings()
   const now = useClock(1000)
@@ -219,6 +245,14 @@ export default function Dashboard() {
   const totalsFormat = new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 })
   const mood = isReady ? (isWorkDay ? moodFor(today, start, end) : '今天休息。') : '热身中…'
   const currencySymbol = currencyCodeToSymbol(settings.currency)
+  const liveStatus = liveStatusFor({
+    isReady,
+    isWorkDay,
+    now: today,
+    start,
+    end,
+    remainingSeconds: prog.remainingSeconds,
+  })
 
   return (
     <section className="hud-shell" aria-label="PayMood 仪表盘">
@@ -236,6 +270,9 @@ export default function Dashboard() {
         <div className="hud-mood" aria-label="状态">
           {mood}
         </div>
+        <div className="hud-live-status" aria-label="工作状态">
+          {liveStatus}
+        </div>
       </header>
 
       {!isWorkDay ? (
@@ -243,6 +280,7 @@ export default function Dashboard() {
           <div className="hud-rest-panel">
             <div className="hud-rest-title">今天就先休息。</div>
             <div className="hud-rest-sub">周/月累计还在这里。</div>
+            <div className="hud-rest-status">{liveStatus}</div>
           </div>
           <section className="hud-metrics" aria-label="摘要">
             <div className="hud-metric">

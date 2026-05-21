@@ -440,6 +440,7 @@ select {
   z-index: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
   padding: 6px 6px 0;
 }
@@ -464,6 +465,36 @@ select {
   font-weight: 600;
   color: var(--text);
   overflow-wrap: anywhere;
+}
+
+.hud-live-status,
+.hud-rest-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+  border: 1px solid var(--s-line-ghost);
+  border-radius: 999px;
+  background: var(--s-ctrl-bg);
+  color: var(--s-text);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.hud-live-status {
+  padding: 7px 11px;
+}
+
+.hud-rest-status {
+  margin: 16px auto 0;
+  padding: 6px 10px;
+  color: var(--s-muted);
 }
 
 .hud-main {
@@ -924,6 +955,8 @@ fieldset.hud-control {
   .hud-shell {
     padding: 22px 16px 18px;
     border-radius: 28px;
+    min-height: calc(100svh - 36px);
+    justify-content: center;
   }
 
   .hud-controls {
@@ -976,8 +1009,12 @@ fieldset.hud-control {
   }
 
   .hud-main {
-    gap: 14px;
+    gap: 12px;
     padding: 4px 4px 0;
+  }
+
+  .hud-ring-wrap {
+    width: min(330px, 100%);
   }
 
   .hud-center {
@@ -993,7 +1030,7 @@ fieldset.hud-control {
   }
 
   .hud-amount {
-    font-size: clamp(2.6rem, 10vw, 4.6rem);
+    font-size: clamp(2.5rem, 12vw, 4.2rem);
   }
 
   .hud-percent {
@@ -1006,8 +1043,8 @@ fieldset.hud-control {
   }
 
   .hud-metric {
-    padding: 10px 12px;
-    border-radius: 16px;
+    padding: 9px 11px;
+    border-radius: 14px;
   }
 
   .hud-metric-label {
@@ -1199,6 +1236,40 @@ fieldset.hud-control {
   display: flex;
   flex-direction: column;
   gap: clamp(14px, 2.2vw, 20px);
+}
+
+.settings-overview {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.settings-overview > div {
+  min-width: 0;
+  border: 1px solid var(--s-line-ghost);
+  border-radius: 18px;
+  background: var(--s-section-quiet);
+  padding: 13px 14px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.settings-overview span {
+  display: block;
+  color: var(--s-muted);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.settings-overview strong {
+  display: block;
+  margin-top: 7px;
+  color: var(--s-text);
+  font-size: 0.82rem;
+  font-weight: 520;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 /* ── SECTION ──────────────────────────────────────────────────────────────── */
@@ -1727,6 +1798,15 @@ fieldset.hud-control {
     padding: 16px;
   }
 
+  .settings-overview {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .settings-overview > div {
+    padding: 12px 13px;
+  }
+
   .setting-row {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -1782,5 +1862,3 @@ fieldset.hud-control {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
-
-

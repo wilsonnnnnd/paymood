@@ -104,7 +104,22 @@ export default function SettingsForm() {
   return (
     <>
       <form className="settings-system" aria-label="设置表单">
-        <SettingSection title="Workspace" description="让界面保持安静，只在需要时给你一点回应。" tone="quiet">
+        <div className="settings-overview" aria-label="设置摘要">
+          <div>
+            <span>Stored locally</span>
+            <strong>只保存在当前设备</strong>
+          </div>
+          <div>
+            <span>Live estimate</span>
+            <strong>用于今日进度与收入</strong>
+          </div>
+          <div>
+            <span>Quiet companion</span>
+            <strong>{petEnabled ? '桌宠已开启' : '桌宠已关闭'}</strong>
+          </div>
+        </div>
+
+        <SettingSection title="Workspace" description="界面偏好和陪伴感放在这里，不影响收入计算。" tone="quiet">
           <SettingRow label="主题模式" description="当前颜色模式会跟随系统或固定为你选择的状态。" value={colorModeLabel} />
 
           <SettingRow
@@ -145,7 +160,7 @@ export default function SettingsForm() {
           ) : null}
         </SettingSection>
 
-        <SettingSection title="Work rhythm" description="一天的边界和呼吸感。" tone="default">
+        <SettingSection title="Work rhythm" description="定义今天从什么时候开始、什么时候结束，以及哪些日子参与估算。" tone="default">
           <SettingGroup>
             <SettingRow label="上班时间" controlId="settings-start-time">
               <SettingTimeInput
@@ -255,7 +270,7 @@ export default function SettingsForm() {
           )}
         </SettingSection>
 
-        <SettingSection title="Display" description="影响收入展示方式，不改变你的原始薪资设置。" tone="quiet">
+        <SettingSection title="Display" description="只影响金额显示方式，不改变你的原始薪资设置。" tone="quiet">
           <SettingRow label="货币" controlId="settings-currency">
             <SettingSelect
               id="settings-currency"
