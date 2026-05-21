@@ -32,6 +32,7 @@ const els = {
   progressPill: document.getElementById('progressPill'),
   remainingPill: document.getElementById('remainingPill'),
   hourlyPill: document.getElementById('hourlyPill'),
+  liveStatusText: document.getElementById('liveStatusText'),
   weekText: document.getElementById('weekText'),
   monthText: document.getElementById('monthText'),
   codingTodayText: document.getElementById('codingTodayText'),
@@ -60,6 +61,15 @@ function formatDuration(seconds) {
   const minutes = Math.floor((totalSeconds % 3600) / 60)
   if (hours > 0) return `${hours}h ${String(minutes).padStart(2, '0')}m`
   return `${minutes}m`
+}
+
+function getLiveStatus(snapshot) {
+  if (!snapshot.isWorkDay) return 'Off today'
+  const pct = Math.max(0, Math.min(100, Number(snapshot.percent) || 0))
+  const remaining = Math.max(0, Number(snapshot.remainingSeconds) || 0)
+  if (pct >= 100 || remaining === 0) return 'Shift complete'
+  if (pct <= 0) return `Before shift · starts at ${snapshot.settings.startTime || '09:00'}`
+  return `In shift · ${formatDuration(remaining)} left`
 }
 
 function renderWorkDays(selected) {
@@ -154,6 +164,7 @@ function applySnapshot(snapshot) {
   els.progressBar.style.width = `${pct}%`
   els.remainingPill.textContent = snapshot.isWorkDay ? snapshot.remainingHuman : '00h 00m'
   els.hourlyPill.textContent = currencySymbol + hourlyText
+  els.liveStatusText.textContent = getLiveStatus(snapshot)
   els.weekText.textContent = currencySymbol + weekText
   els.monthText.textContent = currencySymbol + monthText
   els.codingTodayText.textContent = formatDuration(snapshot.codingTodaySeconds)

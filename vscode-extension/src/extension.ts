@@ -92,7 +92,15 @@ function formatStatus(snapshot: Snapshot) {
   const currency = currencyCodeToSymbol(snapshot.settings.currency)
   const percentText = `${Math.max(0, Math.min(100, snapshot.percent))}%`
   const moneyText = Number.isFinite(snapshot.earned) ? snapshot.earned.toFixed(2) : '0.00'
-  return `${percentText} ${currency}${moneyText}`
+  const salarySet = Number.isFinite(snapshot.settings.salaryAmount) && snapshot.settings.salaryAmount > 0
+  if (!salarySet) return '$(gear) Set pay'
+  if (!snapshot.isWorkDay) return '$(coffee) Off today'
+
+  const now = new Date(snapshot.now)
+  const { start, end } = getWorkWindowForNow(now, snapshot.settings.startTime, snapshot.settings.endTime)
+  if (now < start) return `$(clock) Starts ${snapshot.settings.startTime}`
+  if (now >= end) return `$(check) Done · ${currency}${moneyText}`
+  return `$(pulse) ${percentText} · ${currency}${moneyText}`
 }
 
 function readSettings(context: vscode.ExtensionContext) {
@@ -344,67 +352,84 @@ function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri, nonce
 
     <main class="shell">
       <section class="workspace" aria-label="Earnings summary">
-        <div class="panel-kicker">
-          <span>Live shift</span>
-          <span id="progressPill">-</span>
-        </div>
-
-        <div class="earnings-block">
-          <div>
-            <div class="eyebrow">Earned today</div>
-            <div class="amount" id="earnedText">-</div>
+        <div class="live-card">
+          <div class="panel-kicker">
+            <span>Live shift</span>
+            <span class="progress-chip" id="progressPill">-</span>
           </div>
-        </div>
 
-        <div class="progress-cluster">
-          <div class="progress" aria-label="Workday progress">
-            <div id="progressBar"></div>
-          </div>
-          <div class="status-grid">
+          <div class="earnings-block">
             <div>
-              <div class="k">Remaining</div>
-              <div class="status-value" id="remainingPill">-</div>
-            </div>
-            <div>
-              <div class="k">Hourly rate</div>
-              <div class="status-value" id="hourlyPill">-</div>
+              <div class="eyebrow">Earned today</div>
+              <div class="amount" id="earnedText">-</div>
+              <div class="live-status" id="liveStatusText">-</div>
+              <div class="live-caption">Estimated from your schedule and pay model.</div>
             </div>
           </div>
+
+          <div class="progress-cluster">
+            <div class="progress" aria-label="Workday progress">
+              <div id="progressBar"></div>
+            </div>
+            <div class="status-grid">
+              <div>
+                <div class="k">Remaining</div>
+                <div class="status-value" id="remainingPill">-</div>
+              </div>
+              <div>
+                <div class="k">Hourly rate</div>
+                <div class="status-value" id="hourlyPill">-</div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="insights-grid" aria-label="Work metrics">
-          <div class="metric">
-            <div class="k">This week</div>
-            <div class="v" id="weekText">-</div>
+        <div class="insights-panel">
+          <div class="panel-kicker">
+            <span>Rollups</span>
+            <span>Today</span>
           </div>
-          <div class="metric">
-            <div class="k">This month</div>
-            <div class="v" id="monthText">-</div>
-          </div>
-          <div class="metric">
-            <div class="k">Coding today</div>
-            <div class="v" id="codingTodayText">-</div>
-          </div>
-          <div class="metric">
-            <div class="k">Thinking today</div>
-            <div class="v" id="thinkingTodayText">-</div>
-          </div>
-          <div class="metric">
-            <div class="k">This session</div>
-            <div class="v" id="codingSessionText">-</div>
+          <div class="rollups-note">Coding tracks recent edits. Thinking tracks focused idle time.</div>
+          <div class="insights-grid" aria-label="Work metrics">
+            <div class="metric">
+              <div class="k">This week</div>
+              <div class="v" id="weekText">-</div>
+            </div>
+            <div class="metric">
+              <div class="k">This month</div>
+              <div class="v" id="monthText">-</div>
+            </div>
+            <div class="metric">
+              <div class="k">Coding today</div>
+              <div class="v" id="codingTodayText">-</div>
+            </div>
+            <div class="metric">
+              <div class="k">Thinking today</div>
+              <div class="v" id="thinkingTodayText">-</div>
+            </div>
+            <div class="metric metric-wide">
+              <div class="k">This session</div>
+              <div class="v" id="codingSessionText">-</div>
+            </div>
           </div>
         </div>
       </section>
 
       <section class="settings-panel" aria-label="Settings">
         <div class="section-heading">
-          <h2>Settings</h2>
-          <span>Auto-saved</span>
+          <div>
+            <h2>Settings</h2>
+            <span>Local preferences for this workspace</span>
+          </div>
+          <span class="save-chip">Auto-saved</span>
         </div>
 
         <div class="settings-grid">
           <div class="settings-group">
-            <div class="group-title">Work schedule</div>
+            <div class="group-title">
+              <div>Work schedule</div>
+              <span>Used for progress and time remaining.</span>
+            </div>
             <div class="field-grid two-col">
               <div class="field">
                 <label for="startTime">Start</label>
@@ -420,6 +445,7 @@ function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri, nonce
             <div class="field">
               <label for="breakMinutes">Break</label>
               <input id="breakMinutes" type="number" min="0" max="1440" step="5" />
+              <div class="field-hint">Minutes removed from the earning window.</div>
             </div>
 
             <div class="field">
@@ -429,7 +455,10 @@ function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri, nonce
           </div>
 
           <div class="settings-group">
-            <div class="group-title">Pay model</div>
+            <div class="group-title">
+              <div>Pay model</div>
+              <span>Stored locally and used only for estimates.</span>
+            </div>
             <div class="field-grid two-col">
               <div class="field">
                 <label for="salaryType">Type</label>
@@ -632,13 +661,14 @@ export function activate(context: vscode.ExtensionContext) {
 
     ensureStatusBar()
     if (statusItem) {
-      statusItem.text = `$(pulse) ${formatStatus(snapshot)}`
+      statusItem.text = formatStatus(snapshot)
       const tooltipLines = [
         'Work progress',
-        `${snapshot.percent}% - ${currencyCodeToSymbol(settings.currency)}${snapshot.earned.toFixed(2)}`,
+        `${Math.max(0, Math.min(100, snapshot.percent))}% · ${currencyCodeToSymbol(settings.currency)}${snapshot.earned.toFixed(2)} earned`,
         `Remaining ${formatHM(snapshot.remainingSeconds)}`,
         `Coding today ${formatHM(snapshot.codingTodaySeconds)}`,
         `Thinking today ${formatHM(snapshot.thinkingTodaySeconds)}`,
+        'Click to open PayMood',
       ]
       statusItem.tooltip = tooltipLines.join('\n')
     }

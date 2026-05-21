@@ -15,6 +15,10 @@
   --pm-button-fg: var(--vscode-button-foreground);
   --pm-button-hover: var(--vscode-button-hoverBackground);
   --pm-danger: var(--vscode-errorForeground);
+  --pm-subtle: color-mix(in srgb, var(--pm-muted) 18%, transparent);
+  --pm-soft: color-mix(in srgb, var(--pm-panel-strong) 78%, var(--pm-bg));
+  --pm-accent-soft: color-mix(in srgb, var(--pm-button-bg) 14%, transparent);
+  --pm-radius: 8px;
 }
 
 * {
@@ -24,7 +28,9 @@
 body {
   min-width: 280px;
   margin: 0;
-  background: var(--pm-bg);
+  background:
+    radial-gradient(520px 300px at 0% 0%, var(--pm-accent-soft), transparent 72%),
+    var(--pm-bg);
   color: var(--pm-fg);
   font-family: var(--vscode-font-family);
   font-size: var(--vscode-font-size);
@@ -46,9 +52,10 @@ select {
   justify-content: space-between;
   gap: 10px;
   min-height: 38px;
-  padding: 6px 8px;
+  padding: 8px 10px;
   border-bottom: 1px solid var(--pm-border);
-  background: var(--pm-bg);
+  background: color-mix(in srgb, var(--pm-bg) 92%, transparent);
+  backdrop-filter: blur(12px);
 }
 
 .brand {
@@ -102,18 +109,27 @@ label,
 }
 
 .ghost-button {
-  min-height: 24px;
-  padding: 2px 7px;
+  min-height: 26px;
+  padding: 3px 9px;
   border: 1px solid transparent;
-  border-radius: 3px;
+  border-radius: 5px;
   background: transparent;
   color: var(--pm-fg);
   cursor: pointer;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease,
+    transform 120ms ease;
 }
 
 .ghost-button:hover {
   border-color: var(--pm-border);
   background: var(--vscode-toolbar-hoverBackground, var(--pm-row-hover));
+}
+
+.ghost-button:active {
+  transform: translateY(1px);
 }
 
 .ghost-button[aria-pressed='true'] {
@@ -140,10 +156,31 @@ label,
 .workspace {
   display: grid;
   align-content: start;
-  gap: 10px;
-  padding: 10px;
+  gap: 12px;
+  padding: 12px;
   border-bottom: 1px solid var(--pm-border);
-  background: var(--pm-panel);
+  background: color-mix(in srgb, var(--pm-panel) 88%, var(--pm-bg));
+}
+
+.live-card,
+.insights-panel {
+  display: grid;
+  min-width: 0;
+  gap: 12px;
+  border: 1px solid var(--pm-border);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--pm-panel-strong) 74%, transparent);
+}
+
+.live-card {
+  padding: 12px;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--pm-fg) 7%, transparent);
+}
+
+.insights-panel {
+  gap: 8px;
+  padding: 10px;
+  background: color-mix(in srgb, var(--pm-panel) 74%, transparent);
 }
 
 .panel-kicker {
@@ -159,27 +196,51 @@ label,
 .earnings-block {
   display: grid;
   min-width: 0;
-  padding: 4px 0 2px;
+  padding: 5px 0 3px;
 }
 
 .amount {
-  margin-top: 2px;
-  font-size: 34px;
+  margin-top: 4px;
+  font-size: clamp(34px, 10vw, 48px);
   font-weight: 760;
   line-height: 1;
+  overflow-wrap: anywhere;
+  letter-spacing: -0.03em;
+}
+
+.live-caption {
+  margin-top: 7px;
+  color: var(--pm-muted);
+  font-size: 11px;
+}
+
+.live-status {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 8px;
+  padding: 3px 8px;
+  border: 1px solid var(--pm-border);
+  border-radius: 999px;
+  background: var(--pm-subtle);
+  color: var(--pm-fg);
+  font-size: 11px;
+  font-weight: 650;
   overflow-wrap: anywhere;
 }
 
 .progress-cluster {
   display: grid;
-  gap: 8px;
+  gap: 10px;
 }
 
 .progress {
-  height: 6px;
+  height: 8px;
   overflow: hidden;
   border-radius: 999px;
-  background: var(--vscode-progressBar-background, var(--pm-border));
+  border: 1px solid color-mix(in srgb, var(--pm-border) 70%, transparent);
+  background: color-mix(in srgb, var(--vscode-progressBar-background, var(--pm-border)) 58%, transparent);
 }
 
 .progress > div {
@@ -187,7 +248,8 @@ label,
   height: 100%;
   border-radius: inherit;
   background: var(--pm-button-bg);
-  transition: width 160ms ease;
+  box-shadow: 0 0 18px color-mix(in srgb, var(--pm-button-bg) 32%, transparent);
+  transition: width 180ms ease;
 }
 
 .status-grid,
@@ -198,17 +260,18 @@ label,
 
 .status-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
+  gap: 0;
   overflow: hidden;
   border: 1px solid var(--pm-border);
-  border-radius: 5px;
+  border-radius: var(--pm-radius);
+  background: var(--pm-border);
 }
 
 .status-grid > div,
 .metric {
   min-width: 0;
-  padding: 7px;
-  background: var(--pm-panel-strong);
+  padding: 9px;
+  background: var(--pm-soft);
 }
 
 .status-grid > div + div,
@@ -218,17 +281,18 @@ label,
 
 .status-value {
   margin-top: 2px;
-  font-size: 12px;
-  font-weight: 650;
+  font-size: 13px;
+  font-weight: 700;
   overflow-wrap: anywhere;
 }
 
 .insights-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
+  gap: 0;
   overflow: hidden;
   border: 1px solid var(--pm-border);
-  border-radius: 5px;
+  border-radius: var(--pm-radius);
+  background: var(--pm-border);
 }
 
 .metric:nth-child(n + 3) {
@@ -242,10 +306,30 @@ label,
   overflow-wrap: anywhere;
 }
 
+.rollups-note {
+  color: var(--pm-muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.metric-wide {
+  grid-column: 1 / -1;
+}
+
+.progress-chip {
+  padding: 2px 7px;
+  border: 1px solid var(--pm-border);
+  border-radius: 999px;
+  background: var(--pm-accent-soft);
+  color: var(--pm-fg);
+  font-variant-numeric: tabular-nums;
+}
+
 .settings-panel {
   display: grid;
   align-content: start;
-  gap: 0;
+  gap: 10px;
+  padding: 10px;
   background: var(--pm-bg);
 }
 
@@ -254,29 +338,45 @@ label,
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  min-height: 28px;
-  padding: 6px 10px;
-  border-bottom: 1px solid var(--pm-border);
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid var(--pm-border);
+  border-radius: var(--pm-radius);
   background: var(--pm-panel-strong);
 }
 
 .settings-grid {
   display: grid;
-  gap: 0;
+  gap: 10px;
 }
 
 .settings-group {
   display: grid;
   gap: 0;
   min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--pm-border);
+  border-radius: var(--pm-radius);
+  background: color-mix(in srgb, var(--pm-panel) 68%, transparent);
 }
 
 .group-title {
-  padding: 9px 10px 5px;
+  display: grid;
+  gap: 3px;
+  padding: 10px 10px 8px;
+  border-bottom: 1px solid color-mix(in srgb, var(--pm-border) 72%, transparent);
   color: var(--pm-muted);
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
+}
+
+.group-title span,
+.field-hint {
+  color: var(--pm-muted);
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: none;
 }
 
 .field-grid {
@@ -290,10 +390,11 @@ label,
 
 .field {
   display: grid;
-  gap: 4px;
+  gap: 5px;
   min-width: 0;
-  padding: 7px 10px 8px;
-  border-top: 1px solid color-mix(in srgb, var(--pm-border) 70%, transparent);
+  padding: 9px 10px 10px;
+  border-top: 1px solid color-mix(in srgb, var(--pm-border) 58%, transparent);
+  transition: background 120ms ease;
 }
 
 .field:hover {
@@ -305,13 +406,17 @@ select {
   display: block;
   width: 100%;
   min-width: 0;
-  min-height: 26px;
-  padding: 3px 6px;
+  min-height: 28px;
+  padding: 4px 7px;
   border: 1px solid var(--pm-input-border);
-  border-radius: 3px;
+  border-radius: 5px;
   outline: none;
   background: var(--pm-input-bg);
   color: var(--pm-input-fg);
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease;
 }
 
 input:focus,
@@ -323,7 +428,7 @@ select:focus {
 .days {
   display: grid;
   grid-template-columns: repeat(7, minmax(24px, 1fr));
-  gap: 3px;
+  gap: 4px;
 }
 
 .day {
@@ -331,14 +436,19 @@ select:focus {
   align-items: center;
   justify-content: center;
   min-width: 0;
-  min-height: 24px;
+  min-height: 28px;
   padding: 2px 4px;
   border: 1px solid var(--pm-border);
-  border-radius: 3px;
+  border-radius: 5px;
   background: transparent;
   color: var(--pm-fg);
   cursor: pointer;
   user-select: none;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease,
+    transform 120ms ease;
 }
 
 .day:hover {
@@ -358,22 +468,33 @@ select:focus {
   color: var(--pm-button-fg);
 }
 
+.save-chip {
+  flex: 0 0 auto;
+  padding: 2px 7px;
+  border: 1px solid var(--pm-border);
+  border-radius: 999px;
+  background: var(--pm-subtle);
+  color: var(--pm-muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
 @media (min-width: 820px) {
   .shell {
     grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
   }
 
   .workspace {
+    position: sticky;
+    top: 39px;
+    max-height: calc(100vh - 39px);
+    overflow: auto;
     border-right: 1px solid var(--pm-border);
     border-bottom: 0;
   }
 
   .settings-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .settings-group + .settings-group {
-    border-left: 1px solid var(--pm-border);
   }
 }
 
