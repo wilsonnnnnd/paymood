@@ -7,7 +7,11 @@ type AdsWindow = Window & {
   adsbygoogle?: unknown[]
 }
 
-export default function AdSenseSlot() {
+type AdSenseSlotProps = {
+  placement?: 'side' | 'bottom'
+}
+
+export default function AdSenseSlot({ placement = 'bottom' }: AdSenseSlotProps) {
   const client = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT
   const slot = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_SLOT
 
@@ -26,7 +30,7 @@ export default function AdSenseSlot() {
   if (!client || !slot) return null
 
   return (
-    <aside className="adsense-slot" aria-label="Advertisement">
+    <aside className={`adsense-slot adsense-slot--${placement}`} aria-label="Advertisement">
       <Script
         async
         crossOrigin="anonymous"

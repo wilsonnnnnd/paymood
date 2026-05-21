@@ -253,6 +253,12 @@ select {
   justify-content: center;
 }
 
+.app-shell--with-ads {
+  display: grid;
+  grid-template-columns: minmax(120px, 180px) minmax(0, 780px) minmax(120px, 180px);
+  gap: clamp(14px, 2vw, 28px);
+}
+
 .hud-shell {
   width: min(780px, 100%);
   border: 1px solid var(--s-shell-border);
@@ -710,6 +716,15 @@ select {
   min-height: 90px;
   margin-top: 12px;
   overflow: hidden;
+}
+
+.adsense-slot--side {
+  min-height: 600px;
+  margin-top: 0;
+}
+
+.adsense-slot--bottom {
+  display: none;
 }
 
 .hud-controls-grid {
@@ -1791,6 +1806,18 @@ fieldset.hud-control {
 /* ── RESPONSIVE ───────────────────────────────────────────────────────────── */
 
 @media (max-width: 680px) {
+  .app-shell--with-ads {
+    display: flex;
+  }
+
+  .adsense-slot--side {
+    display: none;
+  }
+
+  .adsense-slot--bottom {
+    display: block;
+  }
+
   .settings-shell {
     border-radius: 28px;
     padding: 22px 16px 18px;
