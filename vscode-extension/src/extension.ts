@@ -1,4 +1,5 @@
 import * as vscode from 'vscode'
+import { randomUUID } from 'crypto'
 import {
   earnedSoFar,
   earnedSoFarThisMonth,
@@ -466,7 +467,7 @@ function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri, nonce
 }
 
 export function activate(context: vscode.ExtensionContext) {
-  const windowId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`
+  const windowId = `${Date.now().toString(36)}-${randomUUID()}`
 
   const savedStatusVisible = context.globalState.get<boolean>(STATUS_VISIBLE_KEY)
   let statusVisible = typeof savedStatusVisible === 'boolean' ? savedStatusVisible : true
@@ -477,22 +478,19 @@ export function activate(context: vscode.ExtensionContext) {
   const now = new Date()
   const today = getLocalDayKey(now)
   const legacy = readLegacyCodingTime(context, now)
-  const existingWindow = runtimeState.windows[windowId]
-  if (existingWindow && existingWindow.day === today) localWindowState = existingWindow
-  else {
-    localWindowState = {
-      day: today,
-      codingTodayMs: legacy.day === today ? legacy.milliseconds : 0,
-      thinkingTodayMs: 0,
-      codingSessionMs: 0,
-      lastSeenMs: now.getTime(),
-      timerStatus: vscode.window.state.focused ? 'start' : 'pause',
-      timerUpdatedAt: now.getTime(),
-    }
+  localWindowState = {
+    day: today,
+    codingTodayMs: legacy.day === today ? legacy.milliseconds : 0,
+    thinkingTodayMs: 0,
+    codingSessionMs: 0,
+    lastSeenMs: now.getTime(),
+    timerStatus: runtimeState.timer.status,
+    timerUpdatedAt: runtimeState.timer.updatedAt,
   }
 
   let codingActiveUntilMs = 0
   let lastTickMs = Date.now()
+  let wasWindowFocused = vscode.window.state.focused
   let statusItem: vscode.StatusBarItem | null = null
   let panel: vscode.WebviewPanel | null = null
   let timer: NodeJS.Timeout | null = null
@@ -505,10 +503,25 @@ export function activate(context: vscode.ExtensionContext) {
     void context.globalState.update(RUNTIME_STATE_KEY, runtimeState)
   }
 
+  const syncRuntimeFromStore = (nowDate: Date) => {
+    const incoming = readRuntimeState(context, nowDate)
+    const incomingSerialized = JSON.stringify(incoming)
+    if (incomingSerialized === lastRuntimeSerialized) return
+
+    runtimeState = incoming
+    const incomingLocal = runtimeState.windows[windowId]
+    if (incomingLocal) {
+      localWindowState = sanitizeWindowRuntimeState(incomingLocal, getLocalDayKey(nowDate), nowDate.getTime())
+    } else {
+      runtimeState.windows[windowId] = localWindowState
+    }
+    lastRuntimeSerialized = incomingSerialized
+  }
+
   const determineTimerStatus = (nowMs: number): TimerStatus => {
     if (vscode.window.state.focused) return 'start'
     const activeWindows = countActiveWindows(runtimeState, nowMs)
-    return activeWindows > 1 ? 'pause' : 'end'
+    return activeWindows > 0 ? 'pause' : 'end'
   }
 
   const applySharedTimerLww = (desiredStatus: TimerStatus, nowMs: number) => {
@@ -533,6 +546,8 @@ export function activate(context: vscode.ExtensionContext) {
     const nowDate = new Date()
     const nowMs = nowDate.getTime()
     const todayKey = getLocalDayKey(nowDate)
+    syncRuntimeFromStore(nowDate)
+    const focusStateAtLastTick = wasWindowFocused
 
     if (localWindowState.day !== todayKey) {
       localWindowState = {
@@ -546,8 +561,8 @@ export function activate(context: vscode.ExtensionContext) {
       }
     }
 
-    const deltaMs = Math.max(0, nowMs - lastTickMs)
-    if (deltaMs > 0 && vscode.window.state.focused) {
+    const deltaMs = nowMs - lastTickMs
+    if (deltaMs > 0 && focusStateAtLastTick) {
       if (nowMs <= codingActiveUntilMs) {
         localWindowState.codingTodayMs += deltaMs
         localWindowState.codingSessionMs += deltaMs
@@ -564,13 +579,13 @@ export function activate(context: vscode.ExtensionContext) {
     runtimeState.windows[windowId] = localWindowState
     persistRuntimeState()
     lastTickMs = nowMs
+    wasWindowFocused = vscode.window.state.focused
   }
 
   const markCodingActivity = () => {
     const nowMs = Date.now()
     if (nowMs > codingActiveUntilMs) lastTickMs = nowMs
     codingActiveUntilMs = nowMs + CODING_ACTIVE_WINDOW_MS
-    collectTime()
     refresh()
   }
 
@@ -603,7 +618,6 @@ export function activate(context: vscode.ExtensionContext) {
     const nowDate = new Date()
     const nowMs = nowDate.getTime()
     const todayKey = getLocalDayKey(nowDate)
-    cleanupRuntimeState(runtimeState, nowMs, todayKey)
     const totals = aggregateToday(runtimeState, nowMs, todayKey)
 
     const snapshot = computeSnapshot(
@@ -619,9 +633,14 @@ export function activate(context: vscode.ExtensionContext) {
     ensureStatusBar()
     if (statusItem) {
       statusItem.text = `$(pulse) ${formatStatus(snapshot)}`
-      statusItem.tooltip = `Work progress\n${snapshot.percent}% - ${currencyCodeToSymbol(settings.currency)}${snapshot.earned.toFixed(
-        2,
-      )}\nRemaining ${formatHM(snapshot.remainingSeconds)}\nCoding today ${formatHM(snapshot.codingTodaySeconds)}\nThinking today ${formatHM(snapshot.thinkingTodaySeconds)}`
+      const tooltipLines = [
+        'Work progress',
+        `${snapshot.percent}% - ${currencyCodeToSymbol(settings.currency)}${snapshot.earned.toFixed(2)}`,
+        `Remaining ${formatHM(snapshot.remainingSeconds)}`,
+        `Coding today ${formatHM(snapshot.codingTodaySeconds)}`,
+        `Thinking today ${formatHM(snapshot.thinkingTodaySeconds)}`,
+      ]
+      statusItem.tooltip = tooltipLines.join('\n')
     }
 
     postSnapshotToWebview(snapshot)
@@ -708,16 +727,6 @@ export function activate(context: vscode.ExtensionContext) {
       refresh()
     }),
   )
-  context.subscriptions.push(
-    context.globalState.onDidChange((event) => {
-      if (event.key !== RUNTIME_STATE_KEY) return
-      runtimeState = sanitizeRuntimeState(event.value, new Date())
-      cleanupRuntimeState(runtimeState, Date.now(), getLocalDayKey(new Date()))
-      runtimeState.windows[windowId] = localWindowState
-      lastRuntimeSerialized = JSON.stringify(runtimeState)
-      refresh()
-    }),
-  )
 
   ensureStatusBar()
   refresh()
@@ -726,13 +735,15 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push({
     dispose: () => {
       if (timer) clearInterval(timer)
-      const current = readRuntimeState(context, new Date())
+      const now = new Date()
+      const nowMs = now.getTime()
+      const current = readRuntimeState(context, now)
       delete current.windows[windowId]
-      cleanupRuntimeState(current, Date.now(), getLocalDayKey(new Date()))
-      if (countActiveWindows(current, Date.now()) === 0) {
+      cleanupRuntimeState(current, nowMs, getLocalDayKey(now))
+      if (countActiveWindows(current, nowMs) === 0) {
         current.timer = {
           status: 'end',
-          updatedAt: Date.now(),
+          updatedAt: nowMs,
           sourceWindowId: windowId,
         }
       }
