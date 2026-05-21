@@ -2,6 +2,13 @@
 
 Status bar work progress + earnings, with a webview settings dashboard.
 
+## Runtime behavior
+
+- `Coding today` is aggregated across all active VS Code windows on the same machine.
+- `Thinking today` tracks focused-but-not-coding time and is also aggregated across active windows.
+- Multi-window timer state (`start` / `pause` / `end`) auto-syncs using last-write-wins.
+- Status bar tooltip shows both `Coding today` and `Thinking today`.
+
 ## Quick start
 
 From the repo root:
