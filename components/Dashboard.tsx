@@ -328,6 +328,10 @@ export default function Dashboard() {
           </section>
         </div>
       )}
+      <footer className="hud-footnote" aria-label="Site information">
+        <Link href="/about">About</Link> <Link href="/privacy">Privacy</Link>{' '}
+        <Link href="/terms">Terms</Link> <Link href="/contact">Contact</Link>
+      </footer>
     </section>
   )
 }

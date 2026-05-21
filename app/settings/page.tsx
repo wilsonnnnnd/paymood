@@ -34,6 +34,10 @@ export default function SettingsPage() {
           <p className="settings-footnote" aria-label="货币提示">
             货币与工作时间会影响你的进度与收入展示。
           </p>
+          <nav className="settings-footnote" aria-label="Site information">
+            <Link href="/about">About</Link> <Link href="/privacy">Privacy</Link>{' '}
+            <Link href="/terms">Terms</Link> <Link href="/contact">Contact</Link>
+          </nav>
         </section>
       </section>
     </main>
