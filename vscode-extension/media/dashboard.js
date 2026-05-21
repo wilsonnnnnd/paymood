@@ -35,6 +35,7 @@ const els = {
   weekText: document.getElementById('weekText'),
   monthText: document.getElementById('monthText'),
   codingTodayText: document.getElementById('codingTodayText'),
+  thinkingTodayText: document.getElementById('thinkingTodayText'),
   codingSessionText: document.getElementById('codingSessionText'),
 }
 
@@ -156,6 +157,7 @@ function applySnapshot(snapshot) {
   els.weekText.textContent = currencySymbol + weekText
   els.monthText.textContent = currencySymbol + monthText
   els.codingTodayText.textContent = formatDuration(snapshot.codingTodaySeconds)
+  els.thinkingTodayText.textContent = formatDuration(snapshot.thinkingTodaySeconds)
   els.codingSessionText.textContent = formatDuration(snapshot.codingSessionSeconds)
   els.statusToggle.textContent = snapshot.statusVisible ? 'Status on' : 'Status off'
   els.statusToggle.setAttribute('aria-pressed', snapshot.statusVisible ? 'true' : 'false')
