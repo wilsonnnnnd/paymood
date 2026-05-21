@@ -1,6 +1,7 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import AdSenseSlot from './AdSenseSlot'
 import CircularProgress from './CircularProgress'
 import ColorModeToggle from './ColorModeToggle'
 import { useSettings } from '../hooks/useSettings'
@@ -332,6 +333,7 @@ export default function Dashboard() {
         <Link href="/about">About</Link> <Link href="/privacy">Privacy</Link>{' '}
         <Link href="/terms">Terms</Link> <Link href="/contact">Contact</Link>
       </footer>
+      <AdSenseSlot />
     </section>
   )
 }

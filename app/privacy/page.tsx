@@ -37,7 +37,15 @@ export default function PrivacyPage() {
             'If PayMood later uses advertising, analytics, search, hosting, or similar third-party services, those services may process technical information.',
           body: [
             'Depending on the service, this may include cookies, device identifiers, IP address, browser information, page views, ad interactions, search queries, or web beacons. Those third parties may use this information according to their own policies.',
-            'If Google advertising or search advertising is enabled, Google and its partners may use cookies or similar technologies to serve, measure, and personalize ads where permitted.',
+            'Third-party vendors, including Google, may use cookies to serve ads based on your prior visits to PayMood or other websites. Google advertising cookies enable Google and its partners to serve ads based on visits to this site and other sites on the Internet.',
+            <>
+              You can opt out of personalized advertising through{' '}
+              <a href="https://www.google.com/settings/ads" rel="noreferrer" target="_blank">
+                Google Ads Settings
+              </a>
+              . If other third-party vendors or ad networks are enabled, they may also use cookies for ad
+              serving and may provide their own opt-out controls.
+            </>,
           ],
         },
         {

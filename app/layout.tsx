@@ -20,9 +20,13 @@ export const viewport: Viewport = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const adsenseClient = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT
+
   return (
     <html lang="zh-CN">
-      <head />
+      <head>
+        {adsenseClient ? <meta name="google-adsense-account" content={adsenseClient} /> : null}
+      </head>
       <body>
         <SettingsProvider>
           <ThemeSync />
