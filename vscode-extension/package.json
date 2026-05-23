@@ -21,6 +21,7 @@
     "onStartupFinished",
     "onCommand:paymood.openDashboard",
     "onCommand:paymood.toggleStatusBar",
+    "onCommand:paymood.resetTodayActivity",
     "onCommand:paymood.resetSettings"
   ],
   "contributes": {
@@ -34,6 +35,10 @@
         "title": "PayMood: Toggle Status Bar"
       },
       {
+        "command": "paymood.resetTodayActivity",
+        "title": "PayMood: Reset Today Activity"
+      },
+      {
         "command": "paymood.resetSettings",
         "title": "PayMood: Reset Settings"
       }
@@ -42,6 +47,7 @@
   "scripts": {
     "build": "npx esbuild src/extension.ts --bundle --platform=node --format=cjs --target=node18 --external:vscode --outfile=dist/extension.js",
     "watch": "npx esbuild src/extension.ts --bundle --platform=node --format=cjs --target=node18 --external:vscode --outfile=dist/extension.js --watch",
+    "test": "npx esbuild src/storage.test.ts --bundle --platform=node --format=cjs --target=node18 --external:vscode --outfile=.tmp/storage.test.cjs && node --test .tmp/storage.test.cjs",
     "typecheck": "npx tsc -p tsconfig.json"
   },
   "devDependencies": {

@@ -26,6 +26,7 @@ const els = {
   salaryAmount: document.getElementById('salaryAmount'),
   currency: document.getElementById('currency'),
   statusToggle: document.getElementById('statusToggle'),
+  resetTodayActivity: document.getElementById('resetTodayActivity'),
   resetSettings: document.getElementById('resetSettings'),
   earnedText: document.getElementById('earnedText'),
   progressBar: document.getElementById('progressBar'),
@@ -127,7 +128,11 @@ function bind() {
   els.statusToggle.addEventListener('click', () => {
     vscode.postMessage({ type: 'toggleStatusBar' })
   })
-  els.resetSettings.addEventListener('click', () => {
+els.resetTodayActivity?.addEventListener('click', () => {
+  post({ type: 'resetTodayActivity' })
+})
+
+els.resetSettings.addEventListener('click', () => {
     vscode.postMessage({ type: 'resetSettings' })
   })
 }

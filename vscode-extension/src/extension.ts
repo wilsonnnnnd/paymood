@@ -9,16 +9,27 @@ import {
 } from '../../lib/earnings'
 import { currencySymbols } from '../../lib/settings'
 import { defaultSettings, sanitizeSettings, type Settings } from '../../lib/settingsModel'
+import {
+  addDailyActivity,
+  cleanupRuntimeState,
+  countActiveWindows,
+  getLocalDayKey,
+  persistRuntimeState as persistRuntimeStateToStore,
+  readDailyActivity,
+  readRuntimeState,
+  readSettings,
+  readStatusVisible,
+  resetDailyActivity,
+  sanitizeWindowRuntimeState,
+  writeSettings,
+  writeStatusVisible,
+  type RuntimeState,
+  type TimerStatus,
+  type WindowRuntimeState,
+} from './storage'
 
-const SETTINGS_KEY = 'paymood.settings.v1'
-const STATUS_VISIBLE_KEY = 'paymood.statusBar.visible.v1'
-const CODING_TIME_KEY = 'paymood.codingTime.v1'
-const RUNTIME_STATE_KEY = 'paymood.runtimeState.v1'
 const CODING_ACTIVE_WINDOW_MS = 90_000
 const RUNTIME_HEARTBEAT_MS = 5_000
-const WINDOW_STALE_MS = 20_000
-
-type TimerStatus = 'start' | 'pause' | 'end'
 
 type Snapshot = {
   settings: Settings
@@ -41,35 +52,9 @@ type WebviewIncomingMessage =
   | { type: 'ready' }
   | { type: 'patchSettings'; patch?: unknown }
   | { type: 'toggleStatusBar' }
+  | { type: 'resetTodayActivity' }
   | { type: 'resetSettings' }
   | { type: string; [key: string]: unknown }
-
-type LegacyCodingTimeState = {
-  day: string
-  milliseconds: number
-}
-
-type WindowRuntimeState = {
-  day: string
-  codingTodayMs: number
-  thinkingTodayMs: number
-  codingSessionMs: number
-  lastSeenMs: number
-  timerStatus: TimerStatus
-  timerUpdatedAt: number
-}
-
-type SharedTimerState = {
-  status: TimerStatus
-  updatedAt: number
-  sourceWindowId: string
-}
-
-type RuntimeState = {
-  day: string
-  windows: Record<string, WindowRuntimeState>
-  timer: SharedTimerState
-}
 
 const WEBVIEW_ALLOWED_SETTING_KEYS = new Set<keyof Settings>([
   'startTime',
@@ -101,16 +86,6 @@ function formatStatus(snapshot: Snapshot) {
   if (now < start) return `$(clock) Starts ${snapshot.settings.startTime}`
   if (now >= end) return `$(check) Done · ${currency}${moneyText}`
   return `$(pulse) ${percentText} · ${currency}${moneyText}`
-}
-
-function readSettings(context: vscode.ExtensionContext) {
-  const raw = context.globalState.get<unknown>(SETTINGS_KEY)
-  if (!raw) return defaultSettings
-  return sanitizeSettings(raw)
-}
-
-async function writeSettings(context: vscode.ExtensionContext, next: Settings) {
-  await context.globalState.update(SETTINGS_KEY, next)
 }
 
 function computeSnapshot(
@@ -179,121 +154,6 @@ function formatHM(seconds: number) {
   return `${String(h).padStart(2, '0')}h ${String(m).padStart(2, '0')}m`
 }
 
-function getLocalDayKey(date: Date) {
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-  return `${year}-${month}-${day}`
-}
-
-function readLegacyCodingTime(context: vscode.ExtensionContext, now: Date): LegacyCodingTimeState {
-  const today = getLocalDayKey(now)
-  const raw = context.globalState.get<unknown>(CODING_TIME_KEY)
-  if (!raw || typeof raw !== 'object') return { day: today, milliseconds: 0 }
-
-  const saved = raw as Partial<LegacyCodingTimeState>
-  if (saved.day !== today || typeof saved.milliseconds !== 'number' || !Number.isFinite(saved.milliseconds)) {
-    return { day: today, milliseconds: 0 }
-  }
-
-  return { day: today, milliseconds: Math.max(0, saved.milliseconds) }
-}
-
-function defaultRuntimeState(now: Date): RuntimeState {
-  const nowMs = now.getTime()
-  return {
-    day: getLocalDayKey(now),
-    windows: {},
-    timer: {
-      status: 'end',
-      updatedAt: nowMs,
-      sourceWindowId: '',
-    },
-  }
-}
-
-function coerceTimerStatus(value: unknown): TimerStatus {
-  if (value === 'start' || value === 'pause' || value === 'end') return value
-  return 'end'
-}
-
-function sanitizeWindowRuntimeState(raw: unknown, fallbackDay: string, nowMs: number): WindowRuntimeState {
-  const value = raw && typeof raw === 'object' ? (raw as Partial<WindowRuntimeState>) : {}
-  return {
-    day: typeof value.day === 'string' ? value.day : fallbackDay,
-    codingTodayMs: Number.isFinite(value.codingTodayMs) ? Math.max(0, Number(value.codingTodayMs)) : 0,
-    thinkingTodayMs: Number.isFinite(value.thinkingTodayMs) ? Math.max(0, Number(value.thinkingTodayMs)) : 0,
-    codingSessionMs: Number.isFinite(value.codingSessionMs) ? Math.max(0, Number(value.codingSessionMs)) : 0,
-    lastSeenMs: Number.isFinite(value.lastSeenMs) ? Math.max(0, Number(value.lastSeenMs)) : nowMs,
-    timerStatus: coerceTimerStatus(value.timerStatus),
-    timerUpdatedAt: Number.isFinite(value.timerUpdatedAt) ? Math.max(0, Number(value.timerUpdatedAt)) : nowMs,
-  }
-}
-
-function sanitizeRuntimeState(raw: unknown, now: Date): RuntimeState {
-  const fallback = defaultRuntimeState(now)
-  if (!raw || typeof raw !== 'object') return fallback
-
-  const nowMs = now.getTime()
-  const value = raw as Partial<RuntimeState>
-  const day = typeof value.day === 'string' ? value.day : fallback.day
-
-  const windowsRaw = value.windows
-  const windows: Record<string, WindowRuntimeState> = {}
-  if (windowsRaw && typeof windowsRaw === 'object') {
-    for (const [id, entry] of Object.entries(windowsRaw)) {
-      if (!id) continue
-      windows[id] = sanitizeWindowRuntimeState(entry, day, nowMs)
-    }
-  }
-
-  const timerRaw = value.timer && typeof value.timer === 'object' ? (value.timer as Partial<SharedTimerState>) : {}
-  const timer: SharedTimerState = {
-    status: coerceTimerStatus(timerRaw.status),
-    updatedAt: Number.isFinite(timerRaw.updatedAt) ? Math.max(0, Number(timerRaw.updatedAt)) : nowMs,
-    sourceWindowId: typeof timerRaw.sourceWindowId === 'string' ? timerRaw.sourceWindowId : '',
-  }
-
-  return { day, windows, timer }
-}
-
-function readRuntimeState(context: vscode.ExtensionContext, now: Date): RuntimeState {
-  const raw = context.globalState.get<unknown>(RUNTIME_STATE_KEY)
-  return sanitizeRuntimeState(raw, now)
-}
-
-function cleanupRuntimeState(runtime: RuntimeState, nowMs: number, today: string) {
-  runtime.day = today
-  for (const [windowId, entry] of Object.entries(runtime.windows)) {
-    const stale = nowMs - entry.lastSeenMs > WINDOW_STALE_MS
-    if (stale || entry.day !== today) {
-      delete runtime.windows[windowId]
-    }
-  }
-}
-
-function aggregateToday(runtime: RuntimeState, nowMs: number, today: string) {
-  let codingTodayMs = 0
-  let thinkingTodayMs = 0
-
-  for (const entry of Object.values(runtime.windows)) {
-    if (entry.day !== today) continue
-    if (nowMs - entry.lastSeenMs > WINDOW_STALE_MS) continue
-    codingTodayMs += Math.max(0, entry.codingTodayMs)
-    thinkingTodayMs += Math.max(0, entry.thinkingTodayMs)
-  }
-
-  return { codingTodayMs, thinkingTodayMs }
-}
-
-function countActiveWindows(runtime: RuntimeState, nowMs: number) {
-  let count = 0
-  for (const entry of Object.values(runtime.windows)) {
-    if (nowMs - entry.lastSeenMs <= WINDOW_STALE_MS) count += 1
-  }
-  return count
-}
-
 function createNonce() {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   let value = ''
@@ -340,12 +200,13 @@ function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri, nonce
       <div class="brand">
         <div class="brand-mark" aria-hidden="true"></div>
         <div>
-          <h1>paymood</h1>
+          <h1>Paymood</h1>
           <div class="sub">VS Code work meter</div>
         </div>
       </div>
       <div class="actions" aria-label="Dashboard actions">
         <button class="ghost-button" id="statusToggle" type="button">Status bar</button>
+        <button class="ghost-button" id="resetTodayActivity" type="button">Reset today</button>
         <button class="ghost-button danger" id="resetSettings" type="button">Reset</button>
       </div>
     </header>
@@ -399,11 +260,11 @@ function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri, nonce
               <div class="k">This month</div>
               <div class="v" id="monthText">-</div>
             </div>
-            <div class="metric">
+            <div class="metric" title="Coding time is counted while this VS Code window is focused and within 90 seconds of a text edit.">
               <div class="k">Coding today</div>
               <div class="v" id="codingTodayText">-</div>
             </div>
-            <div class="metric">
+            <div class="metric" title="Thinking time is counted while this VS Code window is focused but outside the recent coding window.">
               <div class="k">Thinking today</div>
               <div class="v" id="thinkingTodayText">-</div>
             </div>
@@ -498,18 +359,17 @@ function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri, nonce
 export function activate(context: vscode.ExtensionContext) {
   const windowId = `${Date.now().toString(36)}-${randomUUID()}`
 
-  const savedStatusVisible = context.globalState.get<boolean>(STATUS_VISIBLE_KEY)
-  let statusVisible = typeof savedStatusVisible === 'boolean' ? savedStatusVisible : true
+  let statusVisible = readStatusVisible(context)
   let runtimeState = readRuntimeState(context, new Date())
+  let dailyActivityState = readDailyActivity(context, new Date())
   let localWindowState: WindowRuntimeState
   let lastRuntimeSerialized = JSON.stringify(runtimeState)
 
   const now = new Date()
   const today = getLocalDayKey(now)
-  const legacy = readLegacyCodingTime(context, now)
   localWindowState = {
     day: today,
-    codingTodayMs: legacy.day === today ? legacy.milliseconds : 0,
+    codingTodayMs: 0,
     thinkingTodayMs: 0,
     codingSessionMs: 0,
     lastSeenMs: now.getTime(),
@@ -529,7 +389,7 @@ export function activate(context: vscode.ExtensionContext) {
     const serialized = JSON.stringify(runtimeState)
     if (serialized === lastRuntimeSerialized) return
     lastRuntimeSerialized = serialized
-    void context.globalState.update(RUNTIME_STATE_KEY, runtimeState)
+    persistRuntimeStateToStore(context, runtimeState)
   }
 
   const syncRuntimeFromStore = (nowDate: Date) => {
@@ -576,6 +436,7 @@ export function activate(context: vscode.ExtensionContext) {
     const nowMs = nowDate.getTime()
     const todayKey = getLocalDayKey(nowDate)
     syncRuntimeFromStore(nowDate)
+    dailyActivityState = readDailyActivity(context, nowDate)
     const focusStateAtLastTick = wasWindowFocused
 
     if (localWindowState.day !== todayKey) {
@@ -591,13 +452,23 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     const deltaMs = nowMs - lastTickMs
+    let codingDeltaMs = 0
+    let thinkingDeltaMs = 0
     if (deltaMs > 0 && focusStateAtLastTick) {
       if (nowMs <= codingActiveUntilMs) {
-        localWindowState.codingTodayMs += deltaMs
+        codingDeltaMs = deltaMs
+        localWindowState.codingTodayMs += codingDeltaMs
         localWindowState.codingSessionMs += deltaMs
       } else {
-        localWindowState.thinkingTodayMs += deltaMs
+        thinkingDeltaMs = deltaMs
+        localWindowState.thinkingTodayMs += thinkingDeltaMs
       }
+    }
+    if (codingDeltaMs > 0 || thinkingDeltaMs > 0) {
+      dailyActivityState = addDailyActivity(context, nowDate, {
+        codingTodayMs: codingDeltaMs,
+        thinkingTodayMs: thinkingDeltaMs,
+      }, windowId, dailyActivityState)
     }
 
     localWindowState.lastSeenMs = nowMs
@@ -645,9 +516,7 @@ export function activate(context: vscode.ExtensionContext) {
     collectTime()
     const settings = readSettings(context)
     const nowDate = new Date()
-    const nowMs = nowDate.getTime()
-    const todayKey = getLocalDayKey(nowDate)
-    const totals = aggregateToday(runtimeState, nowMs, todayKey)
+    const totals = dailyActivityState.day === getLocalDayKey(nowDate) ? dailyActivityState : readDailyActivity(context, nowDate)
 
     const snapshot = computeSnapshot(
       nowDate,
@@ -713,6 +582,9 @@ export function activate(context: vscode.ExtensionContext) {
             await toggleStatusBar()
             refresh()
             return
+          case 'resetTodayActivity':
+            await resetTodayActivityWithConfirmation()
+            return
           case 'resetSettings':
             await resetSettings()
             return
@@ -738,7 +610,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   const toggleStatusBar = async () => {
     statusVisible = !statusVisible
-    await context.globalState.update(STATUS_VISIBLE_KEY, statusVisible)
+    await writeStatusVisible(context, statusVisible)
     ensureStatusBar()
   }
 
@@ -747,8 +619,20 @@ export function activate(context: vscode.ExtensionContext) {
     refresh()
   }
 
+  const resetTodayActivityWithConfirmation = async () => {
+    const choice = await vscode.window.showWarningMessage(
+      'Reset today\'s Coding today and Thinking today totals?',
+      { modal: true },
+      'Reset today',
+    )
+    if (choice !== 'Reset today') return
+    dailyActivityState = resetDailyActivity(context, new Date())
+    refresh()
+  }
+
   context.subscriptions.push(vscode.commands.registerCommand('paymood.openDashboard', openDashboard))
   context.subscriptions.push(vscode.commands.registerCommand('paymood.toggleStatusBar', toggleStatusBar))
+  context.subscriptions.push(vscode.commands.registerCommand('paymood.resetTodayActivity', resetTodayActivityWithConfirmation))
   context.subscriptions.push(vscode.commands.registerCommand('paymood.resetSettings', resetSettings))
   context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(markCodingActivity))
   context.subscriptions.push(
@@ -777,7 +661,7 @@ export function activate(context: vscode.ExtensionContext) {
           sourceWindowId: windowId,
         }
       }
-      void context.globalState.update(RUNTIME_STATE_KEY, current)
+      persistRuntimeStateToStore(context, current)
     },
   })
 }
