@@ -21,12 +21,12 @@ import slime2Idle from '../craftpix/PNG/Slime2/With_shadow/Slime2_Idle_with_shad
 import slime3Idle from '../craftpix/PNG/Slime3/With_shadow/Slime3_Idle_with_shadow.png'
 
 const salaryTypeOptions: Array<{ value: Settings['salaryType']; label: string }> = [
-  { value: 'hourly', label: '时薪' },
-  { value: 'daily', label: '日薪' },
-  { value: 'weekly', label: '周薪' },
-  { value: 'fortnightly', label: '双周薪' },
-  { value: 'monthly', label: '月薪' },
-  { value: 'annually', label: '年薪' },
+  { value: 'hourly', label: 'Hourly' },
+  { value: 'daily', label: 'Daily' },
+  { value: 'weekly', label: 'Weekly' },
+  { value: 'fortnightly', label: 'Fortnightly' },
+  { value: 'monthly', label: 'Monthly' },
+  { value: 'annually', label: 'Annually' },
 ]
 
 function PetIcon({ sheet }: { sheet: { height: number; width: number; src: string } }) {
@@ -107,11 +107,11 @@ export default function SettingsForm() {
         <div className="settings-overview" aria-label="设置摘要">
           <div>
             <span>Stored locally</span>
-            <strong>只保存在当前设备</strong>
+            <strong>Saved on this device only</strong>
           </div>
           <div>
             <span>Live estimate</span>
-            <strong>用于今日进度与收入</strong>
+            <strong>Used for progress and earnings</strong>
           </div>
           <div>
             <span>Quiet companion</span>
@@ -160,9 +160,9 @@ export default function SettingsForm() {
           ) : null}
         </SettingSection>
 
-        <SettingSection title="Work rhythm" description="定义今天从什么时候开始、什么时候结束，以及哪些日子参与估算。" tone="default">
+        <SettingSection title="Work schedule" description="Used for progress, time remaining, and earning estimates." tone="default">
           <SettingGroup>
-            <SettingRow label="上班时间" controlId="settings-start-time">
+            <SettingRow label="Start" controlId="settings-start-time">
               <SettingTimeInput
                 id="settings-start-time"
                 value={settings.startTime}
@@ -170,7 +170,7 @@ export default function SettingsForm() {
               />
             </SettingRow>
 
-            <SettingRow label="下班时间" controlId="settings-end-time">
+            <SettingRow label="End" controlId="settings-end-time">
               <SettingTimeInput
                 id="settings-end-time"
                 value={settings.endTime}
@@ -178,7 +178,7 @@ export default function SettingsForm() {
               />
             </SettingRow>
 
-            <SettingRow label="休息时间" description="以分钟计算，会从工作进度里扣除。" controlId="settings-break-minutes">
+            <SettingRow label="Break" description="Minutes removed from the earning window." controlId="settings-break-minutes">
               <SettingInput
                 id="settings-break-minutes"
                 value={String(settings.breakMinutes)}
@@ -190,7 +190,7 @@ export default function SettingsForm() {
             </SettingRow>
           </SettingGroup>
 
-          <SettingRow label="工作日" description="用于估算周/月收入，不会制造任何提醒。">
+          <SettingRow label="Work days" description="Used for week and month estimates; no reminders are created.">
             <div className="setting-weekdays" role="group" aria-label="工作日">
               {weekdayChoices.map((day) => {
                 const pressed = workDays.includes(day.value)
@@ -212,7 +212,7 @@ export default function SettingsForm() {
           </SettingRow>
         </SettingSection>
 
-        <SettingSection title="Privacy vault" description="薪资只用于本机估算，保存后不回显具体金额。" tone="vault">
+        <SettingSection title="Pay model" description="Stored locally and used only for estimates." tone="vault">
           {payLocked ? (
             <SettingGroup density="loose">
               <div className="setting-vault-state">
@@ -246,14 +246,14 @@ export default function SettingsForm() {
                   min={0}
                   max={activeSalaryBounds.max}
                   step="any"
-                  placeholder="输入一次"
-                  aria-label="薪资金额"
+                  placeholder="Amount"
+                  aria-label="Amount"
                 />
                 <SettingSelect
                   tone="vault"
                   value={salaryTypeDraft}
                   onChange={(e) => setSalaryTypeDraft(e.target.value as Settings['salaryType'])}
-                  aria-label="薪资类型"
+                  aria-label="Type"
                 >
                   {salaryTypeOptions.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -271,7 +271,7 @@ export default function SettingsForm() {
         </SettingSection>
 
         <SettingSection title="Display" description="只影响金额显示方式，不改变你的原始薪资设置。" tone="quiet">
-          <SettingRow label="货币" controlId="settings-currency">
+          <SettingRow label="Currency" controlId="settings-currency">
             <SettingSelect
               id="settings-currency"
               value={(settings.currency ?? 'AUD').toUpperCase()}

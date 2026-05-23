@@ -128,11 +128,11 @@ function bind() {
   els.statusToggle.addEventListener('click', () => {
     vscode.postMessage({ type: 'toggleStatusBar' })
   })
-els.resetTodayActivity?.addEventListener('click', () => {
-  post({ type: 'resetTodayActivity' })
-})
+  els.resetTodayActivity?.addEventListener('click', () => {
+    vscode.postMessage({ type: 'resetTodayActivity' })
+  })
 
-els.resetSettings.addEventListener('click', () => {
+  els.resetSettings.addEventListener('click', () => {
     vscode.postMessage({ type: 'resetSettings' })
   })
 }

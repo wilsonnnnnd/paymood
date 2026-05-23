@@ -200,7 +200,7 @@ function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri, nonce
       <div class="brand">
         <div class="brand-mark" aria-hidden="true"></div>
         <div>
-          <h1>Paymood</h1>
+          <h1>PayMood</h1>
           <div class="sub">VS Code work meter</div>
         </div>
       </div>
