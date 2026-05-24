@@ -757,7 +757,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-23T13:15:08.165Z"
+        "updatedAt": "2026-05-24T13:46:05.851Z"
     },
     {
         "path": "vscode-extension/src/extension.ts",
