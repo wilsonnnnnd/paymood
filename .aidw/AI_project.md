@@ -30,16 +30,18 @@ The repository is packaged for npm distribution.
   - dev: npx next dev
   - build: npx next build
   - start: npx next start
-  - lint: npx eslint . --ext .ts,.tsx,.js,.jsx
-  - test: npx vitest
+  - lint: npx eslint .
+  - test: npx vitest --dir test
 
 ## UI Design Context
 - Framework: React/Next.js
 - Styling: Tailwind CSS, PostCSS
-- Common Components: CircularProgress, ColorModeToggle, Dashboard, SettingsForm, ThemeSync
+- Component Libraries: shadcn/ui or internal UI library
+  - Prefer reusing existing components before writing new UI
+- Common Components: ConfirmModal
 - Design Tokens: theme variables/tokens
   - Reuse existing tokens for consistency (colors, spacing, sizing, shadows)
-- UI Locations: app, components, styles
+- UI Locations: app, components, components/ui, styles
 - Best Practice: Always inspect and reuse project UI system before writing new styles
 
 ## AI Development Notes
@@ -57,6 +59,7 @@ The repository is packaged for npm distribution.
 - .claude/ -> Claude-compatible skill modules and executor logic
 - app/ -> app-router pages and layouts
 - components/ -> shared and feature UI components
+- components/ui/ -> shared UI primitives and reusable building blocks
 - lib/ -> shared utilities, helpers, and support logic
 - styles/ -> global styles, tokens, and theme definitions
 
@@ -66,12 +69,14 @@ The repository is packaged for npm distribution.
 
 ## Reusable System
 ### Shared Components
-- No shared UI directory detected
+- Shared UI directory: `components/ui`
+- Modal
 
 ### Shared Utilities
 - lib/
 
 ## Risk Areas
+- shared UI components affect many pages and should remain backward compatible
 - routing and page entry points affect navigation and screen-level behavior
 - shared layout wrappers can impact many routes at once
 - global styles and spacing tokens can create broad visual regressions
@@ -94,33 +99,36 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 
 ## Project Purpose
 
-- TODO
+- Build PayMood (paymood.work): a calm, cozy workday progress + earned income progress dashboard with subtle “salary mood”.
 
 ## Tech Stack
 
-- Language: TODO
-- Framework: TODO
-- Runtime: TODO
-- Package manager: TODO
-- Database: TODO
-- Deployment: TODO
+- Language: TypeScript
+- Framework: Next.js (App Router)
+- Runtime: Browser-first (no backend)
+- Package manager: npm
+- Database: None (localStorage for settings)
+- Deployment: Static-compatible Next.js deploy (e.g. Vercel)
 
 ## Product / Domain Requirements
 
-- TODO
+- Show work time progress, remaining time, and estimated earned amount based on user schedule and pay settings.
+- Keep UI calm, ambient, soft; Apple-like breathing motion; avoid enterprise dashboard tone.
+- Not a game, not a pet-raising product, not an enterprise admin or finance tool.
+- China-friendly: avoid Google fonts/analytics and fragile external resources.
 
 ## Architecture Notes
 
-- Entry points: TODO
-- Important directories: TODO
-- Shared abstractions: TODO
-- Integration boundaries: TODO
+- Entry points: `app/page.tsx` (dashboard), `app/settings/page.tsx` (settings)
+- Important directories: `components/`, `hooks/`, `lib/`, `styles/`
+- Shared abstractions: pure calculation helpers in `lib/`, persistent settings in `hooks/useSettings.ts`
+- Integration boundaries: no external APIs; local-only persistence
 
 ## Development Requirements
 
-- Testing strategy: TODO
-- Definition of done: TODO
-- Review expectations: TODO
+- Testing strategy: vitest for calculation helpers and critical UI logic; keep build green.
+- Definition of done: user can set schedule/pay and see live progress + earned amount; design matches PayMood direction.
+- Review expectations: keep changes minimal, tokenized, responsive, accessible, production-ready.
 
 ## Safety / Boundaries
 
@@ -138,19 +146,23 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 ## AI Runtime Project Design (PDGL) (v1)
 
 <!-- PDGL:v1 START -->
+
 ### Project Identity
+
 - Project Name: TODO
 - One-line Summary: TODO
 - Target Users: TODO
 - Non-goals: TODO
 
 ### Product / Runtime Intent
+
 - What problem does this project solve?: TODO
 - What should AI optimize for?: TODO
 - What must AI avoid?: TODO
 - What is intentionally out of scope?: TODO
 
 ### Stack Decisions
+
 - Language: TODO
 - Framework: TODO
 - Runtime: TODO
@@ -159,6 +171,7 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 - Deployment Environment: TODO
 
 ### Runtime Constraints
+
 - Files never touch: TODO
 - Dangerous operations: TODO
 - Deployment boundaries: TODO
@@ -167,6 +180,7 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 - MCP write policy: TODO
 
 ### Development Workflow
+
 - Preferred workflow: TODO
 - Testing strategy: TODO
 - Definition of Done: TODO
@@ -174,6 +188,7 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 - Snapshot expectations: TODO
 
 ### Architecture Notes
+
 - Entry points: TODO
 - Directory conventions: TODO
 - Config sources: TODO
@@ -181,12 +196,14 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 - Shared abstractions: TODO
 
 ### Bootstrap Guidance
+
 - Recommended scaffold: TODO
 - Manual setup steps: TODO
 - Human-required setup: TODO
 - Secrets/config setup expectations: TODO
 
 ### AI Collaboration Rules
+
 - How AI should propose changes: TODO
 - How AI should ask for clarification: TODO
 - Preferred output structure: TODO
@@ -196,36 +213,48 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 ## Stable Human Context (SHC) (v1)
 
 <!-- SHC:v1 START -->
+
 ### Project Goal
+
 - TODO
 
 ### Target Users
+
 - TODO
 
 ### Non-goals
+
 - TODO
 
 ### Stack Decisions
+
 - TODO
 
 ### Runtime Constraints
+
 - TODO
 
 ### Directory Conventions
+
 - TODO
 
 ### Config Sources
+
 - TODO
 
 ### Testing Strategy
+
 - TODO
 
 ### Release Constraints
+
 - TODO
 
 ### Files Never Touch
+
 - TODO
 
 ### Deployment Boundaries
+
 - TODO
 <!-- SHC:v1 END -->

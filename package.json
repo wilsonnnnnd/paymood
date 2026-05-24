@@ -18,7 +18,7 @@
     "next": "^16.2.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "repo-context-kit": "^1.7.3",
+    "repo-context-kit": "^1.8.2",
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {

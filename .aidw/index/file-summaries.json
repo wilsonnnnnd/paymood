@@ -1,5 +1,25 @@
 [
     {
+        "path": ".env.example",
+        "roleSummary": "Project configuration file.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-21T15:53:01.941Z"
+    },
+    {
+        "path": ".eslintrc.cjs",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T07:25:59.471Z"
+    },
+    {
         "path": "AGENTS.md",
         "roleSummary": "Project file relevant to repository structure.",
         "exports": [],
@@ -7,7 +27,27 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-10T08:56:09.223Z"
+        "updatedAt": "2026-05-17T07:25:59.512Z"
+    },
+    {
+        "path": "app/about/page.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-21T15:18:45.141Z"
+    },
+    {
+        "path": "app/contact/page.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-21T15:18:45.264Z"
     },
     {
         "path": "app/layout.tsx",
@@ -17,7 +57,17 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.195Z"
+        "updatedAt": "2026-05-21T15:34:34.197Z"
+    },
+    {
+        "path": "app/not-found.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T15:41:54.902Z"
     },
     {
         "path": "app/page.tsx",
@@ -27,7 +77,17 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-10T14:11:18.981Z"
+        "updatedAt": "2026-05-21T15:54:55.074Z"
+    },
+    {
+        "path": "app/privacy/page.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-21T15:28:18.468Z"
     },
     {
         "path": "app/settings/page.tsx",
@@ -37,7 +97,27 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T03:50:27.789Z"
+        "updatedAt": "2026-05-21T15:21:13.003Z"
+    },
+    {
+        "path": "app/terms/page.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-21T15:21:12.890Z"
+    },
+    {
+        "path": "components/AdSenseSlot.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-21T15:54:55.021Z"
     },
     {
         "path": "components/CircularProgress.tsx",
@@ -47,7 +127,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T03:50:27.799Z"
+        "updatedAt": "2026-05-17T07:25:59.646Z"
     },
     {
         "path": "components/ColorModeToggle.tsx",
@@ -57,7 +137,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T03:51:57.422Z"
+        "updatedAt": "2026-05-17T07:25:59.654Z"
     },
     {
         "path": "components/Dashboard.tsx",
@@ -67,7 +147,17 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T03:58:02.893Z"
+        "updatedAt": "2026-05-23T12:21:26.491Z"
+    },
+    {
+        "path": "components/LegalPage.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-21T15:21:12.784Z"
     },
     {
         "path": "components/pet/AmbientPet.tsx",
@@ -77,7 +167,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:10:10.190Z"
+        "updatedAt": "2026-05-17T15:06:18.809Z"
     },
     {
         "path": "components/pet/FloatingPet.tsx",
@@ -87,7 +177,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.195Z"
+        "updatedAt": "2026-05-17T15:42:19.347Z"
     },
     {
         "path": "components/pet/PetAvatar.tsx",
@@ -97,7 +187,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.234Z"
+        "updatedAt": "2026-05-17T07:25:59.743Z"
     },
     {
         "path": "components/pet/PetBubble.tsx",
@@ -107,7 +197,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.234Z"
+        "updatedAt": "2026-05-17T15:06:17.903Z"
     },
     {
         "path": "components/pet/PetMessageBubble.tsx",
@@ -117,7 +207,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.019Z"
+        "updatedAt": "2026-05-17T15:06:18.405Z"
     },
     {
         "path": "components/pet/PetSprite.tsx",
@@ -127,7 +217,117 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:03:02.325Z"
+        "updatedAt": "2026-05-17T07:25:59.762Z"
+    },
+    {
+        "path": "components/settings/index.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T14:07:13.692Z"
+    },
+    {
+        "path": "components/settings/setting-action.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T14:28:12.889Z"
+    },
+    {
+        "path": "components/settings/setting-description.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T14:28:12.889Z"
+    },
+    {
+        "path": "components/settings/setting-group.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T14:28:12.889Z"
+    },
+    {
+        "path": "components/settings/setting-input.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T14:28:12.889Z"
+    },
+    {
+        "path": "components/settings/setting-row.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T15:40:53.388Z"
+    },
+    {
+        "path": "components/settings/setting-section.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T14:28:12.889Z"
+    },
+    {
+        "path": "components/settings/setting-select.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T14:28:12.889Z"
+    },
+    {
+        "path": "components/settings/setting-time-input.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T14:07:13.515Z"
+    },
+    {
+        "path": "components/settings/setting-toggle.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T14:28:12.889Z"
+    },
+    {
+        "path": "components/settings/setting-utils.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T14:26:24.162Z"
     },
     {
         "path": "components/SettingsForm.tsx",
@@ -137,7 +337,17 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.234Z"
+        "updatedAt": "2026-05-23T12:22:22.921Z"
+    },
+    {
+        "path": "components/SettingsProvider.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T15:42:40.081Z"
     },
     {
         "path": "components/ThemeSync.tsx",
@@ -147,7 +357,17 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T03:50:27.799Z"
+        "updatedAt": "2026-05-17T07:25:59.782Z"
+    },
+    {
+        "path": "components/ui/ConfirmModal.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T15:42:26.103Z"
     },
     {
         "path": "content/pet/messages/hover/default.ts",
@@ -167,7 +387,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.234Z"
+        "updatedAt": "2026-05-17T07:25:59.796Z"
     },
     {
         "path": "content/pet/messages/hover/nearOffwork.ts",
@@ -227,7 +447,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.029Z"
+        "updatedAt": "2026-05-17T07:25:59.815Z"
     },
     {
         "path": "content/pet/messages/moods/idle.ts",
@@ -237,7 +457,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.195Z"
+        "updatedAt": "2026-05-17T07:25:59.819Z"
     },
     {
         "path": "content/pet/messages/moods/index.ts",
@@ -267,7 +487,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.195Z"
+        "updatedAt": "2026-05-17T07:25:59.830Z"
     },
     {
         "path": "content/pet/messages/moods/tired.ts",
@@ -277,7 +497,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.195Z"
+        "updatedAt": "2026-05-17T07:25:59.834Z"
     },
     {
         "path": "content/pet/messages/moods/working.ts",
@@ -287,7 +507,17 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:13:36.317Z"
+        "updatedAt": "2026-05-17T07:25:59.838Z"
+    },
+    {
+        "path": "eslint.config.js",
+        "roleSummary": "Project configuration file.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T15:18:40.997Z"
     },
     {
         "path": "global.d.ts",
@@ -297,7 +527,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-10T14:56:21.520Z"
+        "updatedAt": "2026-05-17T07:25:59.841Z"
     },
     {
         "path": "hooks/useClock.ts",
@@ -307,7 +537,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-10T14:35:37.620Z"
+        "updatedAt": "2026-05-17T07:25:59.848Z"
     },
     {
         "path": "hooks/usePetMessage.ts",
@@ -317,7 +547,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.195Z"
+        "updatedAt": "2026-05-17T15:18:40.998Z"
     },
     {
         "path": "hooks/usePetMood.ts",
@@ -327,7 +557,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.234Z"
+        "updatedAt": "2026-05-17T07:25:59.857Z"
     },
     {
         "path": "hooks/usePetWalker.ts",
@@ -337,7 +567,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.234Z"
+        "updatedAt": "2026-05-17T15:18:41.002Z"
     },
     {
         "path": "hooks/useSettings.ts",
@@ -347,7 +577,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.195Z"
+        "updatedAt": "2026-05-23T13:15:08.120Z"
     },
     {
         "path": "lib/earnings.ts",
@@ -357,7 +587,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T03:50:27.816Z"
+        "updatedAt": "2026-05-17T07:25:59.906Z"
     },
     {
         "path": "lib/pet/getPetMood.ts",
@@ -367,7 +597,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.234Z"
+        "updatedAt": "2026-05-17T07:25:59.913Z"
     },
     {
         "path": "lib/pet/petMessages.ts",
@@ -377,7 +607,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.234Z"
+        "updatedAt": "2026-05-17T07:25:59.923Z"
     },
     {
         "path": "lib/pet/petMoodRules.ts",
@@ -387,7 +617,37 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:08:46.060Z"
+        "updatedAt": "2026-05-17T07:25:59.928Z"
+    },
+    {
+        "path": "lib/settings.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T15:39:53.271Z"
+    },
+    {
+        "path": "lib/settingsModel.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-23T13:15:08.145Z"
+    },
+    {
+        "path": "lib/utils.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-17T14:26:24.162Z"
     },
     {
         "path": "next-env.d.ts",
@@ -397,7 +657,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-10T09:33:15.616Z"
+        "updatedAt": "2026-05-21T15:29:45.483Z"
     },
     {
         "path": "next.config.js",
@@ -407,7 +667,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-10T09:30:05.715Z"
+        "updatedAt": "2026-05-17T07:25:59.938Z"
     },
     {
         "path": "package.json",
@@ -417,7 +677,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.195Z"
+        "updatedAt": "2026-05-24T13:44:46.135Z"
     },
     {
         "path": "postcss.config.cjs",
@@ -427,7 +687,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.195Z"
+        "updatedAt": "2026-05-17T07:25:59.996Z"
     },
     {
         "path": "README.md",
@@ -437,7 +697,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:31:52.566Z"
+        "updatedAt": "2026-05-17T15:18:40.990Z"
     },
     {
         "path": "tailwind.config.cjs",
@@ -447,7 +707,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-10T09:30:05.715Z"
+        "updatedAt": "2026-05-17T07:26:00.102Z"
     },
     {
         "path": "test/earnings.test.ts",
@@ -457,7 +717,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T03:50:27.847Z"
+        "updatedAt": "2026-05-17T15:18:41.003Z"
     },
     {
         "path": "test/petMoodRules.test.ts",
@@ -467,7 +727,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T06:47:11.234Z"
+        "updatedAt": "2026-05-17T07:26:00.132Z"
     },
     {
         "path": "tsconfig.json",
@@ -477,6 +737,66 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-10T09:33:15.614Z"
+        "updatedAt": "2026-05-20T11:31:28.016Z"
+    },
+    {
+        "path": "vscode-extension/media/dashboard.js",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-23T12:20:40.402Z"
+    },
+    {
+        "path": "vscode-extension/package.json",
+        "roleSummary": "Project configuration file.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-23T13:15:08.165Z"
+    },
+    {
+        "path": "vscode-extension/src/extension.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-23T12:20:50.197Z"
+    },
+    {
+        "path": "vscode-extension/src/storage.test.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-23T09:27:31.960Z"
+    },
+    {
+        "path": "vscode-extension/src/storage.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-23T09:26:19.644Z"
+    },
+    {
+        "path": "vscode-extension/tsconfig.json",
+        "roleSummary": "Project configuration file.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-23T13:15:08.408Z"
     }
 ]

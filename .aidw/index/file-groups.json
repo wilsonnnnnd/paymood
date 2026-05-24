@@ -1,22 +1,46 @@
 [
     {
         "path": ".",
-        "fileCount": 9,
+        "fileCount": 12,
         "summary": "Repository root files and package metadata.",
         "keyFiles": [
-            "next.config.js",
-            "package.json",
-            "tailwind.config.cjs"
+            ".env.example",
+            "eslint.config.js",
+            "next.config.js"
         ]
     },
     {
         "path": "components",
-        "fileCount": 11,
+        "fileCount": 26,
         "summary": "Reusable UI components.",
         "keyFiles": [
+            "components/AdSenseSlot.tsx",
             "components/CircularProgress.tsx",
-            "components/ColorModeToggle.tsx",
-            "components/Dashboard.tsx"
+            "components/ColorModeToggle.tsx"
+        ]
+    },
+    {
+        "path": "app/about",
+        "fileCount": 1,
+        "summary": "Project files grouped by directory.",
+        "keyFiles": [
+            "app/about/page.tsx"
+        ]
+    },
+    {
+        "path": "app/contact",
+        "fileCount": 1,
+        "summary": "Project files grouped by directory.",
+        "keyFiles": [
+            "app/contact/page.tsx"
+        ]
+    },
+    {
+        "path": "app/privacy",
+        "fileCount": 1,
+        "summary": "Project files grouped by directory.",
+        "keyFiles": [
+            "app/privacy/page.tsx"
         ]
     },
     {
@@ -25,6 +49,14 @@
         "summary": "Project files grouped by directory.",
         "keyFiles": [
             "app/settings/page.tsx"
+        ]
+    },
+    {
+        "path": "app/terms",
+        "fileCount": 1,
+        "summary": "Project files grouped by directory.",
+        "keyFiles": [
+            "app/terms/page.tsx"
         ]
     },
     {
@@ -47,6 +79,26 @@
         ]
     },
     {
+        "path": "lib",
+        "fileCount": 7,
+        "summary": "Project files grouped by directory.",
+        "keyFiles": [
+            "lib/earnings.ts",
+            "lib/pet/getPetMood.ts",
+            "lib/pet/petMessages.ts"
+        ]
+    },
+    {
+        "path": "vscode-extension",
+        "fileCount": 6,
+        "summary": "Project files grouped by directory.",
+        "keyFiles": [
+            "vscode-extension/package.json",
+            "vscode-extension/tsconfig.json",
+            "vscode-extension/media/dashboard.js"
+        ]
+    },
+    {
         "path": "hooks",
         "fileCount": 5,
         "summary": "Project files grouped by directory.",
@@ -57,21 +109,12 @@
         ]
     },
     {
-        "path": "lib",
-        "fileCount": 4,
-        "summary": "Project files grouped by directory.",
-        "keyFiles": [
-            "lib/earnings.ts",
-            "lib/pet/getPetMood.ts",
-            "lib/pet/petMessages.ts"
-        ]
-    },
-    {
         "path": "app",
-        "fileCount": 2,
+        "fileCount": 3,
         "summary": "Python backend application package.",
         "keyFiles": [
             "app/layout.tsx",
+            "app/not-found.tsx",
             "app/page.tsx"
         ]
     }
