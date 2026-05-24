@@ -695,58 +695,6 @@ select {
   color: var(--text);
 }
 
-.hud-explanation {
-  width: min(420px, 100%);
-  border: 1px solid var(--s-line-ghost);
-  border-radius: 18px;
-  background: var(--s-section-bg);
-  padding: 14px;
-  color: var(--s-muted);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-}
-
-.hud-explanation-title {
-  color: var(--s-text);
-  font-size: 0.72rem;
-  font-weight: 620;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.hud-explanation-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px 12px;
-  margin-top: 12px;
-}
-
-.hud-explanation span {
-  display: block;
-  color: var(--s-muted);
-  font-size: 0.66rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.hud-explanation strong {
-  display: block;
-  margin-top: 5px;
-  color: var(--s-text);
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  font-weight: 520;
-  line-height: 1.35;
-  overflow-wrap: anywhere;
-}
-
-.hud-explanation p {
-  margin: 12px 0 0;
-  color: var(--s-muted);
-  font-size: 0.76rem;
-  line-height: 1.55;
-}
-
 .hud-controls {
   margin-top: 2px;
   padding: 18px 6px 0;
@@ -1127,10 +1075,6 @@ fieldset.hud-control {
 
   .hud-metric-value {
     font-size: 1rem;
-  }
-
-  .hud-explanation-grid {
-    grid-template-columns: 1fr;
   }
 
   .hud-controls {

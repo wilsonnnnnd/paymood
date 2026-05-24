@@ -79,15 +79,6 @@ function RollingChar({
 
 const defaultMoneyFormat = (v: number) => v.toFixed(2)
 
-const salaryTypeLabels: Record<string, string> = {
-  hourly: 'Hourly',
-  daily: 'Daily',
-  weekly: 'Weekly',
-  fortnightly: 'Fortnightly',
-  monthly: 'Monthly',
-  annually: 'Annually',
-}
-
 function RollingNumber({ value, format = defaultMoneyFormat }: { value: number; format?: (v: number) => string }) {
   const timerRef = useRef<number | null>(null)
   const prevValueRef = useRef(value)
@@ -253,18 +244,8 @@ export default function Dashboard() {
     : { earned: 0, hourly: 0 }
   const percent = isWorkDay ? Math.round(prog.progress * 100) : 0
   const totalsFormat = new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 })
-  const moneyFormat = new Intl.NumberFormat(undefined, { maximumFractionDigits: 2 })
   const mood = isReady ? (isWorkDay ? moodFor(today, start, end) : '今天休息。') : '热身中…'
   const currencySymbol = currencyCodeToSymbol(settings.currency)
-  const salaryTypeLabel = salaryTypeLabels[settings.salaryType] ?? 'Pay'
-  const salaryAmountLabel =
-    Number.isFinite(settings.salaryAmount) && settings.salaryAmount > 0
-      ? `${currencySymbol}${moneyFormat.format(settings.salaryAmount)} ${salaryTypeLabel.toLowerCase()}`
-      : 'Pay amount not set'
-  const workDaysLabel = `${workDaysPerWeek} work ${workDaysPerWeek === 1 ? 'day' : 'days'} / week`
-  const workWindowLabel = `${settings.startTime} - ${settings.endTime}`
-  const breakLabel = `${Math.max(0, settings.breakMinutes || 0)}m break`
-  const hourlyLabel = `${currencySymbol}${moneyFormat.format(dayEarnings.hourly)} / hour`
   const liveStatus = liveStatusFor({
     isReady,
     isWorkDay,
@@ -345,31 +326,6 @@ export default function Dashboard() {
               <span className="hud-metric-label">本月</span>
               <span className="hud-metric-value">{totalsFormat.format(month.earned)}</span>
             </div>
-          </section>
-
-          <section className="hud-explanation" aria-label="Calculation explanation">
-            <div className="hud-explanation-title">Estimate basis</div>
-            <div className="hud-explanation-grid">
-              <div>
-                <span>Pay model</span>
-                <strong>{salaryAmountLabel}</strong>
-              </div>
-              <div>
-                <span>Work schedule</span>
-                <strong>
-                  {workWindowLabel} · {breakLabel}
-                </strong>
-              </div>
-              <div>
-                <span>Work days</span>
-                <strong>{workDaysLabel}</strong>
-              </div>
-              <div>
-                <span>Hourly rate</span>
-                <strong>{hourlyLabel}</strong>
-              </div>
-            </div>
-            <p>Earned today is an estimate from your current work progress, schedule, break time, and local pay settings.</p>
           </section>
         </div>
       )}
