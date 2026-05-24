@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 type AdsWindow = Window & {
   adsbygoogle?: unknown[]
@@ -13,11 +13,50 @@ type AdSenseSlotProps = {
 export default function AdSenseSlot({ placement = 'bottom' }: AdSenseSlotProps) {
   const client = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT
   const slot = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_SLOT
+  const containerRef = useRef<HTMLElement | null>(null)
   const adRef = useRef<HTMLModElement | null>(null)
   const pushedRef = useRef(false)
+  const [canRenderAd, setCanRenderAd] = useState(false)
 
   useEffect(() => {
     if (!client || !slot) return
+
+    const updateVisibility = () => {
+      const container = containerRef.current
+      if (!container) return
+
+      const style = window.getComputedStyle(container)
+      const isVisible =
+        style.display !== 'none' &&
+        style.visibility !== 'hidden' &&
+        container.getBoundingClientRect().width > 0
+
+      if (!isVisible) pushedRef.current = false
+      setCanRenderAd(isVisible)
+    }
+
+    const frameId = window.requestAnimationFrame(updateVisibility)
+    window.addEventListener('resize', updateVisibility)
+
+    if (!('ResizeObserver' in window)) {
+      return () => {
+        window.cancelAnimationFrame(frameId)
+        window.removeEventListener('resize', updateVisibility)
+      }
+    }
+
+    const observer = new ResizeObserver(updateVisibility)
+    if (containerRef.current) observer.observe(containerRef.current)
+
+    return () => {
+      window.cancelAnimationFrame(frameId)
+      window.removeEventListener('resize', updateVisibility)
+      observer.disconnect()
+    }
+  }, [client, slot])
+
+  useEffect(() => {
+    if (!client || !slot || !canRenderAd) return
 
     const scriptId = 'paymood-adsense-script'
     let script = document.getElementById(scriptId) as HTMLScriptElement | null
@@ -59,21 +98,23 @@ export default function AdSenseSlot({ placement = 'bottom' }: AdSenseSlotProps) 
       window.cancelAnimationFrame(frameId)
       observer.disconnect()
     }
-  }, [client, slot])
+  }, [canRenderAd, client, slot])
 
   if (!client || !slot) return null
 
   return (
-    <aside className={`adsense-slot adsense-slot--${placement}`} aria-label="Advertisement">
-      <ins
-        ref={adRef}
-        className="adsbygoogle"
-        data-ad-client={client}
-        data-ad-format="auto"
-        data-ad-slot={slot}
-        data-full-width-responsive="true"
-        style={{ display: 'block' }}
-      />
+    <aside ref={containerRef} className={`adsense-slot adsense-slot--${placement}`} aria-label="Advertisement">
+      {canRenderAd ? (
+        <ins
+          ref={adRef}
+          className="adsbygoogle"
+          data-ad-client={client}
+          data-ad-format="auto"
+          data-ad-slot={slot}
+          data-full-width-responsive="true"
+          style={{ display: 'block' }}
+        />
+      ) : null}
     </aside>
   )
 }

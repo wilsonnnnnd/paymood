@@ -1,14 +1,12 @@
-# AGENTS.md
+﻿# AGENTS.md
 
 Single workflow entry point for AI coding tools in this repository.
 
-## Project Context
-
-Primary context: `.aidw/project.md`. Do not proceed without reading it.
+## Required Reading`r`n`r`nPrimary sources:`r`n- `PROJECT.md` - Human-owned project context`r`n- `.aidw/AI_project.md` - Generated AI context (from scan)
 
 ## Read first
 
-- .aidw/project.md
+- PROJECT.md`r`n- .aidw/AI_project.md
 - .aidw/rules.md
 - .aidw/workflow.md
 - .aidw/safety.md
@@ -22,7 +20,7 @@ Primary context: `.aidw/project.md`. Do not proceed without reading it.
 Classify requests into:
 
 - Clarify (vague): ask focused boundary questions, then stop
-- Implement (clear): draft a task → wait for confirmation → implement → verify
+- Implement (clear): draft a task â†’ wait for confirmation â†’ implement â†’ verify
 - Review: refine an existing prompt/plan/task/implementation against Task/AC
 
 ## Required behavior
@@ -40,3 +38,4 @@ Classify requests into:
 - skip clarification for ambiguous requests
 - create duplicate structures unnecessarily
 - perform unrelated refactors
+

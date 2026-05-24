@@ -21,12 +21,12 @@ import slime2Idle from '../craftpix/PNG/Slime2/With_shadow/Slime2_Idle_with_shad
 import slime3Idle from '../craftpix/PNG/Slime3/With_shadow/Slime3_Idle_with_shadow.png'
 
 const salaryTypeOptions: Array<{ value: Settings['salaryType']; label: string }> = [
-  { value: 'hourly', label: 'Hourly' },
-  { value: 'daily', label: 'Daily' },
-  { value: 'weekly', label: 'Weekly' },
-  { value: 'fortnightly', label: 'Fortnightly' },
-  { value: 'monthly', label: 'Monthly' },
-  { value: 'annually', label: 'Annually' },
+  { value: 'hourly', label: '时薪' },
+  { value: 'daily', label: '日薪' },
+  { value: 'weekly', label: '周薪' },
+  { value: 'fortnightly', label: '双周薪' },
+  { value: 'monthly', label: '月薪' },
+  { value: 'annually', label: '年薪' },
 ]
 
 function PetIcon({ sheet }: { sheet: { height: number; width: number; src: string } }) {
@@ -106,20 +106,20 @@ export default function SettingsForm() {
       <form className="settings-system" aria-label="设置表单">
         <div className="settings-overview" aria-label="设置摘要">
           <div>
-            <span>Stored locally</span>
-            <strong>Saved on this device only</strong>
+            <span>本机保存</span>
+            <strong>只保存在当前设备</strong>
           </div>
           <div>
-            <span>Live estimate</span>
-            <strong>Used for progress and earnings</strong>
+            <span>实时估算</span>
+            <strong>用于进度与收入展示</strong>
           </div>
           <div>
-            <span>Quiet companion</span>
+            <span>安静陪伴</span>
             <strong>{petEnabled ? '桌宠已开启' : '桌宠已关闭'}</strong>
           </div>
         </div>
 
-        <SettingSection title="Workspace" description="界面偏好和陪伴感放在这里，不影响收入计算。" tone="quiet">
+        <SettingSection title="工作空间" description="界面偏好和陪伴感放在这里，不影响收入计算。" tone="quiet">
           <SettingRow label="主题模式" description="当前颜色模式会跟随系统或固定为你选择的状态。" value={colorModeLabel} />
 
           <SettingRow
@@ -141,9 +141,9 @@ export default function SettingsForm() {
             <SettingRow label="陪伴角色" description="选择一个在工作日里安静陪着你的角色。" density="quiet">
               <div className="setting-pet-grid">
                 {[
-                  { key: 'aqua' as const, label: 'Aqua Slime', sheet: slime1Idle },
-                  { key: 'undead' as const, label: 'Undead Slime', sheet: slime2Idle },
-                  { key: 'magma' as const, label: 'Magma Slime', sheet: slime3Idle },
+                  { key: 'aqua' as const, label: '水蓝史莱姆', sheet: slime1Idle },
+                  { key: 'undead' as const, label: '幽灵史莱姆', sheet: slime2Idle },
+                  { key: 'magma' as const, label: '熔岩史莱姆', sheet: slime3Idle },
                 ].map((item) => (
                   <SettingToggle
                     key={item.key}
@@ -160,9 +160,9 @@ export default function SettingsForm() {
           ) : null}
         </SettingSection>
 
-        <SettingSection title="Work schedule" description="Used for progress, time remaining, and earning estimates." tone="default">
+        <SettingSection title="工作时间" description="用于计算今日进度、剩余时间和收入估算。" tone="default">
           <SettingGroup>
-            <SettingRow label="Start" controlId="settings-start-time">
+            <SettingRow label="开始时间" controlId="settings-start-time">
               <SettingTimeInput
                 id="settings-start-time"
                 value={settings.startTime}
@@ -170,7 +170,7 @@ export default function SettingsForm() {
               />
             </SettingRow>
 
-            <SettingRow label="End" controlId="settings-end-time">
+            <SettingRow label="结束时间" controlId="settings-end-time">
               <SettingTimeInput
                 id="settings-end-time"
                 value={settings.endTime}
@@ -178,7 +178,7 @@ export default function SettingsForm() {
               />
             </SettingRow>
 
-            <SettingRow label="Break" description="Minutes removed from the earning window." controlId="settings-break-minutes">
+            <SettingRow label="休息时间" description="从收入计算时段中扣除的分钟数。" controlId="settings-break-minutes">
               <SettingInput
                 id="settings-break-minutes"
                 value={String(settings.breakMinutes)}
@@ -190,7 +190,7 @@ export default function SettingsForm() {
             </SettingRow>
           </SettingGroup>
 
-          <SettingRow label="Work days" description="Used for week and month estimates; no reminders are created.">
+          <SettingRow label="工作日" description="用于周/月收入估算，不会创建提醒。">
             <div className="setting-weekdays" role="group" aria-label="工作日">
               {weekdayChoices.map((day) => {
                 const pressed = workDays.includes(day.value)
@@ -212,7 +212,7 @@ export default function SettingsForm() {
           </SettingRow>
         </SettingSection>
 
-        <SettingSection title="Pay model" description="Stored locally and used only for estimates." tone="vault">
+        <SettingSection title="薪资模式" description="仅保存在本机，只用于收入估算。" tone="vault">
           {payLocked ? (
             <SettingGroup density="loose">
               <div className="setting-vault-state">
@@ -246,14 +246,14 @@ export default function SettingsForm() {
                   min={0}
                   max={activeSalaryBounds.max}
                   step="any"
-                  placeholder="Amount"
-                  aria-label="Amount"
+                  placeholder="金额"
+                  aria-label="金额"
                 />
                 <SettingSelect
                   tone="vault"
                   value={salaryTypeDraft}
                   onChange={(e) => setSalaryTypeDraft(e.target.value as Settings['salaryType'])}
-                  aria-label="Type"
+                  aria-label="薪资类型"
                 >
                   {salaryTypeOptions.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -270,8 +270,8 @@ export default function SettingsForm() {
           )}
         </SettingSection>
 
-        <SettingSection title="Display" description="只影响金额显示方式，不改变你的原始薪资设置。" tone="quiet">
-          <SettingRow label="Currency" controlId="settings-currency">
+        <SettingSection title="显示" description="只影响金额显示方式，不改变你的原始薪资设置。" tone="quiet">
+          <SettingRow label="货币" controlId="settings-currency">
             <SettingSelect
               id="settings-currency"
               value={(settings.currency ?? 'AUD').toUpperCase()}
