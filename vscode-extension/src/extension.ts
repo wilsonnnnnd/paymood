@@ -192,7 +192,7 @@ function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri, nonce
     <meta charset="UTF-8" />
     <meta http-equiv="Content-Security-Policy" content="${csp}" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>paymood</title>
+    <title>PayMood</title>
     <link rel="stylesheet" href="${stylesheetUri}" />
   </head>
   <body>
@@ -552,7 +552,7 @@ export function activate(context: vscode.ExtensionContext) {
       return
     }
 
-    panel = vscode.window.createWebviewPanel('paymoodDashboard', 'paymood', vscode.ViewColumn.One, {
+    panel = vscode.window.createWebviewPanel('paymoodDashboard', 'PayMood', vscode.ViewColumn.One, {
       enableScripts: true,
       localResourceRoots: [vscode.Uri.joinPath(context.extensionUri, 'media')],
     })

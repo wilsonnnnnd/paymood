@@ -1,65 +1,70 @@
-# PayMood (VS Code extension)
+# 💰 PayMood — Know What Your Coding Time Is Worth
 
-Status bar work progress + earnings, with a webview settings dashboard.
+> Ever wonder how much money you've made while fixing that one annoying bug? Now you'll know.
 
-## Runtime behavior
+**PayMood** turns your VS Code status bar into a real-time earnings ticker. Set your hourly rate, hit the timer, and watch your income grow — one keystroke at a time.
 
-- `Coding today` tracks a full-day total across VS Code windows on the same machine and survives window close/reopen during the same day.
-- `Thinking today` tracks a full-day focused-but-not-coding total and also survives window close/reopen during the same day.
-- Coding time is counted while a VS Code window is focused and within about 90 seconds of a text edit.
-- Thinking time is counted while a VS Code window is focused but outside that recent-coding window.
-- A window is treated as active when it has reported heartbeat updates recently (about the last 20 seconds).
-- Multi-window timer state (`start` / `pause` / `end`) auto-syncs using last-write-wins.
-- Status bar tooltip shows both `Coding today` and `Thinking today`.
+---
 
-## Quick start
+## ✨ What it does
+
+- **💵 Live earnings** — See your running total right in the status bar as you code.
+- **⏱️ Smart time tracking** — Separately tracks *Coding* time (active edits) and *Thinking* time (focused but not typing), because staring at the screen counts too.
+- **📊 Dashboard** — Open the PayMood panel to see today's breakdown: time spent, money earned, and your settings at a glance.
+- **🔄 Persists across windows** — Close a window, open another — your daily totals stay intact until midnight.
+- **🪟 Multi-window aware** — Running multiple VS Code windows? PayMood syncs timer state automatically.
+
+---
+
+## 🚀 Quick start
+
+1. Install the extension from the VS Code Marketplace.
+2. Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) and run **PayMood: Open Dashboard**.
+3. Enter your hourly rate and work hours, then start the timer.
+4. Watch the money roll in. 🤑
+
+---
+
+## 🎮 Commands
+
+| Command | What it does |
+|---|---|
+| `PayMood: Open Dashboard` | Open the earnings & settings panel |
+| `PayMood: Toggle Status Bar` | Show or hide the status bar ticker |
+| `PayMood: Reset Today Activity` | Clear today's coding & thinking totals |
+| `PayMood: Reset Settings` | Restore all settings to defaults |
+
+---
+
+## 🧠 How time tracking works
+
+- **Coding time** — counted while a VS Code window is focused and you've made a text edit within the last ~90 seconds.
+- **Thinking time** — counted while a window is focused but outside that recent-coding window. (Yes, planning counts.)
+- Both totals persist for the full local day and reset at midnight.
+- Multi-window sync uses last-write-wins, so your totals stay consistent no matter how many windows you have open.
+
+---
+
+## 🛠️ Development
 
 From the repo root:
-
-1. Install dependencies:
 
 ```bash
 cd vscode-extension
 npm install
-```
-
-2. Build the extension:
-
-```bash
 npm run build
 ```
 
-3. Run in VS Code:
+Then open the repo in VS Code and run the **Run Extension** launch config to start an Extension Development Host.
 
-- Open the repo in VS Code
-- Run the `Run Extension` launch config (or start an Extension Development Host pointing to `vscode-extension/`)
-
-## Commands
-
-- `paymood: Open Dashboard` — Open the settings dashboard webview
-- `paymood: Toggle Status Bar` — Show/hide the status bar
-- `paymood: Reset Today Activity` — Reset today's `Coding today` and `Thinking today` totals after confirmation
-- `paymood: Reset Settings` — Reset all settings to defaults
-
-## Development notes
-
-- Extension entry point: `src/extension.ts`
+- Entry point: `src/extension.ts`
 - Storage helpers: `src/storage.ts`
-- Build output: `dist/extension.js` (esbuild bundle)
-- Before publishing, run `npm run build` from `vscode-extension/` so the extension bundle reflects the latest TypeScript source.
-- Webview media: CSS and JavaScript live in `media/` and are loaded with `webview.asWebviewUri(...)`
-- Webview security: strict Content Security Policy with nonce-based script loading
-- Webview state: UI state that should survive reloads is saved with `vscode.getState()` / `vscode.setState()`
-- Resource roots: webview `localResourceRoots` is limited to `media/`
+- Build output: `dist/extension.js` (esbuild via `npm run build`)
+- Webview assets (CSS/JS): `media/`
+- Webview security: strict CSP with nonce-based script loading
 
-## Full-day activity verification
+---
 
-- Close a VS Code window after accumulating coding/thinking time; today's totals should remain visible in another window or after reopening the dashboard.
-- Restart the extension host on the same local day; today's totals should restore from persisted daily activity state.
-- Move to a new local day; `Coding today` and `Thinking today` should start from zero.
-- Upgrade from legacy `paymood.codingTime.v1` state; same-day coding time should seed the new daily activity state.
+## 📝 Release notes
 
-## Release notes
-
-- `Coding today` and `Thinking today` now persist as full local-day totals instead of disappearing when a VS Code window becomes inactive or closes.
-- Added `PayMood: Reset Today Activity` for clearing today's activity totals after confirmation.
+- **v0.1.9** — `Coding today` and `Thinking today` now persist as full local-day totals and no longer reset when a window goes inactive or closes. Added `PayMood: Reset Today Activity` command.
