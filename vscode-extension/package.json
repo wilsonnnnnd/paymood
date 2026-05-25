@@ -2,7 +2,7 @@
   "name": "paymood",
   "displayName": "PayMood",
   "description": "Workday earnings dashboard in VS Code: status bar progress + earnings and a settings webview.",
-  "version": "0.1.11",
+  "version": "0.2.0",
   "publisher": "WilsonnnnD",
   "license": "MIT",
   "icon": "media/paymood_icon_white_bg.png",
