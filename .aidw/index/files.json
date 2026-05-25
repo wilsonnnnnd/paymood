@@ -19,7 +19,7 @@
         "path": "AGENTS.md",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T07:25:59.512Z",
+        "updatedAt": "2026-05-25T13:56:23.302Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -75,7 +75,7 @@
         "path": "app/settings/page.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-21T15:21:13.003Z",
+        "updatedAt": "2026-05-24T15:26:49.728Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -91,7 +91,7 @@
         "path": "components/AdSenseSlot.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-21T15:54:55.021Z",
+        "updatedAt": "2026-05-24T15:24:27.417Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -115,7 +115,7 @@
         "path": "components/Dashboard.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-23T12:21:26.491Z",
+        "updatedAt": "2026-05-25T13:49:13.770Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -131,7 +131,7 @@
         "path": "components/pet/AmbientPet.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T15:06:18.809Z",
+        "updatedAt": "2026-05-25T13:49:59.120Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -139,7 +139,7 @@
         "path": "components/pet/FloatingPet.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T15:42:19.347Z",
+        "updatedAt": "2026-05-25T13:49:46.879Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -267,7 +267,7 @@
         "path": "components/SettingsForm.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-23T12:22:22.921Z",
+        "updatedAt": "2026-05-24T15:27:13.074Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -299,7 +299,7 @@
         "path": "content/pet/messages/hover/default.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T06:47:11.195Z",
+        "updatedAt": "2026-05-24T15:21:51.131Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -315,7 +315,7 @@
         "path": "content/pet/messages/hover/nearOffwork.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T06:47:11.234Z",
+        "updatedAt": "2026-05-24T15:21:51.459Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -323,7 +323,7 @@
         "path": "content/pet/messages/hover/night.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T06:47:11.195Z",
+        "updatedAt": "2026-05-24T15:21:51.795Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -331,7 +331,7 @@
         "path": "content/pet/messages/hover/offwork.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T06:47:11.195Z",
+        "updatedAt": "2026-05-24T15:21:51.623Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -339,7 +339,7 @@
         "path": "content/pet/messages/hover/working.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T06:47:11.017Z",
+        "updatedAt": "2026-05-24T15:21:51.297Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -347,7 +347,7 @@
         "path": "content/pet/messages/moods/excited.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T06:47:11.021Z",
+        "updatedAt": "2026-05-24T15:21:26.460Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -355,7 +355,7 @@
         "path": "content/pet/messages/moods/happy.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T07:25:59.815Z",
+        "updatedAt": "2026-05-24T15:21:26.300Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -363,7 +363,7 @@
         "path": "content/pet/messages/moods/idle.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T07:25:59.819Z",
+        "updatedAt": "2026-05-24T15:21:25.962Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -379,7 +379,7 @@
         "path": "content/pet/messages/moods/offwork.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T06:47:11.042Z",
+        "updatedAt": "2026-05-24T15:21:27.018Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -387,7 +387,7 @@
         "path": "content/pet/messages/moods/sleepy.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T07:25:59.830Z",
+        "updatedAt": "2026-05-24T15:21:26.817Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -395,7 +395,7 @@
         "path": "content/pet/messages/moods/tired.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T07:25:59.834Z",
+        "updatedAt": "2026-05-24T15:21:26.626Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -403,7 +403,7 @@
         "path": "content/pet/messages/moods/working.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T07:25:59.838Z",
+        "updatedAt": "2026-05-24T15:21:26.127Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -467,15 +467,7 @@
         "path": "lib/earnings.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T07:25:59.906Z",
-        "confidence": 0.55,
-        "source": "heuristic"
-    },
-    {
-        "path": "lib/pet/getPetMood.ts",
-        "type": "other",
-        "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T07:25:59.913Z",
+        "updatedAt": "2026-05-25T13:48:56.463Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -523,7 +515,7 @@
         "path": "next-env.d.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-21T15:29:45.483Z",
+        "updatedAt": "2026-05-24T15:28:08.866Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -539,7 +531,7 @@
         "path": "package.json",
         "type": "config",
         "description": "Package metadata, scripts, and CLI binary configuration.",
-        "updatedAt": "2026-05-24T13:44:46.135Z",
+        "updatedAt": "2026-05-25T13:44:44.830Z",
         "confidence": 0.85,
         "source": "heuristic"
     },
@@ -571,7 +563,7 @@
         "path": "test/earnings.test.ts",
         "type": "test",
         "description": "Automated test coverage for CLI behavior.",
-        "updatedAt": "2026-05-17T15:18:41.003Z",
+        "updatedAt": "2026-05-25T13:50:18.431Z",
         "confidence": 0.75,
         "source": "heuristic"
     },
@@ -603,7 +595,7 @@
         "path": "vscode-extension/package.json",
         "type": "config",
         "description": "Project configuration file.",
-        "updatedAt": "2026-05-24T13:46:05.851Z",
+        "updatedAt": "2026-05-25T13:39:44.871Z",
         "confidence": 0.85,
         "source": "heuristic"
     },
@@ -611,7 +603,7 @@
         "path": "vscode-extension/src/extension.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-23T12:20:50.197Z",
+        "updatedAt": "2026-05-25T13:49:29.154Z",
         "confidence": 0.55,
         "source": "heuristic"
     },

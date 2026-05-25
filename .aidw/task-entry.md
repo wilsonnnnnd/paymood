@@ -2,6 +2,7 @@ Load:
 - AGENTS.md
 - .aidw/project.md
 - .aidw/rules.md
+- .aidw/rules-canonical.md
 - .aidw/workflow.md
 - .aidw/safety.md
 - .aidw/system-overview.md
@@ -35,4 +36,5 @@ Use `AGENTS.md` as the source of truth.
 
 - Do not write code unless the user explicitly requests implementation and confirms the task draft.
 - Do not skip clarification for vague requests.
+- Use compact, natural replies. Do not emit full `## State` / `## Output` / `## Confirm` blocks unless a host explicitly requires machine-readable protocol output.
 - Output must match the selected behavior (clarify / implement / review).

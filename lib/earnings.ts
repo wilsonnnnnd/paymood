@@ -152,6 +152,12 @@ function startOfMonth(d: Date) {
   return start
 }
 
+function startOfNextMonth(d: Date) {
+  const start = new Date(d.getFullYear(), d.getMonth() + 1, 1)
+  start.setHours(0, 0, 0, 0)
+  return start
+}
+
 export function parseTimeParts(time: string) {
   const [h, m] = time.split(':').map(Number)
   return { h: Number.isFinite(h) ? h : 0, m: Number.isFinite(m) ? m : 0 }
@@ -189,16 +195,69 @@ type EarnedPeriodInput = {
   opts?: { workDayHours?: number; workDaysPerWeek?: number }
 }
 
-function earnedBetweenDates(now: Date, rangeStart: Date, input: EarnedPeriodInput) {
-  const { startTime, endTime, breakMinutes, salaryAmount, salaryType, opts, workDays } = input
+export type WorkEarningsInput = EarnedPeriodInput
+
+export type WorkEarningsSnapshot = {
+  start: Date
+  end: Date
+  isWorkDay: boolean
+  progress: ProgressResult
+  day: {
+    hourly: number
+    earned: number
+  }
+  week: {
+    hourly: number
+    earned: number
+  }
+  month: {
+    hourly: number
+    earned: number
+  }
+  earned: number
+  hourly: number
+  percent: number
+  remainingSeconds: number
+}
+
+function getScheduledWorkWindow(cursor: Date, startTime: string, endTime: string) {
   const { h: sh, m: sm } = parseTimeParts(startTime)
   const { h: eh, m: em } = parseTimeParts(endTime)
   const startMinutes = sh * 60 + sm
   const endMinutes = eh * 60 + em
   const isOvernight = endMinutes <= startMinutes
 
+  const start = new Date(cursor.getFullYear(), cursor.getMonth(), cursor.getDate(), sh, sm)
+  const end = isOvernight
+    ? new Date(cursor.getFullYear(), cursor.getMonth(), cursor.getDate() + 1, eh, em)
+    : new Date(cursor.getFullYear(), cursor.getMonth(), cursor.getDate(), eh, em)
+
+  return { start, end }
+}
+
+function scheduledWorkSecondsBetween(rangeStart: Date, rangeEnd: Date, input: EarnedPeriodInput) {
+  const { startTime, endTime, breakMinutes, workDays } = input
+  let totalSeconds = 0
+
+  for (
+    let cursor = startOfDay(rangeStart);
+    cursor < rangeEnd;
+    cursor = new Date(cursor.getFullYear(), cursor.getMonth(), cursor.getDate() + 1)
+  ) {
+    if (!shouldCountDay(cursor, workDays)) continue
+
+    const { start, end } = getScheduledWorkWindow(cursor, startTime, endTime)
+    totalSeconds += workProgress(end, start, end, breakMinutes).elapsedSeconds
+  }
+
+  return totalSeconds
+}
+
+function earnedBetweenDates(now: Date, rangeStart: Date, input: EarnedPeriodInput, hourlyOverride?: number) {
+  const { startTime, endTime, breakMinutes, salaryAmount, salaryType, opts, workDays } = input
+
   const todayStart = startOfDay(now)
-  const hourly = normalizeSalaryToHourly(salaryAmount, salaryType, opts)
+  const hourly = hourlyOverride ?? normalizeSalaryToHourly(salaryAmount, salaryType, opts)
   if (!isFinite(hourly) || hourly <= 0) return { hourly: 0, earned: 0 }
 
   let earnedTotal = 0
@@ -209,11 +268,7 @@ function earnedBetweenDates(now: Date, rangeStart: Date, input: EarnedPeriodInpu
   ) {
     if (!shouldCountDay(cursor, workDays)) continue
 
-    const start = new Date(cursor.getFullYear(), cursor.getMonth(), cursor.getDate(), sh, sm)
-    const end = isOvernight
-      ? new Date(cursor.getFullYear(), cursor.getMonth(), cursor.getDate() + 1, eh, em)
-      : new Date(cursor.getFullYear(), cursor.getMonth(), cursor.getDate(), eh, em)
-
+    const { start, end } = getScheduledWorkWindow(cursor, startTime, endTime)
     const sliceNow = now.getTime() < end.getTime() ? now : end
     const prog = workProgress(sliceNow, start, end, breakMinutes)
     earnedTotal += hourly * (prog.elapsedSeconds / 3600)
@@ -231,5 +286,60 @@ export function earnedSoFarThisWeek(now: Date | string | number, input: EarnedPe
 export function earnedSoFarThisMonth(now: Date | string | number, input: EarnedPeriodInput) {
   const nowDate = now instanceof Date ? now : new Date(now)
   const rangeStart = startOfMonth(nowDate)
-  return earnedBetweenDates(nowDate, rangeStart, input)
+
+  if (input.salaryType !== 'monthly') {
+    return earnedBetweenDates(nowDate, rangeStart, input)
+  }
+
+  const monthWorkSeconds = scheduledWorkSecondsBetween(rangeStart, startOfNextMonth(nowDate), input)
+  if (!isFinite(input.salaryAmount) || input.salaryAmount <= 0 || monthWorkSeconds <= 0) {
+    return { hourly: 0, earned: 0 }
+  }
+
+  const hourly = input.salaryAmount / (monthWorkSeconds / 3600)
+  return earnedBetweenDates(nowDate, rangeStart, input, hourly)
+}
+
+export function calculateWorkEarnings(now: Date | string | number, input: WorkEarningsInput): WorkEarningsSnapshot {
+  const nowDate = now instanceof Date ? now : new Date(now)
+  const workDaysPerWeek = input.opts?.workDaysPerWeek ?? (input.workDays?.length ? input.workDays.length : 5)
+  const periodInput = {
+    ...input,
+    opts: {
+      ...input.opts,
+      workDaysPerWeek,
+    },
+  }
+
+  const { start, end } = getWorkWindowForNow(nowDate, input.startTime, input.endTime)
+  const isWorkDay = input.workDays?.includes(start.getDay()) ?? true
+  const progress = isWorkDay
+    ? workProgress(nowDate, start, end, input.breakMinutes)
+    : { progress: 0, elapsedSeconds: 0, remainingSeconds: 0, totalWorkSeconds: 0 }
+  const day = earnedSoFar(
+    nowDate,
+    start,
+    end,
+    input.breakMinutes,
+    input.salaryAmount,
+    input.salaryType,
+    periodInput.opts,
+  )
+  const week = earnedSoFarThisWeek(nowDate, periodInput)
+  const month = earnedSoFarThisMonth(nowDate, periodInput)
+  const earned = isWorkDay ? day.earned : 0
+
+  return {
+    start,
+    end,
+    isWorkDay,
+    progress,
+    day,
+    week,
+    month,
+    earned,
+    hourly: day.hourly,
+    percent: isWorkDay ? Math.round(progress.progress * 100) : 0,
+    remainingSeconds: isWorkDay ? progress.remainingSeconds : 0,
+  }
 }

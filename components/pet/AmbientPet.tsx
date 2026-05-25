@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { useClock } from '../../hooks/useClock'
 import { useSettings } from '../../hooks/useSettings'
-import { earnedSoFar, workProgress } from '../../lib/earnings'
+import { calculateWorkEarnings } from '../../lib/earnings'
 import { usePetMessage } from '../../hooks/usePetMessage'
 import { usePetMood } from '../../hooks/usePetMood'
 import PetAvatar from './PetAvatar'
@@ -28,29 +28,26 @@ export default function AmbientPet() {
       }
     }
 
-    const isWorkDay = settings.workDays?.includes(now.getDay()) ?? true
     const workDaysPerWeek = settings.workDays?.length ? settings.workDays.length : 5
-    const [y, m, d] = [now.getFullYear(), now.getMonth(), now.getDate()]
-    const [sh, sm] = settings.startTime.split(':').map(Number)
-    const [eh, em] = settings.endTime.split(':').map(Number)
-    const start = new Date(y, m, d, sh, sm)
-    const end = new Date(y, m, d, eh, em)
+    const earnings = calculateWorkEarnings(now, {
+      startTime: settings.startTime,
+      endTime: settings.endTime,
+      breakMinutes: settings.breakMinutes,
+      workDays: settings.workDays,
+      salaryAmount: settings.salaryAmount,
+      salaryType: settings.salaryType,
+      opts: { workDaysPerWeek },
+    })
+    const { start, end, isWorkDay } = earnings
     const isWorkTime = isWorkDay && now.getTime() >= start.getTime() && now.getTime() < end.getTime()
-
-    const p = isWorkTime ? workProgress(now, start, end, settings.breakMinutes).progress : 0
-    const earned = isWorkTime
-      ? earnedSoFar(now, start, end, settings.breakMinutes, settings.salaryAmount, settings.salaryType, {
-          workDaysPerWeek,
-        }).earned
-      : 0
     const minutesUntilOffwork = isWorkTime ? Math.max(0, Math.floor((end.getTime() - now.getTime()) / 60000)) : 0
     const minutesSinceWorkStart = isWorkTime
       ? Math.max(0, Math.floor((now.getTime() - start.getTime()) / 60000))
       : undefined
 
     return {
-      workProgress: p * 100,
-      earnedAmount: earned,
+      workProgress: isWorkTime ? earnings.progress.progress * 100 : 0,
+      earnedAmount: isWorkTime ? earnings.earned : 0,
       isWorkTime,
       isWorkDay,
       minutesUntilOffwork,

@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import {
+  calculateWorkEarnings,
   earnedSoFar,
   earnedSoFarThisMonth,
   earnedSoFarThisWeek,
@@ -128,5 +129,69 @@ describe('earnedSoFarThisMonth', () => {
 
     // 2026-06-01 Mon 8h + 06-02 Tue 8h + 06-03 Wed 4h => 20 * 20h = 400
     expect(Math.round(earned)).toBe(400)
+  })
+
+  it('spreads monthly salary across the current month actual work hours', () => {
+    const now = new Date('2026-06-03T13:00:00') // Wed
+    const { hourly, earned } = earnedSoFarThisMonth(now, {
+      startTime: '09:00',
+      endTime: '17:00',
+      breakMinutes: 0,
+      salaryAmount: 8800,
+      salaryType: 'monthly',
+    })
+
+    // June 2026 has 22 weekdays. 22 * 8h = 176h, so 8800 / 176 = 50 per hour.
+    // 06-01 Mon 8h + 06-02 Tue 8h + 06-03 Wed 4h => 20h * 50 = 1000.
+    expect(hourly).toBeCloseTo(50)
+    expect(Math.round(earned)).toBe(1000)
+  })
+
+  it('reaches the monthly salary after the final workday is complete', () => {
+    const now = new Date('2026-06-30T18:00:00') // Tue, after shift
+    const { earned } = earnedSoFarThisMonth(now, {
+      startTime: '09:00',
+      endTime: '17:00',
+      breakMinutes: 0,
+      salaryAmount: 8800,
+      salaryType: 'monthly',
+    })
+
+    expect(Math.round(earned)).toBe(8800)
+  })
+})
+
+describe('calculateWorkEarnings', () => {
+  it('returns shared day, week, and month calculations for app surfaces', () => {
+    const now = new Date('2026-06-03T13:00:00') // Wed
+    const snapshot = calculateWorkEarnings(now, {
+      startTime: '09:00',
+      endTime: '17:00',
+      breakMinutes: 0,
+      workDays: [1, 2, 3, 4, 5],
+      salaryAmount: 20,
+      salaryType: 'hourly',
+    })
+
+    expect(snapshot.isWorkDay).toBe(true)
+    expect(snapshot.percent).toBe(50)
+    expect(Math.round(snapshot.earned)).toBe(80)
+    expect(Math.round(snapshot.week.earned)).toBe(400)
+    expect(Math.round(snapshot.month.earned)).toBe(400)
+    expect(snapshot.remainingSeconds).toBe(4 * 60 * 60)
+  })
+
+  it('uses the actual current-month work hours for monthly rollups', () => {
+    const now = new Date('2026-06-30T18:00:00')
+    const snapshot = calculateWorkEarnings(now, {
+      startTime: '09:00',
+      endTime: '17:00',
+      breakMinutes: 0,
+      workDays: [1, 2, 3, 4, 5],
+      salaryAmount: 8800,
+      salaryType: 'monthly',
+    })
+
+    expect(Math.round(snapshot.month.earned)).toBe(8800)
   })
 })

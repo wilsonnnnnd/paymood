@@ -7,11 +7,8 @@ import ColorModeToggle from './ColorModeToggle'
 import { useSettings } from '../hooks/useSettings'
 import { useClock } from '../hooks/useClock'
 import {
-  earnedSoFar,
-  earnedSoFarThisMonth,
-  earnedSoFarThisWeek,
+  calculateWorkEarnings,
   getWorkWindowForNow,
-  workProgress,
 } from '../lib/earnings'
 import { currencySymbols } from '../lib/settings'
 
@@ -207,21 +204,9 @@ export default function Dashboard() {
   const workDaysPerWeek = settings.workDays?.length ? settings.workDays.length : 5
 
   const today = now ?? new Date(0)
-  const { start, end } = getWorkWindowForNow(today, settings.startTime, settings.endTime)
-  const isWorkDay = isReady ? settings.workDays?.includes(start.getDay()) ?? true : true
-
-  const prog =
-    isReady && isWorkDay
-      ? workProgress(today, start, end, settings.breakMinutes)
-      : { progress: 0, elapsedSeconds: 0, remainingSeconds: 0, totalWorkSeconds: 0 }
-  const dayEarnings = isReady
-    ? earnedSoFar(today, start, end, settings.breakMinutes, settings.salaryAmount, settings.salaryType, {
-        workDaysPerWeek,
-      })
-    : { earned: 0, hourly: 0 }
-  const earned = isWorkDay ? dayEarnings.earned : 0
-  const week = isReady
-    ? earnedSoFarThisWeek(today, {
+  const fallbackWindow = getWorkWindowForNow(today, settings.startTime, settings.endTime)
+  const earnings = isReady
+    ? calculateWorkEarnings(today, {
         startTime: settings.startTime,
         endTime: settings.endTime,
         breakMinutes: settings.breakMinutes,
@@ -230,19 +215,23 @@ export default function Dashboard() {
         salaryType: settings.salaryType,
         opts: { workDaysPerWeek },
       })
-    : { earned: 0, hourly: 0 }
-  const month = isReady
-    ? earnedSoFarThisMonth(today, {
-        startTime: settings.startTime,
-        endTime: settings.endTime,
-        breakMinutes: settings.breakMinutes,
-        workDays: settings.workDays,
-        salaryAmount: settings.salaryAmount,
-        salaryType: settings.salaryType,
-        opts: { workDaysPerWeek },
-      })
-    : { earned: 0, hourly: 0 }
-  const percent = isWorkDay ? Math.round(prog.progress * 100) : 0
+    : {
+        start: fallbackWindow.start,
+        end: fallbackWindow.end,
+        isWorkDay: true,
+        progress: { progress: 0, elapsedSeconds: 0, remainingSeconds: 0, totalWorkSeconds: 0 },
+        earned: 0,
+        week: { earned: 0, hourly: 0 },
+        month: { earned: 0, hourly: 0 },
+        percent: 0,
+        remainingSeconds: 0,
+      }
+  const { start, end, isWorkDay } = earnings
+  const prog = earnings.progress
+  const earned = earnings.earned
+  const week = earnings.week
+  const month = earnings.month
+  const percent = earnings.percent
   const totalsFormat = new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 })
   const mood = isReady ? (isWorkDay ? moodFor(today, start, end) : '今天休息。') : '热身中…'
   const currencySymbol = currencyCodeToSymbol(settings.currency)

@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T13:46:05.851Z",
+    "generatedAt": "2026-05-25T13:56:23.512Z",
     "kind": "context",
     "payload": {
         "entrypoints": [],
@@ -59,7 +59,7 @@
         ],
         "index": {
             "fileGroups": 13,
-            "indexedFiles": 80,
+            "indexedFiles": 79,
             "indexedSymbols": 0,
             "truncated": false
         },
@@ -374,11 +374,6 @@
             {
                 "description": "Project file relevant to repository structure.",
                 "path": "lib/earnings.ts",
-                "type": "other"
-            },
-            {
-                "description": "Project file relevant to repository structure.",
-                "path": "lib/pet/getPetMood.ts",
                 "type": "other"
             },
             {

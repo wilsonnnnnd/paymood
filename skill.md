@@ -10,5 +10,6 @@ Use `AGENTS.md` as the source of truth. Read:
 - `AGENTS.md`
 - `.aidw/project.md`
 - `.aidw/rules.md`
+- `.aidw/rules-canonical.md`
 - `.aidw/task-entry.md`
 - `.aidw/confirmation-protocol.md`

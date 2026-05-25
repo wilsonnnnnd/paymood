@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { usePetWalker } from '../../hooks/usePetWalker'
 import { useClock } from '../../hooks/useClock'
 import { useSettings, type Settings } from '../../hooks/useSettings'
-import { earnedSoFar, getWorkWindowForNow, workProgress } from '../../lib/earnings'
+import { calculateWorkEarnings } from '../../lib/earnings'
 import { getHoverMessageContext, pickHoverMessageWithContext } from '../../lib/pet/petMessages'
 import { usePetMood } from '../../hooks/usePetMood'
 import PetSprite from './PetSprite'
@@ -52,24 +52,25 @@ function FloatingPetImpl({ settings }: { settings: Settings }) {
     }
 
     const workDaysPerWeek = settings.workDays?.length ? settings.workDays.length : 5
-    const { start, end } = getWorkWindowForNow(now, settings.startTime, settings.endTime)
-    const isWorkDay = settings.workDays?.includes(start.getDay()) ?? true
+    const earnings = calculateWorkEarnings(now, {
+      startTime: settings.startTime,
+      endTime: settings.endTime,
+      breakMinutes: settings.breakMinutes,
+      workDays: settings.workDays,
+      salaryAmount: settings.salaryAmount,
+      salaryType: settings.salaryType,
+      opts: { workDaysPerWeek },
+    })
+    const { start, end, isWorkDay } = earnings
     const isWorkTime = isWorkDay && now.getTime() >= start.getTime() && now.getTime() < end.getTime()
-
-    const p = isWorkTime ? workProgress(now, start, end, settings.breakMinutes).progress : 0
-    const earned = isWorkTime
-      ? earnedSoFar(now, start, end, settings.breakMinutes, settings.salaryAmount, settings.salaryType, {
-          workDaysPerWeek,
-        }).earned
-      : 0
     const minutesUntilOffwork = isWorkTime ? Math.max(0, Math.floor((end.getTime() - now.getTime()) / 60000)) : 0
     const minutesSinceWorkStart = isWorkTime
       ? Math.max(0, Math.floor((now.getTime() - start.getTime()) / 60000))
       : undefined
 
     return {
-      workProgress: p * 100,
-      earnedAmount: earned,
+      workProgress: isWorkTime ? earnings.progress.progress * 100 : 0,
+      earnedAmount: isWorkTime ? earnings.earned : 0,
       isWorkTime,
       isWorkDay,
       minutesUntilOffwork,

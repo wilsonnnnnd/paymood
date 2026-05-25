@@ -1,11 +1,8 @@
 import * as vscode from 'vscode'
 import { randomUUID } from 'crypto'
 import {
-  earnedSoFar,
-  earnedSoFarThisMonth,
-  earnedSoFarThisWeek,
+  calculateWorkEarnings,
   getWorkWindowForNow,
-  workProgress,
 } from '../../lib/earnings'
 import { currencySymbols } from '../../lib/settings'
 import { defaultSettings, sanitizeSettings, type Settings } from '../../lib/settingsModel'
@@ -98,28 +95,7 @@ function computeSnapshot(
   timerStatus: TimerStatus,
 ): Snapshot {
   const workDaysPerWeek = settings.workDays?.length ? settings.workDays.length : 5
-  const { start, end } = getWorkWindowForNow(now, settings.startTime, settings.endTime)
-  const isWorkDay = settings.workDays?.includes(start.getDay()) ?? true
-
-  const prog = isWorkDay ? workProgress(now, start, end, settings.breakMinutes) : undefined
-  const day = earnedSoFar(now, start, end, settings.breakMinutes, settings.salaryAmount, settings.salaryType, {
-    workDaysPerWeek,
-  })
-
-  const earned = isWorkDay ? day.earned : 0
-  const percent = isWorkDay ? Math.round((prog?.progress ?? 0) * 100) : 0
-  const remainingSeconds = isWorkDay ? prog?.remainingSeconds ?? 0 : 0
-
-  const week = earnedSoFarThisWeek(now, {
-    startTime: settings.startTime,
-    endTime: settings.endTime,
-    breakMinutes: settings.breakMinutes,
-    workDays: settings.workDays,
-    salaryAmount: settings.salaryAmount,
-    salaryType: settings.salaryType,
-    opts: { workDaysPerWeek },
-  })
-  const month = earnedSoFarThisMonth(now, {
+  const earnings = calculateWorkEarnings(now, {
     startTime: settings.startTime,
     endTime: settings.endTime,
     breakMinutes: settings.breakMinutes,
@@ -137,13 +113,13 @@ function computeSnapshot(
     thinkingTodaySeconds: Math.floor(Math.max(0, thinkingTodayMs) / 1000),
     codingSessionSeconds: Math.floor(Math.max(0, codingSessionMs) / 1000),
     timerStatus,
-    isWorkDay,
-    percent,
-    earned,
-    hourly: day.hourly,
-    remainingSeconds,
-    weekEarned: week.earned,
-    monthEarned: month.earned,
+    isWorkDay: earnings.isWorkDay,
+    percent: earnings.percent,
+    earned: earnings.earned,
+    hourly: earnings.hourly,
+    remainingSeconds: earnings.remainingSeconds,
+    weekEarned: earnings.week.earned,
+    monthEarned: earnings.month.earned,
   }
 }
 

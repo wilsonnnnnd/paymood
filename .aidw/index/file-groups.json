@@ -80,12 +80,12 @@
     },
     {
         "path": "lib",
-        "fileCount": 7,
+        "fileCount": 6,
         "summary": "Project files grouped by directory.",
         "keyFiles": [
             "lib/earnings.ts",
-            "lib/pet/getPetMood.ts",
-            "lib/pet/petMessages.ts"
+            "lib/pet/petMessages.ts",
+            "lib/pet/petMoodRules.ts"
         ]
     },
     {

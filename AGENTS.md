@@ -2,12 +2,18 @@
 
 Single workflow entry point for AI coding tools in this repository.
 
-## Required Reading`r`n`r`nPrimary sources:`r`n- `PROJECT.md` - Human-owned project context`r`n- `.aidw/AI_project.md` - Generated AI context (from scan)
+## Required Reading
 
-## Read first
+Primary sources:
+- `PROJECT.md` - Human-owned project context
+- `.aidw/AI_project.md` - Generated AI context (from scan)
 
-- PROJECT.md`r`n- .aidw/AI_project.md
+Read first:
+
+- PROJECT.md
+- .aidw/AI_project.md
 - .aidw/rules.md
+- .aidw/rules-canonical.md
 - .aidw/workflow.md
 - .aidw/safety.md
 - .aidw/system-overview.md
@@ -31,6 +37,13 @@ Classify requests into:
 4. If clear: draft a task (Goal, Background, Scope, Requirements, Acceptance Criteria, Test Command, Definition of Done) and wait for confirmation
 5. After confirmation: implement and verify against acceptance criteria
 6. Review requests: review/refine against Task/AC (draft minimal Task/AC if missing)
+
+## Response style
+
+- Use compact, natural replies by default.
+- Do not use full `## State` / `## Output` / `## Confirm` blocks unless a host explicitly requires machine-readable protocol output.
+- For confirmations, ask plainly with short options such as `Confirm task`, `Adjust task`, `Run tests`, or `Cancel`.
+- Final reports should be concise: what changed, tests run, and remaining notes or risks.
 
 ## Never
 
