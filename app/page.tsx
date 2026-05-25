@@ -1,13 +1,16 @@
 import React from 'react'
-import AdSenseSlot from '../components/AdSenseSlot'
-import Dashboard from '../components/Dashboard'
+import { cookies } from 'next/headers'
+import HomeShell from '../components/HomeShell'
 
-export default function Page() {
-  return (
-    <main className="app-shell app-shell--with-ads">
-      <AdSenseSlot placement="side" />
-      <Dashboard />
-      <AdSenseSlot placement="side" />
-    </main>
-  )
+export default async function Page() {
+  const cookieStore = await cookies()
+  const adsCookie = cookieStore.get('pm_ads')?.value
+  const regionAllowsAds = adsCookie !== 'off'
+  const adsenseEnabled =
+    process.env.NEXT_PUBLIC_ADSENSE_ENABLED === 'true' &&
+    Boolean(process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT) &&
+    Boolean(process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_SLOT) &&
+    regionAllowsAds
+
+  return <HomeShell adsenseEnabled={adsenseEnabled} />
 }

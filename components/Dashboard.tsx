@@ -197,7 +197,13 @@ function formatTime(date: Date) {
   return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`
 }
 
-export default function Dashboard() {
+export default function Dashboard({
+  adsenseEnabled = true,
+  onNoFill,
+}: {
+  adsenseEnabled?: boolean
+  onNoFill?: () => void
+}) {
   const { settings, ready } = useSettings()
   const now = useClock(1000)
   const isReady = ready && now !== null
@@ -322,7 +328,7 @@ export default function Dashboard() {
         <Link href="/about">About</Link> <Link href="/privacy">Privacy</Link>{' '}
         <Link href="/terms">Terms</Link> <Link href="/contact">Contact</Link>
       </footer>
-      <AdSenseSlot />
+      {adsenseEnabled ? <AdSenseSlot onNoFill={onNoFill} /> : null}
     </section>
   )
 }

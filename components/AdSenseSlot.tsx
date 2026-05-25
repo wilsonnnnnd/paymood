@@ -8,9 +8,10 @@ type AdsWindow = Window & {
 
 type AdSenseSlotProps = {
   placement?: 'side' | 'bottom'
+  onNoFill?: () => void
 }
 
-export default function AdSenseSlot({ placement = 'bottom' }: AdSenseSlotProps) {
+export default function AdSenseSlot({ placement = 'bottom', onNoFill }: AdSenseSlotProps) {
   const adsenseEnabled = process.env.NEXT_PUBLIC_ADSENSE_ENABLED === 'true'
   const client = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT
   const slot = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_SLOT
@@ -95,11 +96,32 @@ export default function AdSenseSlot({ placement = 'bottom' }: AdSenseSlotProps) 
     const observer = new ResizeObserver(() => pushAd())
     observer.observe(ad)
 
+    const timeoutId =
+      onNoFill !== undefined
+        ? window.setTimeout(() => {
+            const current = adRef.current
+            if (!current) {
+              onNoFill()
+              return
+            }
+
+            const status = current.getAttribute('data-ad-status')
+            const rect = current.getBoundingClientRect()
+            const hasIframe = Boolean(current.querySelector('iframe'))
+            const isFilled = status === 'filled' || hasIframe || (rect.width > 0 && rect.height > 0)
+            const isUnfilled = status === 'unfilled'
+            const isBlocked = pushedRef.current === false
+
+            if (isUnfilled || isBlocked || !isFilled) onNoFill()
+          }, 6000)
+        : null
+
     return () => {
       window.cancelAnimationFrame(frameId)
       observer.disconnect()
+      if (timeoutId !== null) window.clearTimeout(timeoutId)
     }
-  }, [adsenseEnabled, canRenderAd, client, slot])
+  }, [adsenseEnabled, canRenderAd, client, onNoFill, slot])
 
   if (!adsenseEnabled || !client || !slot) return null
 
