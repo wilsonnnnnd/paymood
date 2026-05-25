@@ -174,7 +174,7 @@ function FloatingPetImpl({ settings }: { settings: Settings }) {
       aria-label="桌宠"
     >
       <div className="relative h-[84px] w-[84px]">
-        <PetMessageBubble visible={hovered} text={message} />
+        <PetMessageBubble visible={hovered} text={message} variant={variant} />
         <div className="absolute inset-0 grid place-items-center">
           <div className="drop-shadow-[0_24px_70px_rgba(0,0,0,0.18)]">
             <PetSprite mode={mode} flipX={flipX} size={84} variant={variant} />

@@ -17,11 +17,11 @@ import slime3Walk from '../../craftpix/PNG/Slime3/With_shadow/Slime3_Walk_with_s
 import slime3Run from '../../craftpix/PNG/Slime3/With_shadow/Slime3_Run_with_shadow.png'
 import slime3Hurt from '../../craftpix/PNG/Slime3/With_shadow/Slime3_Hurt_with_shadow.png'
 
-type Mode = 'idle' | 'walk' | 'run' | 'hurt'
-type Variant = 'aqua' | 'undead' | 'magma'
+export type PetSpriteMode = 'idle' | 'walk' | 'run' | 'hurt'
+export type PetSpriteVariant = 'aqua' | 'undead' | 'magma'
 type Sheet = typeof slime1Idle
 
-const sprites: Record<Variant, Record<Mode, Sheet>> = {
+const sprites: Record<PetSpriteVariant, Record<PetSpriteMode, Sheet>> = {
   aqua: { idle: slime1Idle, walk: slime1Walk, run: slime1Run, hurt: slime1Hurt },
   undead: { idle: slime2Idle, walk: slime2Walk, run: slime2Run, hurt: slime2Hurt },
   magma: { idle: slime3Idle, walk: slime3Walk, run: slime3Run, hurt: slime3Hurt },
@@ -33,10 +33,10 @@ export default function PetSprite({
   size,
   variant,
 }: {
-  mode: Mode
+  mode: PetSpriteMode
   flipX: boolean
   size: number
-  variant: Variant
+  variant: PetSpriteVariant
 }) {
   const reduceMotion = useReducedMotion()
   const [frame, setFrame] = useState(0)

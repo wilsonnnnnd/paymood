@@ -235,6 +235,321 @@ body::before {
     linear-gradient(180deg, var(--bg0), var(--bg1));
 }
 
+/* Pet companion HUD -------------------------------------------------------
+ * A quiet floating companion surface: closer to an ambient game HUD than a
+ * tooltip. Values are derived from the existing semantic tokens so light,
+ * dark, and system modes keep their own atmosphere.
+ */
+.pet-companion-hud {
+  --pet-hud-surface: color-mix(in srgb, var(--surface-floating) 88%, transparent);
+  --pet-hud-surface-top: color-mix(in srgb, white 18%, var(--surface-floating));
+  --pet-hud-border: color-mix(in srgb, var(--border-soft) 58%, white 18%);
+  --pet-hud-shadow: 0 18px 44px rgba(15, 23, 42, 0.105), 0 2px 10px rgba(15, 23, 42, 0.055);
+  --pet-hud-halo: var(--glow-ambient);
+  --pet-hud-accent: var(--glow-accent);
+  --pet-hud-dot: color-mix(in srgb, var(--accent) 60%, white);
+  --pet-hud-badge: color-mix(in srgb, white 72%, var(--pet-hud-accent));
+
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  width: max-content;
+  max-width: min(21rem, calc(100vw - 2rem));
+  min-height: 58px;
+  padding: 12px 17px 12px 13px;
+  border: 1px solid var(--pet-hud-border);
+  border-radius: 26px;
+  background:
+    linear-gradient(152deg, var(--pet-hud-surface-top), var(--pet-hud-surface)),
+    radial-gradient(circle at 20% 12%, color-mix(in srgb, white 38%, transparent), transparent 34%);
+  box-shadow: var(--pet-hud-shadow);
+  color: var(--text);
+  pointer-events: none;
+  user-select: none;
+  backdrop-filter: blur(22px) saturate(145%);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
+  transform-origin: 86% 92%;
+}
+
+.pet-companion-hud[data-tone='warm'] {
+  --pet-hud-halo: var(--glow-warning);
+  --pet-hud-accent: color-mix(in srgb, var(--glow-warning) 76%, var(--glow-ambient));
+  --pet-hud-dot: color-mix(in srgb, rgba(245, 158, 11, 0.88) 72%, white);
+}
+
+.pet-companion-hud[data-tone='rose'] {
+  --pet-hud-halo: var(--glow-danger);
+  --pet-hud-accent: color-mix(in srgb, var(--glow-danger) 74%, var(--glow-ambient));
+  --pet-hud-dot: color-mix(in srgb, rgba(244, 63, 94, 0.82) 70%, white);
+}
+
+.pet-companion-hud[data-tone='dream'] {
+  --pet-hud-halo: var(--glow-ambient);
+  --pet-hud-accent: color-mix(in srgb, var(--glow-ambient) 78%, var(--glow-ring));
+}
+
+.pet-companion-hud[data-tone='focus'] {
+  --pet-hud-halo: var(--glow-accent);
+  --pet-hud-accent: color-mix(in srgb, var(--glow-accent) 78%, var(--glow-ring));
+}
+
+.pet-companion-hud[data-emphasized='true'] {
+  --pet-hud-shadow: 0 20px 52px rgba(15, 23, 42, 0.13), 0 3px 14px rgba(15, 23, 42, 0.07);
+}
+
+.pet-companion-hud--ambient {
+  animation: pet-companion-breathe 5.8s var(--ease) infinite;
+}
+
+.pet-companion-hud--hover {
+  position: absolute;
+  left: 50%;
+  top: -6px;
+  grid-template-columns: auto minmax(0, 1fr);
+  min-height: 54px;
+  min-width: 11.25rem;
+  padding: 12px 17px 12px 14px;
+  text-align: left;
+  translate: -50% -100%;
+  transform-origin: 50% 100%;
+}
+
+.pet-companion-hud__glow,
+.pet-companion-hud__sheen {
+  position: absolute;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.pet-companion-hud__glow {
+  inset: -18px;
+  z-index: -2;
+  background:
+    radial-gradient(circle at 12% 46%, var(--pet-hud-halo), transparent 44%),
+    radial-gradient(circle at 86% 12%, var(--pet-hud-accent), transparent 38%);
+  filter: blur(18px);
+  opacity: 0.48;
+}
+
+.pet-companion-hud__sheen {
+  inset: 1px 1px auto 1px;
+  height: 46%;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent);
+  opacity: 0.72;
+}
+
+.pet-companion-badge {
+  position: relative;
+  width: 48px;
+  height: 50px;
+  margin-left: -30px;
+  display: grid;
+  place-items: center;
+  transform: translateY(-4px);
+}
+
+.pet-companion-badge__halo {
+  position: absolute;
+  inset: -10px -8px -8px -12px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 44% 44%, color-mix(in srgb, var(--pet-hud-accent) 72%, transparent), transparent 58%),
+    radial-gradient(circle at 48% 70%, rgba(255, 255, 255, 0.24), transparent 64%);
+  filter: blur(12px);
+  opacity: 0.42;
+}
+
+.pet-companion-badge__orb {
+  position: relative;
+  width: 48px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.pet-companion-badge__sprite {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--pet-companion-image-size, 58px);
+  height: var(--pet-companion-image-size, 58px);
+  margin-left: -2px;
+  margin-top: -9px;
+  filter: drop-shadow(0 15px 18px rgba(15, 23, 42, 0.2));
+  transform: translateY(2px);
+}
+
+.pet-companion-badge__status {
+  position: absolute;
+  right: 1px;
+  bottom: 5px;
+  width: 9px;
+  height: 9px;
+  border: 2px solid color-mix(in srgb, var(--surface-floating) 82%, white);
+  border-radius: 999px;
+  background: var(--pet-hud-dot);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--pet-hud-dot) 16%, transparent);
+}
+
+.pet-companion-mini {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin-left: -18px;
+  display: grid;
+  place-items: center;
+  transform: translateY(-1px);
+}
+
+.pet-companion-mini__glow {
+  position: absolute;
+  inset: -11px -10px -9px -13px;
+  border-radius: 999px;
+  background: radial-gradient(circle, var(--pet-hud-accent), transparent 66%);
+  filter: blur(11px);
+  opacity: 0.38;
+}
+
+.pet-companion-mini__orb {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.pet-companion-mini__sprite {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--pet-companion-image-size, 38px);
+  height: var(--pet-companion-image-size, 38px);
+  margin-left: -13px;
+  margin-top: -21px;
+  filter: drop-shadow(0 11px 13px rgba(15, 23, 42, 0.18));
+  transform: translate(-3px, -5px);
+}
+
+.pet-companion-content {
+  position: relative;
+  min-width: 0;
+  display: block;
+  padding-right: 1px;
+}
+
+.pet-companion-content--center {
+  padding-right: 0;
+}
+
+.pet-companion-content__text {
+  display: block;
+  max-width: 15.5rem;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 650;
+  line-height: 1.42;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.pet-companion-tail {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 0 0 7px 0;
+  border-right: 1px solid var(--pet-hud-border);
+  border-bottom: 1px solid var(--pet-hud-border);
+  background: linear-gradient(135deg, transparent 0 48%, var(--pet-hud-surface) 49% 100%);
+  box-shadow: 5px 6px 16px rgba(15, 23, 42, 0.055);
+}
+
+.pet-companion-tail--right {
+  right: -5px;
+  bottom: 15px;
+  transform: rotate(-8deg);
+}
+
+.pet-companion-tail--bottom {
+  left: 50%;
+  bottom: -6px;
+  transform: translateX(-50%) rotate(45deg);
+  background: var(--pet-hud-surface);
+}
+
+:root[data-color-mode='dark'] .pet-companion-hud {
+  --pet-hud-surface: color-mix(in srgb, var(--surface-floating) 88%, transparent);
+  --pet-hud-surface-top: color-mix(in srgb, rgba(80, 105, 160, 0.22) 42%, var(--surface-floating));
+  --pet-hud-border: color-mix(in srgb, var(--border-soft) 72%, rgba(255, 255, 255, 0.12));
+  --pet-hud-shadow: 0 24px 58px rgba(0, 0, 0, 0.34), 0 2px 12px rgba(0, 0, 0, 0.22);
+  --pet-hud-badge: color-mix(in srgb, var(--surface-floating) 52%, var(--pet-hud-accent));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-color-mode='light']):not([data-color-mode='dark']) .pet-companion-hud {
+    --pet-hud-surface: color-mix(in srgb, var(--surface-floating) 88%, transparent);
+    --pet-hud-surface-top: color-mix(in srgb, rgba(80, 105, 160, 0.22) 42%, var(--surface-floating));
+    --pet-hud-border: color-mix(in srgb, var(--border-soft) 72%, rgba(255, 255, 255, 0.12));
+    --pet-hud-shadow: 0 24px 58px rgba(0, 0, 0, 0.34), 0 2px 12px rgba(0, 0, 0, 0.22);
+    --pet-hud-badge: color-mix(in srgb, var(--surface-floating) 52%, var(--pet-hud-accent));
+  }
+}
+
+@keyframes pet-companion-breathe {
+  0%,
+  100% {
+    filter: saturate(1);
+  }
+  50% {
+    filter: saturate(1.04);
+  }
+}
+
+@media (max-width: 520px) {
+  .pet-companion-hud {
+    max-width: min(18.5rem, calc(100vw - 1.25rem));
+    min-height: 54px;
+    gap: 10px;
+    padding: 11px 14px 11px 12px;
+    border-radius: 23px;
+  }
+
+  .pet-companion-badge {
+    width: 42px;
+    height: 44px;
+    margin-left: -25px;
+  }
+
+  .pet-companion-badge__orb {
+    width: 42px;
+    height: 44px;
+  }
+
+  .pet-companion-content__text {
+    max-width: 13.5rem;
+    font-size: 0.84rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pet-companion-hud--ambient {
+    animation: none;
+  }
+}
+
 a {
   color: inherit;
 }

@@ -14,6 +14,7 @@ export default function AmbientPet() {
   const now = useClock(1000)
   const reduceMotion = useReducedMotion()
   const [hovered, setHovered] = useState(false)
+  const variant = settings.petVariant ?? 'aqua'
 
   const petInput = useMemo(() => {
     if (!ready || !now) {
@@ -70,7 +71,7 @@ export default function AmbientPet() {
 
   return (
     <div className="pointer-events-none fixed bottom-4 right-4 z-50 flex items-end gap-2 sm:bottom-6 sm:right-6 sm:gap-3">
-      <PetBubble mood={mood} text={message} emphasize={hovered} />
+      <PetBubble mood={mood} text={message} emphasize={hovered} variant={variant} />
 
       <motion.div
         className={[

@@ -1,37 +1,59 @@
 'use client'
 import React from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import PetCompanionImage from './PetCompanionImage'
+import type { PetSpriteVariant } from './PetSprite'
 
-export default function PetMessageBubble({ visible, text }: { visible: boolean; text: string }) {
+function CompanionMiniBadge({ variant }: { variant: PetSpriteVariant }) {
+  const imageSize = 92
+
+  return (
+    <span className="pet-companion-mini" aria-hidden="true">
+      <span className="pet-companion-mini__glow" />
+      <span className="pet-companion-mini__orb">
+        <span
+          className="pet-companion-mini__sprite"
+          style={{ '--pet-companion-image-size': `${imageSize}px` } as React.CSSProperties}
+        >
+          <PetCompanionImage size={imageSize} variant={variant} />
+        </span>
+      </span>
+    </span>
+  )
+}
+
+export default function PetMessageBubble({
+  visible,
+  text,
+  variant = 'aqua',
+}: {
+  visible: boolean
+  text: string
+  variant?: PetSpriteVariant
+}) {
+  const reduceMotion = useReducedMotion()
+
   return (
     <AnimatePresence initial={false}>
       {visible && text ? (
         <motion.div
           key={text}
-          initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          exit={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
-          transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className={[
-            'pointer-events-none',
-            'absolute left-1/2 -translate-x-1/2 -top-2 -translate-y-full',
-            'min-w-25 max-w-70 rounded-2xl border border-(--border-ghost)',
-            'bg-(--surface-raised)/90 backdrop-blur-xl shadow-[0_18px_60px_rgba(0,0,0,0.10)]',
-            'px-3 py-2 text-[0.82rem] leading-snug text-(--text)',
-            'select-none',
-          ].join(' ')}
+          initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.95, filter: 'blur(7px)' }}
+          animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+          exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.97, filter: 'blur(6px)' }}
+          transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+          className="pet-companion-hud pet-companion-hud--hover"
+          data-tone="focus"
           role="status"
           aria-live="polite"
         >
-          {text}
-          <span
-            aria-hidden="true"
-            className={[
-              'absolute left-1/2 -translate-x-1/2 -bottom-1.5 h-3 w-3 rotate-45',
-              'border-r border-b border-(--border-ghost) bg-(--surface-raised)/90',
-            ].join(' ')}
-            style={{ borderBottomRightRadius: 3 }}
-          />
+          <span className="pet-companion-hud__glow" aria-hidden="true" />
+          <span className="pet-companion-hud__sheen" aria-hidden="true" />
+          <CompanionMiniBadge variant={variant} />
+          <span className="pet-companion-content pet-companion-content--center">
+            <span className="pet-companion-content__text">{text}</span>
+          </span>
+          <span className="pet-companion-tail pet-companion-tail--bottom" aria-hidden="true" />
         </motion.div>
       ) : null}
     </AnimatePresence>

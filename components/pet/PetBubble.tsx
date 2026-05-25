@@ -1,50 +1,76 @@
 'use client'
 import React from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import type { PetMood } from '../../lib/pet/petMoodRules'
+import PetCompanionImage from './PetCompanionImage'
+import type { PetSpriteVariant } from './PetSprite'
 
-export default function PetBubble({ mood, text, emphasize }: { mood: PetMood; text: string; emphasize: boolean }) {
-  // Mood tints use semantic glow tokens — consistent across light / dark
-  const moodBg =
-    mood === 'excited' || mood === 'happy'
-      ? 'color-mix(in srgb, var(--glow-warning) 28%, var(--surface-raised))'
-      : mood === 'tired'
-      ? 'color-mix(in srgb, var(--glow-danger) 26%, var(--surface-raised))'
-      : mood === 'sleepy'
-      ? 'color-mix(in srgb, var(--glow-ambient) 24%, var(--surface-raised))'
-      : mood === 'working'
-      ? 'color-mix(in srgb, var(--glow-accent) 22%, var(--surface-raised))'
-      : 'var(--surface-raised)'
+function moodTone(mood: PetMood) {
+  if (mood === 'excited' || mood === 'happy') return 'warm'
+  if (mood === 'tired') return 'rose'
+  if (mood === 'sleepy') return 'dream'
+  if (mood === 'working') return 'focus'
+  return 'calm'
+}
+
+function CompanionBadge({ mood, variant }: { mood: PetMood; variant: PetSpriteVariant }) {
+  const imageSize = 64
+
+  return (
+    <div className="pet-companion-badge" aria-hidden="true">
+      <span className="pet-companion-badge__halo" />
+      <span className="pet-companion-badge__orb">
+        <span
+          className="pet-companion-badge__sprite"
+          style={{ '--pet-companion-image-size': `${imageSize}px` } as React.CSSProperties}
+        >
+          <PetCompanionImage size={imageSize} variant={variant} />
+        </span>
+      </span>
+      <span className="pet-companion-badge__status" data-tone={moodTone(mood)} />
+    </div>
+  )
+}
+
+export default function PetBubble({
+  mood,
+  text,
+  emphasize,
+  variant = 'aqua',
+}: {
+  mood: PetMood
+  text: string
+  emphasize: boolean
+  variant?: PetSpriteVariant
+}) {
+  const reduceMotion = useReducedMotion()
+  const tone = moodTone(mood)
 
   return (
     <AnimatePresence mode="wait" initial={false}>
       <motion.div
         key={`${mood}:${text}`}
-        initial={{ opacity: 0, y: 6, filter: 'blur(4px)' }}
-        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-        exit={{ opacity: 0, y: 6, filter: 'blur(4px)' }}
-        transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-        className={[
-          'pointer-events-none select-none',
-          'max-w-45 rounded-2xl border border-(--border-ghost) sm:max-w-55',
-          'backdrop-blur-xl shadow-[0_18px_60px_rgba(0,0,0,0.10)]',
-          'px-3 py-2 text-[0.8rem] leading-snug text-(--text) sm:px-3.5 sm:py-2.5 sm:text-[0.86rem]',
-          'relative',
-          emphasize ? 'opacity-100' : 'opacity-80',
-        ].join(' ')}
-        style={{ background: moodBg }}
+        initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.96, filter: 'blur(6px)' }}
+        animate={
+          reduceMotion
+            ? { opacity: emphasize ? 1 : 0.9 }
+            : { opacity: emphasize ? 1 : 0.92, y: 0, scale: emphasize ? 1.018 : 1, filter: 'blur(0px)' }
+        }
+        exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.97, filter: 'blur(6px)' }}
+        transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+        className="pet-companion-hud pet-companion-hud--ambient"
+        data-tone={tone}
+        data-emphasized={emphasize ? 'true' : 'false'}
         role="status"
         aria-live="polite"
       >
-        {text}
-        <span
-          aria-hidden="true"
-          className={[
-            'absolute -right-1.5 bottom-2.5 h-3 w-3 rotate-45 sm:bottom-3',
-            'border-r border-b border-(--border-ghost)',
-          ].join(' ')}
-          style={{ background: moodBg, borderBottomRightRadius: 3 }}
-        />
+        <span className="pet-companion-hud__glow" aria-hidden="true" />
+        <span className="pet-companion-hud__sheen" aria-hidden="true" />
+        <CompanionBadge mood={mood} variant={variant} />
+        <span className="pet-companion-content">
+          <span className="pet-companion-content__text">{text}</span>
+        </span>
+        <span className="pet-companion-tail pet-companion-tail--right" aria-hidden="true" />
       </motion.div>
     </AnimatePresence>
   )
