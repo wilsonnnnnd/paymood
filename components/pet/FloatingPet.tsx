@@ -10,6 +10,37 @@ import { usePetMood } from '../../hooks/usePetMood'
 import PetSprite from './PetSprite'
 import PetMessageBubble from './PetMessageBubble'
 
+const petMoveBlockedSelector = [
+  '[data-pet-walker]',
+  'button',
+  'a',
+  'input',
+  'select',
+  'textarea',
+  '[role="button"]',
+  '[role="dialog"]',
+  '.hud-top-actions',
+  '.hud-header',
+  '.hud-main',
+  '.hud-ring-wrap',
+  '.hud-metrics',
+  '.hud-metric',
+  '.hud-rest-panel',
+  '.hud-footnote',
+  '.hud-controls',
+  '.hud-control',
+  '.settings-shell',
+  '.settings-hero',
+  '.settings-stage',
+  '.settings-footnote',
+  '.setting-section',
+  '.setting-section__header',
+  '.setting-pet-grid',
+  '.setting-pet-choice',
+  '.cm-panel-in',
+  '.cm-panel-out',
+].join(',')
+
 export default function FloatingPet() {
   const { settings, ready } = useSettings()
   const enabled = settings.petEnabled !== false
@@ -20,7 +51,7 @@ export default function FloatingPet() {
 function FloatingPetImpl({ settings }: { settings: Settings }) {
   const now = useClock(1000)
   const [compact, setCompact] = useState(false)
-  const { x, y, isMoving, flipX, pause, resume } = usePetWalker(
+  const { x, y, isMoving, flipX, pause, resume, moveTo } = usePetWalker(
     compact
       ? { petSize: 64, padding: 14, minWaitMs: 4500, maxWaitMs: 8500 }
       : { petSize: 84, padding: 24, minWaitMs: 4000, maxWaitMs: 8000 },
@@ -37,6 +68,21 @@ function FloatingPetImpl({ settings }: { settings: Settings }) {
     media.addEventListener('change', handler)
     return () => media.removeEventListener('change', handler)
   }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const onPointerDown = (event: PointerEvent) => {
+      if (event.button !== 0) return
+      const target = event.target
+      if (!(target instanceof Element)) return
+      if (target.closest(petMoveBlockedSelector)) return
+      moveTo(event.clientX, event.clientY)
+    }
+
+    window.addEventListener('pointerdown', onPointerDown)
+    return () => window.removeEventListener('pointerdown', onPointerDown)
+  }, [moveTo])
 
   const petInput = useMemo(() => {
     if (!now) {
@@ -118,6 +164,7 @@ function FloatingPetImpl({ settings }: { settings: Settings }) {
   return (
     <motion.button
       type="button"
+      data-pet-walker
       className="pointer-events-auto fixed left-0 top-0 z-40 border-0 bg-transparent p-0"
       style={{ x, y }}
       onMouseEnter={onEnter}

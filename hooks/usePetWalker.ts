@@ -41,6 +41,8 @@ export function usePetWalker(opts?: Options) {
   const timeoutRef = useRef<number | null>(null)
   const animStopRef = useRef<(() => void) | null>(null)
   const startMoveRef = useRef<(() => void) | null>(null)
+  const scheduleNextRef = useRef<(() => void) | null>(null)
+  const moveIdRef = useRef(0)
 
   const bounds = useMemo(() => {
     const w = viewport?.w ?? 0
@@ -67,6 +69,7 @@ export function usePetWalker(opts?: Options) {
   }, [bounds.maxX, bounds.maxY, viewport, x, y])
 
   const stop = useCallback(() => {
+    moveIdRef.current += 1
     if (timeoutRef.current !== null) {
       window.clearTimeout(timeoutRef.current)
       timeoutRef.current = null
@@ -77,6 +80,51 @@ export function usePetWalker(opts?: Options) {
     }
     setIsMoving(false)
   }, [])
+
+  const moveToPoint = useCallback(
+    (nx: number, ny: number, opts?: { scheduleAfter?: boolean }) => {
+      if (!viewport) return
+      if (timeoutRef.current !== null) {
+        window.clearTimeout(timeoutRef.current)
+        timeoutRef.current = null
+      }
+      if (animStopRef.current) {
+        animStopRef.current()
+        animStopRef.current = null
+      }
+
+      const targetX = clamp(nx, bounds.minX, bounds.maxX)
+      const targetY = clamp(ny, bounds.minY, bounds.maxY)
+      const cx = x.get()
+      const cy = y.get()
+      const currentMoveId = moveIdRef.current + 1
+      moveIdRef.current = currentMoveId
+
+      setFlipX(targetX < cx)
+      setIsMoving(true)
+
+      const dist = distance(cx, cy, targetX, targetY)
+      const speed = 42
+      const duration = clamp(dist / speed, 0.7, 7.5)
+      const ax = animate(x, targetX, { duration, ease: [0.22, 1, 0.36, 1] })
+      const ay = animate(y, targetY, { duration, ease: [0.22, 1, 0.36, 1] })
+      animStopRef.current = () => {
+        ax.stop()
+        ay.stop()
+      }
+
+      Promise.all([ax.finished, ay.finished])
+        .catch(() => {})
+        .finally(() => {
+          if (moveIdRef.current !== currentMoveId) return
+          animStopRef.current = null
+          if (pausedRef.current) return
+          setIsMoving(false)
+          if (opts?.scheduleAfter ?? true) scheduleNextRef.current?.()
+        })
+    },
+    [bounds.maxX, bounds.maxY, bounds.minX, bounds.minY, viewport, x, y],
+  )
 
   const pickNext = useCallback(() => {
     const attemptMax = 10
@@ -106,34 +154,16 @@ export function usePetWalker(opts?: Options) {
     if (!viewport) return
 
     const { nx, ny } = pickNext()
-    const cx = x.get()
-    const cy = y.get()
-    setFlipX(nx < cx)
-    setIsMoving(true)
-
-    const dist = distance(cx, cy, nx, ny)
-    const speed = 42
-    const duration = clamp(dist / speed, 3.2, 7.5)
-    const ax = animate(x, nx, { duration, ease: [0.22, 1, 0.36, 1] })
-    const ay = animate(y, ny, { duration, ease: [0.22, 1, 0.36, 1] })
-    animStopRef.current = () => {
-      ax.stop()
-      ay.stop()
-    }
-
-    Promise.all([ax.finished, ay.finished])
-      .catch(() => {})
-      .finally(() => {
-        animStopRef.current = null
-        if (pausedRef.current) return
-        setIsMoving(false)
-        scheduleNext()
-      })
-  }, [pickNext, scheduleNext, viewport, x, y])
+    moveToPoint(nx, ny)
+  }, [moveToPoint, pickNext, viewport])
 
   useEffect(() => {
     startMoveRef.current = startMove
   }, [startMove])
+
+  useEffect(() => {
+    scheduleNextRef.current = scheduleNext
+  }, [scheduleNext])
 
   useEffect(() => {
     if (!viewport) return
@@ -151,5 +181,12 @@ export function usePetWalker(opts?: Options) {
     scheduleNext()
   }
 
-  return { x, y, isMoving, flipX, pause, resume, petSize }
+  const moveTo = useCallback(
+    (clientX: number, clientY: number) => {
+      moveToPoint(clientX - petSize / 2, clientY - petSize / 2)
+    },
+    [moveToPoint, petSize],
+  )
+
+  return { x, y, isMoving, flipX, pause, resume, moveTo, petSize }
 }
