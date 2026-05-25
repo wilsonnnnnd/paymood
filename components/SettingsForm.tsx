@@ -83,7 +83,13 @@ export default function SettingsForm() {
   }, [])
 
   const colorModeLabel =
-    colorMode === 'system' ? (prefersDark ? '跟随系统（深色）' : '跟随系统（浅色）') : colorMode === 'light' ? '浅色' : '深色'
+    colorMode === 'system'
+      ? prefersDark
+        ? '跟随系统（深色）'
+        : '跟随系统（浅色）'
+      : colorMode === 'light'
+      ? '浅色'
+      : '深色'
 
   const weekdayChoices = [
     { label: '一', value: 1 },
@@ -120,7 +126,11 @@ export default function SettingsForm() {
         </div>
 
         <SettingSection title="工作空间" description="界面偏好和陪伴感放在这里，不影响收入计算。" tone="quiet">
-          <SettingRow label="主题模式" description="当前颜色模式会跟随系统或固定为你选择的状态。" value={colorModeLabel} />
+          <SettingRow
+            label="主题模式"
+            description="当前颜色模式会跟随系统或固定为你选择的状态。"
+            value={colorModeLabel}
+          />
 
           <SettingRow
             label="桌宠"
@@ -178,7 +188,11 @@ export default function SettingsForm() {
               />
             </SettingRow>
 
-            <SettingRow label="休息时间" description="从收入计算时段中扣除的分钟数。" controlId="settings-break-minutes">
+            <SettingRow
+              label="休息时间"
+              description="从收入计算时段中扣除的分钟数。"
+              controlId="settings-break-minutes"
+            >
               <SettingInput
                 id="settings-break-minutes"
                 value={String(settings.breakMinutes)}
@@ -261,11 +275,17 @@ export default function SettingsForm() {
                     </option>
                   ))}
                 </SettingSelect>
-                <SettingAction variant="primary" disabled={!salaryDraftValid} onClick={() => setSalaryConfirmOpen(true)}>
+                <SettingAction
+                  variant="primary"
+                  disabled={!salaryDraftValid}
+                  onClick={() => setSalaryConfirmOpen(true)}
+                >
                   保存
                 </SettingAction>
               </div>
-              <SettingDescription tone="quiet">保存后将无法再次查看具体薪资金额，只能重置后重新输入。</SettingDescription>
+              <SettingDescription tone="quiet">
+                保存后将无法再次查看具体薪资金额，只能重置后重新输入。
+              </SettingDescription>
             </SettingGroup>
           )}
         </SettingSection>

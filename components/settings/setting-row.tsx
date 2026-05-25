@@ -21,7 +21,16 @@ export type SettingRowProps = React.HTMLAttributes<HTMLDivElement> &
     value?: React.ReactNode
   }
 
-export function SettingRow({ label, controlId, description, value, density, className, children, ...props }: SettingRowProps) {
+export function SettingRow({
+  label,
+  controlId,
+  description,
+  value,
+  density,
+  className,
+  children,
+  ...props
+}: SettingRowProps) {
   return (
     <div className={cn(rowVariants({ density }), className)} {...props}>
       <div className="setting-row__copy">

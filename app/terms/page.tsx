@@ -23,8 +23,7 @@ export default function TermsPage() {
         },
         {
           title: 'Estimates only',
-          description:
-            'Earnings, progress, weekly totals, and monthly totals shown by PayMood are estimates.',
+          description: 'Earnings, progress, weekly totals, and monthly totals shown by PayMood are estimates.',
           body: [
             'PayMood does not know your full employment contract, tax position, deductions, overtime rules, superannuation, payroll calendar, unpaid leave, or employer-specific policies. You are responsible for checking your actual pay, timesheets, payslips, contracts, and tax obligations.',
             'Do not rely on PayMood as financial, legal, tax, payroll, HR, or employment advice.',

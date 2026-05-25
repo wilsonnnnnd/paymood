@@ -79,7 +79,11 @@ export function sanitizeSettings(input: unknown): Settings {
     : defaultSettings.currency
 
   const payLocked =
-    typeof raw.payLocked === 'boolean' ? raw.payLocked : raw.payLocked == null ? salaryAmount > 0 : defaultSettings.payLocked
+    typeof raw.payLocked === 'boolean'
+      ? raw.payLocked
+      : raw.payLocked == null
+      ? salaryAmount > 0
+      : defaultSettings.payLocked
   const petEnabled = typeof raw.petEnabled === 'boolean' ? raw.petEnabled : defaultSettings.petEnabled
 
   return {
@@ -98,4 +102,3 @@ export function sanitizeSettings(input: unknown): Settings {
     currency,
   }
 }
-

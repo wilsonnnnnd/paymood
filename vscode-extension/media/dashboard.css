@@ -28,9 +28,7 @@
 body {
   min-width: 280px;
   margin: 0;
-  background:
-    radial-gradient(520px 300px at 0% 0%, var(--pm-accent-soft), transparent 72%),
-    var(--pm-bg);
+  background: radial-gradient(520px 300px at 0% 0%, var(--pm-accent-soft), transparent 72%), var(--pm-bg);
   color: var(--pm-fg);
   font-family: var(--vscode-font-family);
   font-size: var(--vscode-font-size);
@@ -116,11 +114,7 @@ label,
   background: transparent;
   color: var(--pm-fg);
   cursor: pointer;
-  transition:
-    background 120ms ease,
-    border-color 120ms ease,
-    color 120ms ease,
-    transform 120ms ease;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease;
 }
 
 .ghost-button:hover {
@@ -413,10 +407,7 @@ select {
   outline: none;
   background: var(--pm-input-bg);
   color: var(--pm-input-fg);
-  transition:
-    border-color 120ms ease,
-    box-shadow 120ms ease,
-    background 120ms ease;
+  transition: border-color 120ms ease, box-shadow 120ms ease, background 120ms ease;
 }
 
 input:focus,
@@ -444,11 +435,7 @@ select:focus {
   color: var(--pm-fg);
   cursor: pointer;
   user-select: none;
-  transition:
-    background 120ms ease,
-    border-color 120ms ease,
-    color 120ms ease,
-    transform 120ms ease;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease;
 }
 
 .day:hover {

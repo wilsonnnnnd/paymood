@@ -24,16 +24,14 @@ export default function AboutPage() {
         },
         {
           title: 'What it is not',
-          description:
-            'PayMood is not payroll software, a tax calculator, an HR system, or financial advice.',
+          description: 'PayMood is not payroll software, a tax calculator, an HR system, or financial advice.',
           body: [
             'The numbers are intentionally simple and transparent. They are useful for motivation and orientation, but your official pay records and obligations always come from your employer, contracts, payslips, accountant, tax authority, or other qualified sources.',
           ],
         },
         {
           title: 'How it is built',
-          description:
-            'PayMood is browser-first, lightweight, and designed to keep core settings on your device.',
+          description: 'PayMood is browser-first, lightweight, and designed to keep core settings on your device.',
           body: [
             'The current MVP uses local browser storage for preferences and does not require an account, backend database, or payroll integration.',
           ],

@@ -13,8 +13,7 @@ const groupVariants = cva('setting-group', {
   defaultVariants: { density: 'default' },
 })
 
-export type SettingGroupProps = React.HTMLAttributes<HTMLDivElement> &
-  VariantProps<typeof groupVariants>
+export type SettingGroupProps = React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof groupVariants>
 
 export function SettingGroup({ className, density, ...props }: SettingGroupProps) {
   return <div className={cn(groupVariants({ density }), className)} {...props} />

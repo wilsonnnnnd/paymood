@@ -9,7 +9,7 @@
 ## ✨ What it does
 
 - **💵 Live earnings** — See your running total right in the status bar as you code.
-- **⏱️ Smart time tracking** — Separately tracks *Coding* time (active edits) and *Thinking* time (focused but not typing), because staring at the screen counts too.
+- **⏱️ Smart time tracking** — Separately tracks _Coding_ time (active edits) and _Thinking_ time (focused but not typing), because staring at the screen counts too.
 - **📊 Dashboard** — Open the PayMood panel to see today's breakdown: time spent, money earned, and your settings at a glance.
 - **🌐 Shared preferences** — Schedule/pay settings are saved globally and shared across your workspaces.
 - **🔄 Persists across windows** — Close a window, open another — your daily totals stay intact until midnight.
@@ -28,12 +28,12 @@
 
 ## 🎮 Commands
 
-| Command | What it does |
-|---|---|
-| `PayMood: Open Dashboard` | Open the earnings & settings panel |
-| `PayMood: Toggle Status Bar` | Show or hide the status bar ticker |
+| Command                         | What it does                           |
+| ------------------------------- | -------------------------------------- |
+| `PayMood: Open Dashboard`       | Open the earnings & settings panel     |
+| `PayMood: Toggle Status Bar`    | Show or hide the status bar ticker     |
 | `PayMood: Reset Today Activity` | Clear today's coding & thinking totals |
-| `PayMood: Reset Settings` | Restore all settings to defaults |
+| `PayMood: Reset Settings`       | Restore all settings to defaults       |
 
 ---
 

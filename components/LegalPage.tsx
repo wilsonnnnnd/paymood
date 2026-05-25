@@ -22,13 +22,7 @@ const siteLinks = [
   { href: '/contact', label: 'Contact' },
 ]
 
-export default function LegalPage({
-  eyebrow = 'PayMood',
-  title,
-  subtitle,
-  ariaLabel,
-  sections,
-}: LegalPageProps) {
+export default function LegalPage({ eyebrow = 'PayMood', title, subtitle, ariaLabel, sections }: LegalPageProps) {
   return (
     <main className="app-shell settings-page">
       <section className="settings-shell" aria-label={ariaLabel}>
@@ -64,8 +58,7 @@ export default function LegalPage({
           <nav className="settings-footnote" aria-label="Site information">
             {siteLinks.map((link) => (
               <Link href={link.href} key={link.href}>
-                {link.label}
-                {' '}
+                {link.label}{' '}
               </Link>
             ))}
           </nav>

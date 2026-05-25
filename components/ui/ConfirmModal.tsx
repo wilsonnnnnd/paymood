@@ -24,8 +24,7 @@ export type ConfirmModalProps = {
   requireConfirmationValue?: boolean
 }
 
-const focusableSelector =
-  'button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])'
+const focusableSelector = 'button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])'
 
 function getFocusable(container: HTMLElement | null) {
   if (!container) return []
@@ -243,10 +242,7 @@ export default function ConfirmModal({
                 <div className="text-secondary mb-2 text-xs tracking-wide">{confirmationLabel}</div>
               ) : null}
               <input
-                className={[
-                  'setting-input w-full',
-                  'focus-visible:outline-none',
-                ].join(' ')}
+                className={['setting-input w-full', 'focus-visible:outline-none'].join(' ')}
                 value={confirmationDraft}
                 onChange={(e) => setConfirmationDraft(e.target.value)}
                 placeholder={confirmationPlaceholder}
@@ -260,9 +256,7 @@ export default function ConfirmModal({
               {confirmationHelpText ? (
                 <div className="text-secondary mt-2 text-xs leading-relaxed">{confirmationHelpText}</div>
               ) : null}
-              {!matchesConfirmation ? (
-                <div className="text-secondary mt-2 text-xs">输入匹配后才能继续。</div>
-              ) : null}
+              {!matchesConfirmation ? <div className="text-secondary mt-2 text-xs">输入匹配后才能继续。</div> : null}
             </div>
           ) : null}
         </div>
@@ -271,10 +265,7 @@ export default function ConfirmModal({
           <button
             ref={cancelButtonRef}
             type="button"
-            className={[
-              'setting-action setting-action--quiet',
-              'focus-visible:outline-none',
-            ].join(' ')}
+            className={['setting-action setting-action--quiet', 'focus-visible:outline-none'].join(' ')}
             onClick={requestClose}
             disabled={loading}
           >
@@ -282,10 +273,7 @@ export default function ConfirmModal({
           </button>
           <button
             type="button"
-            className={[
-              'setting-action setting-action--modal',
-              'focus-visible:outline-none',
-            ].join(' ')}
+            className={['setting-action setting-action--modal', 'focus-visible:outline-none'].join(' ')}
             onClick={handleConfirm}
             disabled={confirmDisabled}
           >

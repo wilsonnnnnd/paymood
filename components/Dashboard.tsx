@@ -6,10 +6,7 @@ import CircularProgress from './CircularProgress'
 import ColorModeToggle from './ColorModeToggle'
 import { useSettings } from '../hooks/useSettings'
 import { useClock } from '../hooks/useClock'
-import {
-  calculateWorkEarnings,
-  getWorkWindowForNow,
-} from '../lib/earnings'
+import { calculateWorkEarnings, getWorkWindowForNow } from '../lib/earnings'
 import { currencySymbols } from '../lib/settings'
 
 function prefersReducedMotion() {
@@ -325,8 +322,8 @@ export default function Dashboard({
         </div>
       )}
       <footer className="hud-footnote" aria-label="Site information">
-        <Link href="/about">About</Link> <Link href="/privacy">Privacy</Link>{' '}
-        <Link href="/terms">Terms</Link> <Link href="/contact">Contact</Link>
+        <Link href="/about">About</Link> <Link href="/privacy">Privacy</Link> <Link href="/terms">Terms</Link>{' '}
+        <Link href="/contact">Contact</Link>
       </footer>
       {adsenseEnabled ? <AdSenseSlot onNoFill={onNoFill} /> : null}
     </section>

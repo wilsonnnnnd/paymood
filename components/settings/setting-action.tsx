@@ -15,8 +15,7 @@ const actionVariants = cva('setting-action', {
   defaultVariants: { variant: 'default' },
 })
 
-export type SettingActionProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
-  VariantProps<typeof actionVariants>
+export type SettingActionProps = React.ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<typeof actionVariants>
 
 export const SettingAction = React.forwardRef<HTMLButtonElement, SettingActionProps>(function SettingAction(
   { className, variant, type = 'button', ...props },

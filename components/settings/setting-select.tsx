@@ -13,8 +13,7 @@ const selectVariants = cva('setting-select', {
   defaultVariants: { tone: 'default' },
 })
 
-export type SettingSelectProps = React.SelectHTMLAttributes<HTMLSelectElement> &
-  VariantProps<typeof selectVariants>
+export type SettingSelectProps = React.SelectHTMLAttributes<HTMLSelectElement> & VariantProps<typeof selectVariants>
 
 export const SettingSelect = React.forwardRef<HTMLSelectElement, SettingSelectProps>(function SettingSelect(
   { className, tone, ...props },

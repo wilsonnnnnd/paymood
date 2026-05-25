@@ -13,8 +13,7 @@ const inputVariants = cva('setting-input', {
   defaultVariants: { tone: 'default' },
 })
 
-export type SettingInputProps = React.InputHTMLAttributes<HTMLInputElement> &
-  VariantProps<typeof inputVariants>
+export type SettingInputProps = React.InputHTMLAttributes<HTMLInputElement> & VariantProps<typeof inputVariants>
 
 export const SettingInput = React.forwardRef<HTMLInputElement, SettingInputProps>(function SettingInput(
   { className, tone, ...props },

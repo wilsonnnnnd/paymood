@@ -14,4 +14,3 @@
   "include": ["src/**/*.ts", "../lib/earnings.ts", "../lib/settings.ts", "../lib/settingsModel.ts"],
   "exclude": ["node_modules", "dist"]
 }
-

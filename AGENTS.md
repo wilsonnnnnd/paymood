@@ -5,6 +5,7 @@ Single workflow entry point for AI coding tools in this repository.
 ## Required Reading
 
 Primary sources:
+
 - `PROJECT.md` - Human-owned project context
 - `.aidw/AI_project.md` - Generated AI context (from scan)
 
@@ -51,4 +52,3 @@ Classify requests into:
 - skip clarification for ambiguous requests
 - create duplicate structures unnecessarily
 - perform unrelated refactors
-

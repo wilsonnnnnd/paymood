@@ -1,9 +1,6 @@
 import * as vscode from 'vscode'
 import { randomUUID } from 'crypto'
-import {
-  calculateWorkEarnings,
-  getWorkWindowForNow,
-} from '../../lib/earnings'
+import { calculateWorkEarnings, getWorkWindowForNow } from '../../lib/earnings'
 import { currencySymbols } from '../../lib/settings'
 import { defaultSettings, sanitizeSettings, type Settings } from '../../lib/settingsModel'
 import {
@@ -441,10 +438,16 @@ export function activate(context: vscode.ExtensionContext) {
       }
     }
     if (codingDeltaMs > 0 || thinkingDeltaMs > 0) {
-      dailyActivityState = addDailyActivity(context, nowDate, {
-        codingTodayMs: codingDeltaMs,
-        thinkingTodayMs: thinkingDeltaMs,
-      }, windowId, dailyActivityState)
+      dailyActivityState = addDailyActivity(
+        context,
+        nowDate,
+        {
+          codingTodayMs: codingDeltaMs,
+          thinkingTodayMs: thinkingDeltaMs,
+        },
+        windowId,
+        dailyActivityState,
+      )
     }
 
     localWindowState.lastSeenMs = nowMs
@@ -492,7 +495,8 @@ export function activate(context: vscode.ExtensionContext) {
     collectTime()
     const settings = readSettings(context)
     const nowDate = new Date()
-    const totals = dailyActivityState.day === getLocalDayKey(nowDate) ? dailyActivityState : readDailyActivity(context, nowDate)
+    const totals =
+      dailyActivityState.day === getLocalDayKey(nowDate) ? dailyActivityState : readDailyActivity(context, nowDate)
 
     const snapshot = computeSnapshot(
       nowDate,
@@ -509,7 +513,9 @@ export function activate(context: vscode.ExtensionContext) {
       statusItem.text = formatStatus(snapshot)
       const tooltipLines = [
         'Work progress',
-        `${Math.max(0, Math.min(100, snapshot.percent))}% · ${currencyCodeToSymbol(settings.currency)}${snapshot.earned.toFixed(2)} earned`,
+        `${Math.max(0, Math.min(100, snapshot.percent))}% · ${currencyCodeToSymbol(
+          settings.currency,
+        )}${snapshot.earned.toFixed(2)} earned`,
         `Remaining ${formatHM(snapshot.remainingSeconds)}`,
         `Coding today ${formatHM(snapshot.codingTodaySeconds)}`,
         `Thinking today ${formatHM(snapshot.thinkingTodaySeconds)}`,
@@ -597,7 +603,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   const resetTodayActivityWithConfirmation = async () => {
     const choice = await vscode.window.showWarningMessage(
-      'Reset today\'s Coding today and Thinking today totals?',
+      "Reset today's Coding today and Thinking today totals?",
       { modal: true },
       'Reset today',
     )
@@ -608,7 +614,9 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(vscode.commands.registerCommand('paymood.openDashboard', openDashboard))
   context.subscriptions.push(vscode.commands.registerCommand('paymood.toggleStatusBar', toggleStatusBar))
-  context.subscriptions.push(vscode.commands.registerCommand('paymood.resetTodayActivity', resetTodayActivityWithConfirmation))
+  context.subscriptions.push(
+    vscode.commands.registerCommand('paymood.resetTodayActivity', resetTodayActivityWithConfirmation),
+  )
   context.subscriptions.push(vscode.commands.registerCommand('paymood.resetSettings', resetSettings))
   context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(markCodingActivity))
   context.subscriptions.push(

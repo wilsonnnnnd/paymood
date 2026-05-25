@@ -35,8 +35,8 @@ export default function SettingsPage() {
             货币与工作时间会影响你的进度与收入展示。
           </p>
           <nav className="settings-footnote" aria-label="站点信息">
-            <Link href="/about">关于</Link> <Link href="/privacy">隐私</Link>{' '}
-            <Link href="/terms">条款</Link> <Link href="/contact">联系</Link>
+            <Link href="/about">关于</Link> <Link href="/privacy">隐私</Link> <Link href="/terms">条款</Link>{' '}
+            <Link href="/contact">联系</Link>
           </nav>
         </section>
       </section>

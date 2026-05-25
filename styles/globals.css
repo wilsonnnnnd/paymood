@@ -27,38 +27,37 @@
   /* ── primitives ── */
   --bg0: #f6f8ff;
   --bg1: #ecf0fc;
-  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    'Liberation Mono', 'Courier New', monospace;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 
   /* ── surface hierarchy — clean white glass (morning) ── */
-  --surface-base:     rgba(255, 255, 255, 0.58);
-  --surface-raised:   rgba(255, 255, 255, 0.74);
-  --surface-floating: rgba(255, 255, 255, 0.90);
-  --surface-overlay:  rgba(15, 23, 42, 0.12);
+  --surface-base: rgba(255, 255, 255, 0.58);
+  --surface-raised: rgba(255, 255, 255, 0.74);
+  --surface-floating: rgba(255, 255, 255, 0.9);
+  --surface-overlay: rgba(15, 23, 42, 0.12);
 
   /* ── text ── */
-  --text-primary:   #0f172a;
+  --text-primary: #0f172a;
   --text-secondary: rgba(15, 23, 42, 0.62);
-  --text-muted:     rgba(15, 23, 42, 0.44);
+  --text-muted: rgba(15, 23, 42, 0.44);
 
   /* ── border scale — daylight restraint ── */
-  --border-ghost:  rgba(15, 23, 42, 0.06);
-  --border-soft:   rgba(15, 23, 42, 0.10);
-  --border-active: rgba(59, 130, 246, 0.30);
+  --border-ghost: rgba(15, 23, 42, 0.06);
+  --border-soft: rgba(15, 23, 42, 0.1);
+  --border-active: rgba(59, 130, 246, 0.3);
 
   /* ── glow system — soft daylight (morning) ── */
-  --glow-ambient:  rgba(56, 189, 248, 0.14);
-  --glow-accent:   rgba(14, 165, 233, 0.12);
-  --glow-ring:     rgba(59, 130, 246, 0.18);
-  --glow-success:  rgba(34, 197, 94, 0.14);
-  --glow-danger:   rgba(244, 63, 94, 0.13);
-  --glow-warning:  rgba(245, 158, 11, 0.14);
-  --glow-focus:    rgba(59, 130, 246, 0.22);
+  --glow-ambient: rgba(56, 189, 248, 0.14);
+  --glow-accent: rgba(14, 165, 233, 0.12);
+  --glow-ring: rgba(59, 130, 246, 0.18);
+  --glow-success: rgba(34, 197, 94, 0.14);
+  --glow-danger: rgba(244, 63, 94, 0.13);
+  --glow-warning: rgba(245, 158, 11, 0.14);
+  --glow-focus: rgba(59, 130, 246, 0.22);
 
   /* ── state fills ── */
-  --state-hover:  rgba(15, 23, 42, 0.04);
+  --state-hover: rgba(15, 23, 42, 0.04);
   --state-active: rgba(15, 23, 42, 0.08);
 
   /* ── shadow ── */
@@ -66,30 +65,30 @@
 
   /* ── progress ring ── */
   --ring-track: rgba(15, 23, 42, 0.08);
-  --ring-ink:   rgba(59, 130, 246, 0.82);
-  --ring-glow:  var(--glow-ring);
+  --ring-ink: rgba(59, 130, 246, 0.82);
+  --ring-glow: var(--glow-ring);
 
   /* ── shared motion system ── */
-  --ease:        cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --ease-spring: cubic-bezier(0.16, 1.00, 0.30, 1.00);
-  --dur:         210ms;
-  --dur-fast:    165ms;
-  --dur-slow:    340ms;
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 210ms;
+  --dur-fast: 165ms;
+  --dur-slow: 340ms;
 
   /* ── backward-compat aliases (keep legacy CSS working) ── */
-  --text:           var(--text-primary);
-  --muted:          var(--text-muted);
-  --surface:        var(--surface-base);
+  --text: var(--text-primary);
+  --muted: var(--text-muted);
+  --surface: var(--surface-base);
   --surface-strong: var(--surface-raised);
-  --border:         var(--border-soft);
-  --focus:          var(--glow-focus);
-  --overlay:        var(--surface-overlay);
-  --accent:         rgba(14, 165, 233, 0.82);
-  --accent-glow:    var(--glow-accent);
-  --danger:         rgba(244, 63, 94, 0.72);
-  --danger-glow:    var(--glow-danger);
-  --success:        rgba(34, 197, 94, 0.70);
-  --success-glow:   var(--glow-success);
+  --border: var(--border-soft);
+  --focus: var(--glow-focus);
+  --overlay: var(--surface-overlay);
+  --accent: rgba(14, 165, 233, 0.82);
+  --accent-glow: var(--glow-accent);
+  --danger: rgba(244, 63, 94, 0.72);
+  --danger-glow: var(--glow-danger);
+  --success: rgba(34, 197, 94, 0.7);
+  --success-glow: var(--glow-success);
 }
 
 /* ── DARK MODE — midnight workspace ─────────────────────────────────────────
@@ -100,39 +99,39 @@
   --bg0: #05080f;
   --bg1: #080d1b;
 
-  --surface-base:     rgba(10, 14, 26, 0.62);
-  --surface-raised:   rgba(13, 18, 34, 0.72);
+  --surface-base: rgba(10, 14, 26, 0.62);
+  --surface-raised: rgba(13, 18, 34, 0.72);
   --surface-floating: rgba(16, 22, 42, 0.84);
-  --surface-overlay:  rgba(0, 0, 0, 0.65);
+  --surface-overlay: rgba(0, 0, 0, 0.65);
 
-  --text-primary:   rgba(232, 242, 255, 0.92);
-  --text-secondary: rgba(190, 215, 255, 0.60);
-  --text-muted:     rgba(148, 185, 230, 0.44);
+  --text-primary: rgba(232, 242, 255, 0.92);
+  --text-secondary: rgba(190, 215, 255, 0.6);
+  --text-muted: rgba(148, 185, 230, 0.44);
 
-  --border-ghost:  rgba(148, 185, 255, 0.056);
-  --border-soft:   rgba(148, 185, 255, 0.11);
+  --border-ghost: rgba(148, 185, 255, 0.056);
+  --border-soft: rgba(148, 185, 255, 0.11);
   --border-active: rgba(140, 200, 255, 0.22);
 
-  --glow-ambient:  rgba(72, 118, 230, 0.20);
-  --glow-accent:   rgba(100, 150, 255, 0.17);
-  --glow-ring:     rgba(125, 211, 252, 0.20);
-  --glow-success:  rgba(52, 211, 153, 0.18);
-  --glow-danger:   rgba(251, 113, 133, 0.20);
-  --glow-warning:  rgba(251, 191, 36, 0.18);
-  --glow-focus:    rgba(125, 211, 252, 0.22);
+  --glow-ambient: rgba(72, 118, 230, 0.2);
+  --glow-accent: rgba(100, 150, 255, 0.17);
+  --glow-ring: rgba(125, 211, 252, 0.2);
+  --glow-success: rgba(52, 211, 153, 0.18);
+  --glow-danger: rgba(251, 113, 133, 0.2);
+  --glow-warning: rgba(251, 191, 36, 0.18);
+  --glow-focus: rgba(125, 211, 252, 0.22);
 
-  --state-hover:  rgba(255, 255, 255, 0.04);
+  --state-hover: rgba(255, 255, 255, 0.04);
   --state-active: rgba(255, 255, 255, 0.07);
 
   --shadow: 0 32px 100px rgba(0, 0, 0, 0.55);
 
-  --ring-track: rgba(125, 211, 252, 0.10);
-  --ring-ink:   rgba(125, 211, 252, 0.80);
+  --ring-track: rgba(125, 211, 252, 0.1);
+  --ring-ink: rgba(125, 211, 252, 0.8);
 
   /* sky-blue accent — not amber */
-  --accent:   rgba(125, 211, 252, 0.80);
-  --danger:   rgba(251, 113, 133, 0.74);
-  --success:  rgba(74, 222, 128, 0.72);
+  --accent: rgba(125, 211, 252, 0.8);
+  --danger: rgba(251, 113, 133, 0.74);
+  --success: rgba(74, 222, 128, 0.72);
 }
 
 /* ── FORCE LIGHT (explicit override) ────────────────────────────────────── */
@@ -140,28 +139,28 @@
 :root[data-color-mode='light'] {
   --bg0: #f6f8ff;
   --bg1: #ecf0fc;
-  --surface-base:     rgba(255, 255, 255, 0.58);
-  --surface-raised:   rgba(255, 255, 255, 0.74);
-  --surface-floating: rgba(255, 255, 255, 0.90);
-  --surface-overlay:  rgba(15, 23, 42, 0.12);
-  --text-primary:   #0f172a;
+  --surface-base: rgba(255, 255, 255, 0.58);
+  --surface-raised: rgba(255, 255, 255, 0.74);
+  --surface-floating: rgba(255, 255, 255, 0.9);
+  --surface-overlay: rgba(15, 23, 42, 0.12);
+  --text-primary: #0f172a;
   --text-secondary: rgba(15, 23, 42, 0.62);
-  --text-muted:     rgba(15, 23, 42, 0.44);
-  --border-ghost:  rgba(15, 23, 42, 0.06);
-  --border-soft:   rgba(15, 23, 42, 0.10);
-  --border-active: rgba(59, 130, 246, 0.30);
-  --glow-ambient:  rgba(56, 189, 248, 0.14);
-  --glow-accent:   rgba(14, 165, 233, 0.12);
-  --glow-ring:     rgba(59, 130, 246, 0.18);
-  --glow-focus:    rgba(59, 130, 246, 0.22);
-  --state-hover:  rgba(15, 23, 42, 0.04);
+  --text-muted: rgba(15, 23, 42, 0.44);
+  --border-ghost: rgba(15, 23, 42, 0.06);
+  --border-soft: rgba(15, 23, 42, 0.1);
+  --border-active: rgba(59, 130, 246, 0.3);
+  --glow-ambient: rgba(56, 189, 248, 0.14);
+  --glow-accent: rgba(14, 165, 233, 0.12);
+  --glow-ring: rgba(59, 130, 246, 0.18);
+  --glow-focus: rgba(59, 130, 246, 0.22);
+  --state-hover: rgba(15, 23, 42, 0.04);
   --state-active: rgba(15, 23, 42, 0.08);
   --shadow: 0 18px 60px rgba(15, 23, 42, 0.09);
   --ring-track: rgba(15, 23, 42, 0.08);
-  --ring-ink:   rgba(59, 130, 246, 0.82);
-  --accent:  rgba(14, 165, 233, 0.82);
-  --danger:  rgba(244, 63, 94, 0.72);
-  --success: rgba(34, 197, 94, 0.70);
+  --ring-ink: rgba(59, 130, 246, 0.82);
+  --accent: rgba(14, 165, 233, 0.82);
+  --danger: rgba(244, 63, 94, 0.72);
+  --success: rgba(34, 197, 94, 0.7);
 }
 
 /* ── SYSTEM AUTO-DARK ────────────────────────────────────────────────────── */
@@ -170,30 +169,30 @@
   :root:not([data-color-mode='light']):not([data-color-mode='dark']) {
     --bg0: #05080f;
     --bg1: #080d1b;
-    --surface-base:     rgba(10, 14, 26, 0.62);
-    --surface-raised:   rgba(13, 18, 34, 0.72);
+    --surface-base: rgba(10, 14, 26, 0.62);
+    --surface-raised: rgba(13, 18, 34, 0.72);
     --surface-floating: rgba(16, 22, 42, 0.84);
-    --surface-overlay:  rgba(0, 0, 0, 0.65);
-    --text-primary:   rgba(232, 242, 255, 0.92);
-    --text-secondary: rgba(190, 215, 255, 0.60);
-    --text-muted:     rgba(148, 185, 230, 0.44);
-    --border-ghost:  rgba(148, 185, 255, 0.056);
-    --border-soft:   rgba(148, 185, 255, 0.11);
+    --surface-overlay: rgba(0, 0, 0, 0.65);
+    --text-primary: rgba(232, 242, 255, 0.92);
+    --text-secondary: rgba(190, 215, 255, 0.6);
+    --text-muted: rgba(148, 185, 230, 0.44);
+    --border-ghost: rgba(148, 185, 255, 0.056);
+    --border-soft: rgba(148, 185, 255, 0.11);
     --border-active: rgba(140, 200, 255, 0.22);
-    --glow-ambient:  rgba(72, 118, 230, 0.20);
-    --glow-accent:   rgba(100, 150, 255, 0.17);
-    --glow-ring:     rgba(125, 211, 252, 0.20);
-    --glow-success:  rgba(52, 211, 153, 0.18);
-    --glow-danger:   rgba(251, 113, 133, 0.20);
-    --glow-warning:  rgba(251, 191, 36, 0.18);
-    --glow-focus:    rgba(125, 211, 252, 0.22);
-    --state-hover:  rgba(255, 255, 255, 0.04);
+    --glow-ambient: rgba(72, 118, 230, 0.2);
+    --glow-accent: rgba(100, 150, 255, 0.17);
+    --glow-ring: rgba(125, 211, 252, 0.2);
+    --glow-success: rgba(52, 211, 153, 0.18);
+    --glow-danger: rgba(251, 113, 133, 0.2);
+    --glow-warning: rgba(251, 191, 36, 0.18);
+    --glow-focus: rgba(125, 211, 252, 0.22);
+    --state-hover: rgba(255, 255, 255, 0.04);
     --state-active: rgba(255, 255, 255, 0.07);
     --shadow: 0 32px 100px rgba(0, 0, 0, 0.55);
-    --ring-track: rgba(125, 211, 252, 0.10);
-    --ring-ink:   rgba(125, 211, 252, 0.80);
-    --accent:  rgba(125, 211, 252, 0.80);
-    --danger:  rgba(251, 113, 133, 0.74);
+    --ring-track: rgba(125, 211, 252, 0.1);
+    --ring-ink: rgba(125, 211, 252, 0.8);
+    --accent: rgba(125, 211, 252, 0.8);
+    --danger: rgba(251, 113, 133, 0.74);
     --success: rgba(74, 222, 128, 0.72);
   }
 }
@@ -228,9 +227,8 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: -1;
-  background:
-    radial-gradient(900px 560px at 16% 12%, var(--glow-ambient), transparent 60%),
-    radial-gradient(820px 500px at 86% 14%, var(--glow-accent),  transparent 60%),
+  background: radial-gradient(900px 560px at 16% 12%, var(--glow-ambient), transparent 60%),
+    radial-gradient(820px 500px at 86% 14%, var(--glow-accent), transparent 60%),
     radial-gradient(640px 400px at 50% 92%, var(--glow-ambient), transparent 54%),
     linear-gradient(180deg, var(--bg0), var(--bg1));
 }
@@ -262,8 +260,7 @@ body::before {
   padding: 12px 17px 12px 13px;
   border: 1px solid var(--pet-hud-border);
   border-radius: 26px;
-  background:
-    linear-gradient(152deg, var(--pet-hud-surface-top), var(--pet-hud-surface)),
+  background: linear-gradient(152deg, var(--pet-hud-surface-top), var(--pet-hud-surface)),
     radial-gradient(circle at 20% 12%, color-mix(in srgb, white 38%, transparent), transparent 34%);
   box-shadow: var(--pet-hud-shadow);
   color: var(--text);
@@ -327,8 +324,7 @@ body::before {
 .pet-companion-hud__glow {
   inset: -18px;
   z-index: -2;
-  background:
-    radial-gradient(circle at 12% 46%, var(--pet-hud-halo), transparent 44%),
+  background: radial-gradient(circle at 12% 46%, var(--pet-hud-halo), transparent 44%),
     radial-gradient(circle at 86% 12%, var(--pet-hud-accent), transparent 38%);
   filter: blur(18px);
   opacity: 0.48;
@@ -356,8 +352,11 @@ body::before {
   position: absolute;
   inset: -10px -8px -8px -12px;
   border-radius: 999px;
-  background:
-    radial-gradient(circle at 44% 44%, color-mix(in srgb, var(--pet-hud-accent) 72%, transparent), transparent 58%),
+  background: radial-gradient(
+      circle at 44% 44%,
+      color-mix(in srgb, var(--pet-hud-accent) 72%, transparent),
+      transparent 58%
+    ),
     radial-gradient(circle at 48% 70%, rgba(255, 255, 255, 0.24), transparent 64%);
   filter: blur(12px);
   opacity: 0.42;
@@ -628,9 +627,8 @@ select {
   content: '';
   position: absolute;
   inset: -40%;
-  background:
-    radial-gradient(circle at 28% 24%, var(--glow-ambient), transparent 52%),
-    radial-gradient(circle at 72% 18%, var(--glow-accent),  transparent 54%),
+  background: radial-gradient(circle at 28% 24%, var(--glow-ambient), transparent 52%),
+    radial-gradient(circle at 72% 18%, var(--glow-accent), transparent 54%),
     radial-gradient(circle at 50% 78%, var(--glow-ambient), transparent 58%);
   filter: blur(28px);
   opacity: 1;
@@ -1122,11 +1120,8 @@ fieldset.hud-control {
   cursor: pointer;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  transition:
-    border-color   var(--s-dur) var(--s-ease),
-    background     var(--s-dur) var(--s-ease),
-    box-shadow     var(--s-dur) var(--s-ease),
-    color          var(--s-dur) var(--s-ease);
+  transition: border-color var(--s-dur) var(--s-ease), background var(--s-dur) var(--s-ease),
+    box-shadow var(--s-dur) var(--s-ease), color var(--s-dur) var(--s-ease);
 }
 
 .hud-weekday[aria-pressed='true'] {
@@ -1220,11 +1215,8 @@ fieldset.hud-control {
   font-variant-numeric: tabular-nums;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  transition:
-    transform      var(--s-dur) var(--s-ease),
-    border-color   var(--s-dur) var(--s-ease),
-    background     var(--s-dur) var(--s-ease),
-    box-shadow     var(--s-dur) var(--s-ease);
+  transition: transform var(--s-dur) var(--s-ease), border-color var(--s-dur) var(--s-ease),
+    background var(--s-dur) var(--s-ease), box-shadow var(--s-dur) var(--s-ease);
 }
 
 .hud-control-input:hover {
@@ -1236,10 +1228,7 @@ fieldset.hud-control {
   transform: translate3d(0, -1px, 0);
   border-color: var(--s-line-active);
   background: var(--s-ctrl-focus);
-  box-shadow:
-    0 0 0 3px var(--s-glow-focus),
-    0 12px 36px var(--s-glow-ambient),
-    inset 0 1px 0 rgba(255, 255, 255, 0.032);
+  box-shadow: 0 0 0 3px var(--s-glow-focus), 0 12px 36px var(--s-glow-ambient), inset 0 1px 0 rgba(255, 255, 255, 0.032);
 }
 
 .hud-sensitive {
@@ -1444,45 +1433,45 @@ fieldset.hud-control {
 
 :root {
   /* ── shell & section surfaces ── */
-  --s-shell:               var(--surface-floating);
-  --s-shell-border:        var(--border-ghost);
-  --s-section-bg:          var(--surface-base);
-  --s-section-quiet:       color-mix(in srgb, var(--surface-base) 55%, transparent);
-  --s-section-vault:       var(--surface-raised);
-  --s-section-hover:       var(--surface-raised);
+  --s-shell: var(--surface-floating);
+  --s-shell-border: var(--border-ghost);
+  --s-section-bg: var(--surface-base);
+  --s-section-quiet: color-mix(in srgb, var(--surface-base) 55%, transparent);
+  --s-section-vault: var(--surface-raised);
+  --s-section-hover: var(--surface-raised);
 
   /* ── border scale ── */
-  --s-line-ghost:          var(--border-ghost);
-  --s-line:                var(--border-soft);
-  --s-line-active:         var(--border-active);
+  --s-line-ghost: var(--border-ghost);
+  --s-line: var(--border-soft);
+  --s-line-active: var(--border-active);
 
   /* ── control backgrounds ── */
-  --s-ctrl-bg:             var(--surface-base);
-  --s-ctrl-hover:          var(--surface-raised);
-  --s-ctrl-focus:          var(--surface-floating);
-  --s-ctrl-vault:          color-mix(in srgb, var(--surface-raised) 80%, transparent);
+  --s-ctrl-bg: var(--surface-base);
+  --s-ctrl-hover: var(--surface-raised);
+  --s-ctrl-focus: var(--surface-floating);
+  --s-ctrl-vault: color-mix(in srgb, var(--surface-raised) 80%, transparent);
 
   /* ── typography ── */
-  --s-text:                var(--text-primary);
-  --s-muted:               var(--text-muted);
-  --s-placeholder:         color-mix(in srgb, var(--text-muted) 70%, transparent);
+  --s-text: var(--text-primary);
+  --s-muted: var(--text-muted);
+  --s-placeholder: color-mix(in srgb, var(--text-muted) 70%, transparent);
 
   /* ── glows ── */
-  --s-glow-ambient:        var(--glow-ambient);
-  --s-glow-accent:         var(--glow-accent);
-  --s-glow-success:        var(--glow-success);
-  --s-glow-danger:         var(--glow-danger);
-  --s-glow-focus:          var(--glow-focus);
+  --s-glow-ambient: var(--glow-ambient);
+  --s-glow-accent: var(--glow-accent);
+  --s-glow-success: var(--glow-success);
+  --s-glow-danger: var(--glow-danger);
+  --s-glow-focus: var(--glow-focus);
 
   /* ── shadows ── */
-  --s-shadow-soft:         0 18px 56px var(--glow-ambient);
-  --s-shadow-lift:         0 22px 52px var(--glow-ambient);
+  --s-shadow-soft: 0 18px 56px var(--glow-ambient);
+  --s-shadow-lift: 0 22px 52px var(--glow-ambient);
 
   /* ── motion — inherit shared system ── */
-  --s-ease:                var(--ease);
-  --s-ease-spring:         var(--ease-spring);
-  --s-dur:                 var(--dur);
-  --s-dur-fast:            var(--dur-fast);
+  --s-ease: var(--ease);
+  --s-ease-spring: var(--ease-spring);
+  --s-dur: var(--dur);
+  --s-dur-fast: var(--dur-fast);
 }
 
 /* ── SETTINGS PAGE LAYOUT ─────────────────────────────────────────────────── */
@@ -1510,10 +1499,9 @@ fieldset.hud-control {
   content: '';
   position: absolute;
   inset: -32%;
-  background:
-    radial-gradient(ellipse at 20%  8%,  var(--s-glow-ambient), transparent 44%),
-    radial-gradient(ellipse at 82% 10%,  var(--s-glow-accent),  transparent 40%),
-    radial-gradient(ellipse at 50% 95%,  var(--s-glow-ambient), transparent 48%);
+  background: radial-gradient(ellipse at 20% 8%, var(--s-glow-ambient), transparent 44%),
+    radial-gradient(ellipse at 82% 10%, var(--s-glow-accent), transparent 40%),
+    radial-gradient(ellipse at 50% 95%, var(--s-glow-ambient), transparent 48%);
   filter: blur(34px);
   opacity: 0.56;
   pointer-events: none;
@@ -1539,7 +1527,7 @@ fieldset.hud-control {
 .settings-hero__eyebrow {
   color: var(--s-muted);
   font-size: 0.66rem;
-  letter-spacing: 0.30em;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
   opacity: 0.68;
 }
@@ -1620,11 +1608,8 @@ fieldset.hud-control {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   padding: clamp(18px, 3vw, 26px);
-  transition:
-    transform        var(--s-dur) var(--s-ease),
-    border-color     var(--s-dur) var(--s-ease),
-    background       var(--s-dur) var(--s-ease),
-    box-shadow       var(--s-dur) var(--s-ease);
+  transition: transform var(--s-dur) var(--s-ease), border-color var(--s-dur) var(--s-ease),
+    background var(--s-dur) var(--s-ease), box-shadow var(--s-dur) var(--s-ease);
 }
 
 /* Ambient top-light fades in on section hover */
@@ -1635,11 +1620,7 @@ fieldset.hud-control {
   left: 0;
   right: 0;
   height: 50%;
-  background: radial-gradient(
-    ellipse at 24% 0%,
-    var(--s-glow-ambient),
-    transparent 66%
-  );
+  background: radial-gradient(ellipse at 24% 0%, var(--s-glow-ambient), transparent 66%);
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--s-dur) var(--s-ease);
@@ -1665,12 +1646,8 @@ fieldset.hud-control {
 }
 
 .setting-section--vault::before {
-  background: radial-gradient(
-    ellipse at 12% 0%,
-    var(--s-glow-success),
-    transparent 54%
-  );
-  opacity: 0.20;
+  background: radial-gradient(ellipse at 12% 0%, var(--s-glow-success), transparent 54%);
+  opacity: 0.2;
 }
 
 .setting-section__header {
@@ -1768,8 +1745,8 @@ fieldset.hud-control {
   margin-top: 5px;
   color: var(--s-muted);
   font-size: 0.76rem;
-  line-height: 1.60;
-  opacity: 0.80;
+  line-height: 1.6;
+  opacity: 0.8;
 }
 
 .setting-row__control {
@@ -1786,7 +1763,7 @@ fieldset.hud-control {
   font-size: 0.76rem;
   font-variant-numeric: tabular-nums;
   text-align: right;
-  opacity: 0.70;
+  opacity: 0.7;
 }
 
 /* ── DESCRIPTION ──────────────────────────────────────────────────────────── */
@@ -1839,11 +1816,8 @@ fieldset.hud-control {
   font-variant-numeric: tabular-nums;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  transition:
-    transform      var(--s-dur)      var(--s-ease),
-    border-color   var(--s-dur)      var(--s-ease),
-    background     var(--s-dur)      var(--s-ease),
-    box-shadow     var(--s-dur)      var(--s-ease);
+  transition: transform var(--s-dur) var(--s-ease), border-color var(--s-dur) var(--s-ease),
+    background var(--s-dur) var(--s-ease), box-shadow var(--s-dur) var(--s-ease);
 }
 
 .setting-select {
@@ -1870,10 +1844,7 @@ fieldset.hud-control {
   transform: translate3d(0, -1.5px, 0);
   border-color: var(--s-line-active);
   background: var(--s-ctrl-focus);
-  box-shadow:
-    0 0 0 3px var(--s-glow-focus),
-    0 14px 44px var(--s-glow-ambient),
-    inset 0 1px 0 rgba(255, 255, 255, 0.032);
+  box-shadow: 0 0 0 3px var(--s-glow-focus), 0 14px 44px var(--s-glow-ambient), inset 0 1px 0 rgba(255, 255, 255, 0.032);
 }
 
 /* vault tone — darker, more private feeling */
@@ -1898,13 +1869,9 @@ fieldset.hud-control {
   cursor: pointer;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  transition:
-    transform      var(--s-dur)      var(--s-ease),
-    border-color   var(--s-dur)      var(--s-ease),
-    background     var(--s-dur)      var(--s-ease),
-    box-shadow     var(--s-dur)      var(--s-ease),
-    color          var(--s-dur-fast) var(--s-ease),
-    opacity        var(--s-dur-fast) var(--s-ease);
+  transition: transform var(--s-dur) var(--s-ease), border-color var(--s-dur) var(--s-ease),
+    background var(--s-dur) var(--s-ease), box-shadow var(--s-dur) var(--s-ease), color var(--s-dur-fast) var(--s-ease),
+    opacity var(--s-dur-fast) var(--s-ease);
 }
 
 .setting-action:hover,
@@ -1925,9 +1892,7 @@ fieldset.hud-control {
 .setting-action:focus-visible,
 .setting-toggle:focus-visible {
   outline: none;
-  box-shadow:
-    0 0 0 3px var(--s-glow-focus),
-    0 14px 38px var(--s-glow-ambient);
+  box-shadow: 0 0 0 3px var(--s-glow-focus), 0 14px 38px var(--s-glow-ambient);
 }
 
 .setting-action:disabled,
@@ -1946,7 +1911,7 @@ fieldset.hud-control {
   border-radius: 999px;
   padding: 0 16px;
   font-family: var(--font-mono);
-  font-size: 0.70rem;
+  font-size: 0.7rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   white-space: nowrap;
@@ -1960,9 +1925,7 @@ fieldset.hud-control {
 }
 
 .setting-action--primary:hover {
-  box-shadow:
-    0 0 0 1px var(--s-line-active),
-    0 16px 44px var(--s-glow-success);
+  box-shadow: 0 0 0 1px var(--s-line-active), 0 16px 44px var(--s-glow-success);
 }
 
 /* quiet — fades in on hover */
@@ -1988,9 +1951,7 @@ fieldset.hud-control {
 }
 
 .setting-action--modal:hover {
-  box-shadow:
-    0 0 0 1px var(--cm-accent, var(--s-line-active)),
-    0 16px 44px var(--cm-accent-glow, var(--s-glow-success));
+  box-shadow: 0 0 0 1px var(--cm-accent, var(--s-line-active)), 0 16px 44px var(--cm-accent-glow, var(--s-glow-success));
 }
 
 /* Toggle button */
@@ -2018,9 +1979,7 @@ fieldset.hud-control {
   border-color: var(--s-line);
   background: var(--s-ctrl-focus);
   color: var(--s-text);
-  box-shadow:
-    0 0 0 1px var(--s-glow-accent),
-    0 12px 36px var(--s-glow-accent);
+  box-shadow: 0 0 0 1px var(--s-glow-accent), 0 12px 36px var(--s-glow-accent);
 }
 
 /* ── PET SELECTOR ─────────────────────────────────────────────────────────── */
@@ -2082,7 +2041,7 @@ fieldset.hud-control {
 .settings-footnote {
   color: var(--s-muted);
   font-size: 0.76rem;
-  line-height: 1.60;
+  line-height: 1.6;
   text-align: center;
   opacity: 0.64;
 }
@@ -2090,13 +2049,14 @@ fieldset.hud-control {
 /* ── ANIMATIONS ───────────────────────────────────────────────────────────── */
 
 @keyframes settingsAmbientBreath {
-  0%, 100% {
-    opacity: 0.50;
+  0%,
+  100% {
+    opacity: 0.5;
     transform: translate3d(0, 0, 0) scale(1);
   }
 
   50% {
-    opacity: 0.70;
+    opacity: 0.7;
     transform: translate3d(0, 1.5%, 0) scale(1.03);
   }
 }

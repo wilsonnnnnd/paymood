@@ -43,15 +43,19 @@ export default function PrivacyPage() {
               <a href="https://www.google.com/settings/ads" rel="noreferrer" target="_blank">
                 Google Ads Settings
               </a>
-              . If other third-party vendors or ad networks are enabled, they may also use cookies for ad
-              serving and may provide their own opt-out controls.
+              . If other third-party vendors or ad networks are enabled, they may also use cookies for ad serving and
+              may provide their own opt-out controls.
             </>,
           ],
         },
         {
           title: 'Contact',
           description: 'Questions about this policy can be sent through the contact page.',
-          body: [<>Visit <Link href="/contact">Contact</Link> for the current contact method.</>],
+          body: [
+            <>
+              Visit <Link href="/contact">Contact</Link> for the current contact method.
+            </>,
+          ],
         },
       ]}
     />
