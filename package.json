@@ -18,7 +18,6 @@
     "next": "^16.2.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "repo-context-kit": "^1.8.3",
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
@@ -32,6 +31,7 @@
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.6",
     "prettier": "^2.0.0",
+    "repo-context-kit": "^1.8.4",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.0.0",
     "vitest": "^4.1.6"

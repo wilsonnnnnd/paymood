@@ -11,6 +11,7 @@ type AdSenseSlotProps = {
 }
 
 export default function AdSenseSlot({ placement = 'bottom' }: AdSenseSlotProps) {
+  const adsenseEnabled = process.env.NEXT_PUBLIC_ADSENSE_ENABLED === 'true'
   const client = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT
   const slot = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_SLOT
   const containerRef = useRef<HTMLElement | null>(null)
@@ -19,7 +20,7 @@ export default function AdSenseSlot({ placement = 'bottom' }: AdSenseSlotProps) 
   const [canRenderAd, setCanRenderAd] = useState(false)
 
   useEffect(() => {
-    if (!client || !slot) return
+    if (!adsenseEnabled || !client || !slot) return
 
     const updateVisibility = () => {
       const container = containerRef.current
@@ -53,10 +54,10 @@ export default function AdSenseSlot({ placement = 'bottom' }: AdSenseSlotProps) 
       window.removeEventListener('resize', updateVisibility)
       observer.disconnect()
     }
-  }, [client, slot])
+  }, [adsenseEnabled, client, slot])
 
   useEffect(() => {
-    if (!client || !slot || !canRenderAd) return
+    if (!adsenseEnabled || !client || !slot || !canRenderAd) return
 
     const scriptId = 'paymood-adsense-script'
     let script = document.getElementById(scriptId) as HTMLScriptElement | null
@@ -98,9 +99,9 @@ export default function AdSenseSlot({ placement = 'bottom' }: AdSenseSlotProps) 
       window.cancelAnimationFrame(frameId)
       observer.disconnect()
     }
-  }, [canRenderAd, client, slot])
+  }, [adsenseEnabled, canRenderAd, client, slot])
 
-  if (!client || !slot) return null
+  if (!adsenseEnabled || !client || !slot) return null
 
   return (
     <aside ref={containerRef} className={`adsense-slot adsense-slot--${placement}`} aria-label="Advertisement">

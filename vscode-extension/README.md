@@ -11,6 +11,7 @@
 - **💵 Live earnings** — See your running total right in the status bar as you code.
 - **⏱️ Smart time tracking** — Separately tracks *Coding* time (active edits) and *Thinking* time (focused but not typing), because staring at the screen counts too.
 - **📊 Dashboard** — Open the PayMood panel to see today's breakdown: time spent, money earned, and your settings at a glance.
+- **🌐 Shared preferences** — Schedule/pay settings are saved globally and shared across your workspaces.
 - **🔄 Persists across windows** — Close a window, open another — your daily totals stay intact until midnight.
 - **🪟 Multi-window aware** — Running multiple VS Code windows? PayMood syncs timer state automatically.
 
@@ -66,5 +67,7 @@ Then open the repo in VS Code and run the **Run Extension** launch config to sta
 ---
 
 ## 📝 Release notes
+
+- **v0.1.10** — Clarified settings semantics: dashboard now explicitly labels settings as globally shared across workspaces.
 
 - **v0.1.9** — `Coding today` and `Thinking today` now persist as full local-day totals and no longer reset when a window goes inactive or closes. Added `PayMood: Reset Today Activity` command.

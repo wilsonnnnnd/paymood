@@ -20,12 +20,13 @@ export const viewport: Viewport = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const adsenseEnabled = process.env.NEXT_PUBLIC_ADSENSE_ENABLED === 'true'
   const adsenseClient = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT
 
   return (
     <html lang="zh-CN">
       <head>
-        {adsenseClient ? <meta name="google-adsense-account" content={adsenseClient} /> : null}
+        {adsenseEnabled && adsenseClient ? <meta name="google-adsense-account" content={adsenseClient} /> : null}
       </head>
       <body>
         <SettingsProvider>

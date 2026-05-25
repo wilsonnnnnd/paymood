@@ -256,7 +256,7 @@ function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri, nonce
         <div class="section-heading">
           <div>
             <h2>Settings</h2>
-            <span>Local preferences for this workspace</span>
+            <span>Global preferences shared across workspaces</span>
           </div>
           <span class="save-chip">Auto-saved</span>
         </div>
@@ -294,7 +294,7 @@ function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri, nonce
           <div class="settings-group">
             <div class="group-title">
               <div>Pay model</div>
-              <span>Stored locally and used only for estimates.</span>
+              <span>Stored locally on this machine and used only for estimates.</span>
             </div>
             <div class="field-grid two-col">
               <div class="field">

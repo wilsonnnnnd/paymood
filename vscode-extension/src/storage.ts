@@ -1,6 +1,7 @@
 import type * as vscode from 'vscode'
 import { defaultSettings, sanitizeSettings, type Settings } from '../../lib/settingsModel'
 
+// Storage is intentionally global to keep settings and activity consistent across workspaces.
 const SETTINGS_KEY = 'paymood.settings.v1'
 const STATUS_VISIBLE_KEY = 'paymood.statusBar.visible.v1'
 const CODING_TIME_KEY = 'paymood.codingTime.v1'

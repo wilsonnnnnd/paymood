@@ -173,7 +173,7 @@ function FloatingPetImpl({ settings }: { settings: Settings }) {
       onBlur={onLeave}
       aria-label="桌宠"
     >
-      <div className="relative h-[84px] w-[84px]">
+      <div className="relative h-21 w-21">
         <PetMessageBubble visible={hovered} text={message} variant={variant} />
         <div className="absolute inset-0 grid place-items-center">
           <div className="drop-shadow-[0_24px_70px_rgba(0,0,0,0.18)]">

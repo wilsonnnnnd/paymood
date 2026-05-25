@@ -70,6 +70,14 @@ Build the website:
 npm run build
 ```
 
+## AdSense Deployment Switch
+
+AdSense is disabled by default. Enable it only for overseas deployments.
+
+- `NEXT_PUBLIC_ADSENSE_ENABLED=true` to enable AdSense rendering.
+- `NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT` and `NEXT_PUBLIC_GOOGLE_ADSENSE_SLOT` must also be set.
+- If `NEXT_PUBLIC_ADSENSE_ENABLED` is missing or not `true`, no AdSense script or meta tag is injected.
+
 ## VS Code Extension
 
 The extension lives in `vscode-extension/` and imports shared project code from
