@@ -2,8 +2,10 @@ import { describe, it, expect } from 'vitest'
 import {
   calculateWorkEarnings,
   earnedSoFar,
+  earnedSoFarThisFortnight,
   earnedSoFarThisMonth,
   earnedSoFarThisWeek,
+  earnedSoFarThisYear,
   getWorkWindowForNow,
   normalizeSalaryToHourly,
   workProgress,
@@ -161,6 +163,51 @@ describe('earnedSoFarThisMonth', () => {
   })
 })
 
+describe('earnedSoFarThisFortnight', () => {
+  it('accumulates from the current fortnight Monday', () => {
+    const now = new Date('2026-06-10T13:00:00') // Wed; fortnight starts Mon 2026-06-08
+    const { earned } = earnedSoFarThisFortnight(now, {
+      startTime: '09:00',
+      endTime: '17:00',
+      breakMinutes: 0,
+      salaryAmount: 20,
+      salaryType: 'hourly',
+    })
+
+    // Mon 8h + Tue 8h + Wed 4h => 20 * 20h = 400
+    expect(Math.round(earned)).toBe(400)
+  })
+})
+
+describe('earnedSoFarThisYear', () => {
+  it('accumulates from the start of the current year', () => {
+    const now = new Date('2026-01-07T13:00:00') // Wed
+    const { earned } = earnedSoFarThisYear(now, {
+      startTime: '09:00',
+      endTime: '17:00',
+      breakMinutes: 0,
+      salaryAmount: 20,
+      salaryType: 'hourly',
+    })
+
+    // Jan 1 Thu 8h + Jan 2 Fri 8h + Jan 5 Mon 8h + Jan 6 Tue 8h + Jan 7 Wed 4h.
+    expect(Math.round(earned)).toBe(720)
+  })
+
+  it('spreads annual salary across the current year actual work hours', () => {
+    const now = new Date('2026-12-31T18:00:00')
+    const { earned } = earnedSoFarThisYear(now, {
+      startTime: '09:00',
+      endTime: '17:00',
+      breakMinutes: 0,
+      salaryAmount: 104400,
+      salaryType: 'annually',
+    })
+
+    expect(Math.round(earned)).toBe(104400)
+  })
+})
+
 describe('calculateWorkEarnings', () => {
   it('returns shared day, week, and month calculations for app surfaces', () => {
     const now = new Date('2026-06-03T13:00:00') // Wed
@@ -179,6 +226,27 @@ describe('calculateWorkEarnings', () => {
     expect(Math.round(snapshot.week.earned)).toBe(400)
     expect(Math.round(snapshot.month.earned)).toBe(400)
     expect(snapshot.remainingSeconds).toBe(4 * 60 * 60)
+  })
+
+  it('selects the salary-cycle summary without changing day or week earnings', () => {
+    const baseInput = {
+      startTime: '09:00',
+      endTime: '17:00',
+      breakMinutes: 0,
+      workDays: [1, 2, 3, 4, 5],
+      salaryAmount: 20,
+    }
+    const now = new Date('2026-06-10T13:00:00') // Wed
+
+    expect(calculateWorkEarnings(now, { ...baseInput, salaryType: 'hourly' }).cycle).toEqual({
+      label: '工作累计',
+      earned: 80,
+    })
+    expect(calculateWorkEarnings(now, { ...baseInput, salaryType: 'daily' }).cycle.label).toBe('今日')
+    expect(calculateWorkEarnings(now, { ...baseInput, salaryType: 'weekly' }).cycle.label).toBe('本周')
+    expect(calculateWorkEarnings(now, { ...baseInput, salaryType: 'fortnightly' }).cycle.label).toBe('本双周')
+    expect(calculateWorkEarnings(now, { ...baseInput, salaryType: 'monthly' }).cycle.label).toBe('本月')
+    expect(calculateWorkEarnings(now, { ...baseInput, salaryType: 'annually' }).cycle.label).toBe('今年')
   })
 
   it('uses the actual current-month work hours for monthly rollups', () => {

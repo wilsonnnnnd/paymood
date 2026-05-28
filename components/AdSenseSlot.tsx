@@ -29,7 +29,9 @@ export default function AdSenseSlot({ placement = 'bottom', onNoFill }: AdSenseS
 
       const style = window.getComputedStyle(container)
       const isVisible =
-        style.display !== 'none' && style.visibility !== 'hidden' && container.getBoundingClientRect().width > 0
+        style.display !== 'none' &&
+        style.visibility !== 'hidden' &&
+        container.getBoundingClientRect().width > 0
 
       if (!isVisible) pushedRef.current = false
       setCanRenderAd(isVisible)

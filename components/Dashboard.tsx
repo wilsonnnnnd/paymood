@@ -194,6 +194,29 @@ function formatTime(date: Date) {
   return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`
 }
 
+function CycleMetric({
+  label,
+  value,
+  format,
+}: {
+  label: string
+  value: number
+  format: Intl.NumberFormat
+}) {
+  return (
+    <div className="hud-metric hud-metric--cycle" tabIndex={0}>
+      <span className="hud-metric-copy">
+        <span className="hud-metric-label">累计收入</span>
+        <span className="hud-metric-subtitle">{label}</span>
+      </span>
+      <span className="hud-metric-value">{format.format(value)}</span>
+      <span className="hud-metric-tip" role="tooltip">
+        根据你的薪资类型显示当前周期已赚金额；小时/日薪看今日，周薪看本周，双周薪看本双周，月薪看本月，年薪看今年。
+      </span>
+    </div>
+  )
+}
+
 export default function Dashboard({
   adsenseEnabled = true,
   onNoFill,
@@ -226,6 +249,7 @@ export default function Dashboard({
         earned: 0,
         week: { earned: 0, hourly: 0 },
         month: { earned: 0, hourly: 0 },
+        cycle: { label: '本月', earned: 0 },
         percent: 0,
         remainingSeconds: 0,
       }
@@ -233,7 +257,7 @@ export default function Dashboard({
   const prog = earnings.progress
   const earned = earnings.earned
   const week = earnings.week
-  const month = earnings.month
+  const cycle = earnings.cycle
   const percent = earnings.percent
   const totalsFormat = new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 })
   const mood = isReady ? (isWorkDay ? moodFor(today, start, end) : '今天休息。') : '热身中…'
@@ -248,7 +272,7 @@ export default function Dashboard({
   })
 
   return (
-    <section className="hud-shell" aria-label="PayMood 仪表盘">
+    <section className={`hud-shell ${isWorkDay ? 'hud-shell--active' : 'hud-shell--rest'}`} aria-label="PayMood 仪表盘">
       <div className="hud-top-actions" aria-label="顶部操作">
         <ColorModeToggle />
         <Link className="hud-icon-button" href="/settings" aria-label="打开设置">
@@ -266,6 +290,9 @@ export default function Dashboard({
         <div className="hud-live-status" aria-label="工作状态">
           {liveStatus}
         </div>
+        <div className="hud-progress-rail" aria-hidden="true">
+          <span style={{ width: `${isWorkDay ? percent : 0}%` }} />
+        </div>
       </header>
 
       {!isWorkDay ? (
@@ -277,19 +304,31 @@ export default function Dashboard({
           </div>
           <section className="hud-metrics" aria-label="摘要">
             <div className="hud-metric">
-              <span className="hud-metric-label">本周</span>
-              <span className="hud-metric-value">{totalsFormat.format(week.earned)}</span>
+              <span className="hud-metric-label">今日收入</span>
+              <span className="hud-metric-value">{totalsFormat.format(earned)}</span>
             </div>
             <div className="hud-metric">
-              <span className="hud-metric-label">本月</span>
-              <span className="hud-metric-value">{totalsFormat.format(month.earned)}</span>
+              <span className="hud-metric-label">本周收入</span>
+              <span className="hud-metric-value">{totalsFormat.format(week.earned)}</span>
             </div>
+            <CycleMetric label={cycle.label} value={cycle.earned} format={totalsFormat} />
           </section>
         </div>
       ) : (
         <div className="hud-main">
           <div className="hud-ring-wrap" aria-label="收入与进度">
-            <CircularProgress value={prog.progress} size={420} />
+            <div className="hud-disc-aura" aria-hidden="true" />
+            <div className="hud-disc-plate" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </div>
+            <div className="hud-ring-ticks" aria-hidden="true">
+              {Array.from({ length: 24 }).map((_, index) => (
+                <span key={index} style={{ '--tick': index } as React.CSSProperties} />
+              ))}
+            </div>
+            <CircularProgress value={prog.progress} size={480} />
             <div className="hud-center">
               <div className="hud-amount-line">
                 <span className="hud-currency-symbol" aria-hidden="true">
@@ -307,17 +346,14 @@ export default function Dashboard({
 
           <section className="hud-metrics" aria-label="摘要">
             <div className="hud-metric">
-              <span className="hud-metric-label">剩余</span>
-              <span className="hud-metric-value">{formatHM(prog.remainingSeconds)}</span>
+              <span className="hud-metric-label">今日收入</span>
+              <span className="hud-metric-value">{totalsFormat.format(earned)}</span>
             </div>
             <div className="hud-metric">
-              <span className="hud-metric-label">本周</span>
+              <span className="hud-metric-label">本周收入</span>
               <span className="hud-metric-value">{totalsFormat.format(week.earned)}</span>
             </div>
-            <div className="hud-metric">
-              <span className="hud-metric-label">本月</span>
-              <span className="hud-metric-value">{totalsFormat.format(month.earned)}</span>
-            </div>
+            <CycleMetric label={cycle.label} value={cycle.earned} format={totalsFormat} />
           </section>
         </div>
       )}

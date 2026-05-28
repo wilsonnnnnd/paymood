@@ -152,10 +152,31 @@ function startOfMonth(d: Date) {
   return start
 }
 
+function startOfYear(d: Date) {
+  const start = new Date(d.getFullYear(), 0, 1)
+  start.setHours(0, 0, 0, 0)
+  return start
+}
+
 function startOfNextMonth(d: Date) {
   const start = new Date(d.getFullYear(), d.getMonth() + 1, 1)
   start.setHours(0, 0, 0, 0)
   return start
+}
+
+function startOfNextYear(d: Date) {
+  const start = new Date(d.getFullYear() + 1, 0, 1)
+  start.setHours(0, 0, 0, 0)
+  return start
+}
+
+function startOfFortnightMonday(d: Date) {
+  const weekStart = startOfWeekMonday(d)
+  const epochMonday = new Date(1970, 0, 5)
+  epochMonday.setHours(0, 0, 0, 0)
+  const msPerFortnight = 14 * 24 * 60 * 60 * 1000
+  const fortnightsSinceEpoch = Math.floor((weekStart.getTime() - epochMonday.getTime()) / msPerFortnight)
+  return new Date(epochMonday.getTime() + fortnightsSinceEpoch * msPerFortnight)
 }
 
 export function parseTimeParts(time: string) {
@@ -212,6 +233,10 @@ export type WorkEarningsSnapshot = {
   }
   month: {
     hourly: number
+    earned: number
+  }
+  cycle: {
+    label: string
     earned: number
   }
   earned: number
@@ -283,6 +308,12 @@ export function earnedSoFarThisWeek(now: Date | string | number, input: EarnedPe
   return earnedBetweenDates(nowDate, rangeStart, input)
 }
 
+export function earnedSoFarThisFortnight(now: Date | string | number, input: EarnedPeriodInput) {
+  const nowDate = now instanceof Date ? now : new Date(now)
+  const rangeStart = startOfFortnightMonday(nowDate)
+  return earnedBetweenDates(nowDate, rangeStart, input)
+}
+
 export function earnedSoFarThisMonth(now: Date | string | number, input: EarnedPeriodInput) {
   const nowDate = now instanceof Date ? now : new Date(now)
   const rangeStart = startOfMonth(nowDate)
@@ -298,6 +329,49 @@ export function earnedSoFarThisMonth(now: Date | string | number, input: EarnedP
 
   const hourly = input.salaryAmount / (monthWorkSeconds / 3600)
   return earnedBetweenDates(nowDate, rangeStart, input, hourly)
+}
+
+export function earnedSoFarThisYear(now: Date | string | number, input: EarnedPeriodInput) {
+  const nowDate = now instanceof Date ? now : new Date(now)
+  const rangeStart = startOfYear(nowDate)
+
+  if (input.salaryType !== 'annually') {
+    return earnedBetweenDates(nowDate, rangeStart, input)
+  }
+
+  const yearWorkSeconds = scheduledWorkSecondsBetween(rangeStart, startOfNextYear(nowDate), input)
+  if (!isFinite(input.salaryAmount) || input.salaryAmount <= 0 || yearWorkSeconds <= 0) {
+    return { hourly: 0, earned: 0 }
+  }
+
+  const hourly = input.salaryAmount / (yearWorkSeconds / 3600)
+  return earnedBetweenDates(nowDate, rangeStart, input, hourly)
+}
+
+function selectCycleEarnings(
+  salaryType: SalaryType,
+  snapshots: {
+    day: { earned: number }
+    week: { earned: number }
+    fortnight: { earned: number }
+    month: { earned: number }
+    year: { earned: number }
+  },
+) {
+  switch (salaryType) {
+    case 'hourly':
+      return { label: '工作累计', earned: snapshots.day.earned }
+    case 'daily':
+      return { label: '今日', earned: snapshots.day.earned }
+    case 'weekly':
+      return { label: '本周', earned: snapshots.week.earned }
+    case 'fortnightly':
+      return { label: '本双周', earned: snapshots.fortnight.earned }
+    case 'monthly':
+      return { label: '本月', earned: snapshots.month.earned }
+    case 'annually':
+      return { label: '今年', earned: snapshots.year.earned }
+  }
 }
 
 export function calculateWorkEarnings(now: Date | string | number, input: WorkEarningsInput): WorkEarningsSnapshot {
@@ -326,8 +400,17 @@ export function calculateWorkEarnings(now: Date | string | number, input: WorkEa
     periodInput.opts,
   )
   const week = earnedSoFarThisWeek(nowDate, periodInput)
+  const fortnight = earnedSoFarThisFortnight(nowDate, periodInput)
   const month = earnedSoFarThisMonth(nowDate, periodInput)
+  const year = earnedSoFarThisYear(nowDate, periodInput)
   const earned = isWorkDay ? day.earned : 0
+  const cycle = selectCycleEarnings(input.salaryType, {
+    day: { earned },
+    week,
+    fortnight,
+    month,
+    year,
+  })
 
   return {
     start,
@@ -337,6 +420,7 @@ export function calculateWorkEarnings(now: Date | string | number, input: WorkEa
     day,
     week,
     month,
+    cycle,
     earned,
     hourly: day.hourly,
     percent: isWorkDay ? Math.round(progress.progress * 100) : 0,

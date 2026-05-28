@@ -574,19 +574,58 @@ select {
 }
 
 .hud-shell {
+  --hud-deck: color-mix(in srgb, var(--surface-floating) 82%, transparent);
+  --hud-deck-top: color-mix(in srgb, white 54%, var(--surface-floating));
+  --hud-deck-edge: color-mix(in srgb, var(--border-soft) 70%, white 22%);
+  --hud-orbit-base: color-mix(in srgb, white 82%, var(--surface-floating));
+  --hud-orbit-line: color-mix(in srgb, var(--ring-ink) 16%, transparent);
+  --hud-orbit-sheen: color-mix(in srgb, white 38%, transparent);
+  --hud-control: color-mix(in srgb, var(--surface-floating) 72%, transparent);
+  --hud-control-active: color-mix(in srgb, var(--ring-ink) 16%, var(--surface-floating));
+  --hud-player-shadow: 0 24px 70px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.42);
   width: min(780px, 100%);
-  border: 1px solid var(--s-shell-border);
-  border-radius: 32px;
-  background: var(--s-shell);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
-  padding: 26px 22px 22px;
+  border: 1px solid var(--hud-deck-edge);
+  border-radius: 34px;
+  background:
+    linear-gradient(155deg, var(--hud-deck-top), var(--hud-deck)),
+    radial-gradient(circle at 22% 0%, color-mix(in srgb, var(--ring-ink) 12%, transparent), transparent 42%),
+    var(--s-shell);
+  box-shadow: var(--hud-player-shadow);
+  backdrop-filter: blur(24px) saturate(145%);
+  -webkit-backdrop-filter: blur(24px) saturate(145%);
+  padding: 28px 24px 22px;
   display: flex;
   flex-direction: column;
   gap: 16px;
   position: relative;
   overflow: hidden;
+  isolation: isolate;
+}
+
+:root[data-color-mode='dark'] .hud-shell {
+  --hud-deck: rgba(11, 16, 31, 0.84);
+  --hud-deck-top: rgba(33, 44, 74, 0.56);
+  --hud-deck-edge: rgba(148, 185, 255, 0.13);
+  --hud-orbit-base: rgba(16, 24, 44, 0.78);
+  --hud-orbit-line: rgba(148, 185, 255, 0.14);
+  --hud-orbit-sheen: rgba(135, 190, 255, 0.12);
+  --hud-control: rgba(17, 25, 45, 0.74);
+  --hud-control-active: rgba(70, 132, 220, 0.22);
+  --hud-player-shadow: 0 34px 100px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.055);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-color-mode='light']):not([data-color-mode='dark']) .hud-shell {
+    --hud-deck: rgba(11, 16, 31, 0.84);
+    --hud-deck-top: rgba(33, 44, 74, 0.56);
+    --hud-deck-edge: rgba(148, 185, 255, 0.13);
+    --hud-orbit-base: rgba(16, 24, 44, 0.78);
+    --hud-orbit-line: rgba(148, 185, 255, 0.14);
+    --hud-orbit-sheen: rgba(135, 190, 255, 0.12);
+    --hud-control: rgba(17, 25, 45, 0.74);
+    --hud-control-active: rgba(70, 132, 220, 0.22);
+    --hud-player-shadow: 0 34px 100px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.055);
+  }
 }
 
 .hud-top-actions {
@@ -595,23 +634,27 @@ select {
   right: 16px;
   display: flex;
   gap: 10px;
-  z-index: 2;
+  z-index: 6;
 }
 
 .hud-icon-button {
   width: 40px;
   height: 40px;
   border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--surface-strong);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 78%, transparent);
+  background: var(--hud-control);
+  backdrop-filter: blur(16px) saturate(145%);
+  -webkit-backdrop-filter: blur(16px) saturate(145%);
   color: var(--muted);
   text-decoration: none;
   display: grid;
   place-items: center;
   font-size: 1rem;
   line-height: 1;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 18%, transparent),
+    0 10px 28px color-mix(in srgb, var(--ring-ink) 8%, transparent);
+  transition: transform var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
 }
 
 .hud-icon-button:focus-visible {
@@ -621,19 +664,36 @@ select {
 
 .hud-icon-button:hover {
   color: var(--text);
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--ring-ink) 34%, var(--hud-deck-edge));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 22%, transparent),
+    0 14px 34px color-mix(in srgb, var(--ring-ink) 14%, transparent);
 }
 
 .hud-shell::before {
   content: '';
   position: absolute;
   inset: -40%;
-  background: radial-gradient(circle at 28% 24%, var(--glow-ambient), transparent 52%),
-    radial-gradient(circle at 72% 18%, var(--glow-accent), transparent 54%),
-    radial-gradient(circle at 50% 78%, var(--glow-ambient), transparent 58%);
-  filter: blur(28px);
-  opacity: 1;
+  background: radial-gradient(circle at 22% 16%, var(--glow-ambient), transparent 46%),
+    radial-gradient(circle at 76% 12%, var(--glow-accent), transparent 48%),
+    radial-gradient(circle at 50% 84%, var(--glow-ring), transparent 54%);
+  filter: blur(30px);
+  opacity: 0.82;
   animation: breathe 9s ease-in-out infinite;
   pointer-events: none;
+  z-index: -2;
+}
+
+.hud-shell::after {
+  content: '';
+  position: absolute;
+  inset: 1px 1px auto;
+  height: 42%;
+  border-radius: 33px 33px 46% 46%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.24), transparent);
+  opacity: 0.72;
+  pointer-events: none;
+  z-index: -1;
 }
 
 @keyframes breathe {
@@ -651,7 +711,11 @@ select {
 @media (prefers-reduced-motion: reduce) {
   .hud-shell::before,
   .hud-amount,
-  .hud-ring-wrap::before {
+  .hud-ring-wrap::before,
+  .hud-ring-wrap::after,
+  .hud-disc-aura,
+  .hud-disc-plate,
+  .hud-ring-ticks {
     animation: none;
   }
 
@@ -761,7 +825,7 @@ select {
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  padding: 6px 6px 0;
+  padding: 8px 6px 0;
 }
 
 .hud-title {
@@ -793,21 +857,44 @@ select {
   justify-content: center;
   width: fit-content;
   max-width: 100%;
-  border: 1px solid var(--s-line-ghost);
+  border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 76%, transparent);
   border-radius: 999px;
-  background: var(--s-ctrl-bg);
+  background: var(--hud-control);
   color: var(--s-text);
   font-family: var(--font-mono);
   font-size: 0.72rem;
   line-height: 1.3;
   font-variant-numeric: tabular-nums;
   overflow-wrap: anywhere;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 12%, transparent);
+  backdrop-filter: blur(14px) saturate(145%);
+  -webkit-backdrop-filter: blur(14px) saturate(145%);
 }
 
 .hud-live-status {
   padding: 7px 11px;
+}
+
+.hud-progress-rail {
+  width: min(280px, 72%);
+  height: 6px;
+  padding: 1px;
+  border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 74%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hud-control) 78%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 12%, transparent);
+  overflow: hidden;
+}
+
+.hud-progress-rail span {
+  display: block;
+  height: 100%;
+  min-width: 6px;
+  max-width: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--ring-ink) 74%, white 8%), var(--accent));
+  box-shadow: 0 0 16px color-mix(in srgb, var(--ring-ink) 35%, transparent);
+  transition: width 480ms var(--ease);
 }
 
 .hud-rest-status {
@@ -822,7 +909,7 @@ select {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 18px;
+  gap: 20px;
   padding: 6px 6px 0;
 }
 
@@ -833,11 +920,14 @@ select {
 
 .hud-rest-panel {
   width: min(520px, 100%);
-  border: 1px solid var(--s-line-ghost);
-  border-radius: 22px;
+  border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 78%, transparent);
+  border-radius: 24px;
   padding: 26px 22px;
-  background: var(--s-section-bg);
-  box-shadow: var(--s-shadow-soft);
+  background:
+    radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--ring-ink) 10%, transparent), transparent 52%),
+    linear-gradient(155deg, color-mix(in srgb, var(--hud-control) 88%, transparent), color-mix(in srgb, var(--surface-base) 42%, transparent));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 14%, transparent),
+    0 18px 48px color-mix(in srgb, var(--ring-ink) 8%, transparent);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   text-align: center;
@@ -858,43 +948,155 @@ select {
 }
 
 .hud-ring-wrap {
-  width: min(420px, 100%);
+  --ring-tick-radius: 222px;
+  width: min(480px, 100%);
   aspect-ratio: 1 / 1;
   position: relative;
   display: grid;
   place-items: center;
+  isolation: isolate;
+  border-radius: 999px;
+  filter: drop-shadow(0 34px 74px color-mix(in srgb, var(--ring-ink) 16%, transparent));
 }
 
 .hud-ring-wrap::before {
   content: '';
   position: absolute;
-  inset: 12%;
-  background: radial-gradient(circle, var(--glow-ring), transparent 62%);
-  filter: blur(22px);
-  opacity: 1;
-  animation: breathe 8s ease-in-out infinite;
+  inset: -9%;
+  background:
+    radial-gradient(circle at 50% 48%, color-mix(in srgb, var(--ring-ink) 20%, transparent), transparent 42%),
+    radial-gradient(circle at 50% 50%, var(--glow-ring), transparent 67%);
+  filter: blur(26px);
+  opacity: 0.88;
+  animation: breathe 6.8s ease-in-out infinite;
   pointer-events: none;
 }
 
+.hud-ring-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 3.5%;
+  z-index: 0;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle, transparent 59%, color-mix(in srgb, var(--ring-ink) 16%, transparent) 60% 61%, transparent 62%),
+    radial-gradient(circle, transparent 72%, color-mix(in srgb, var(--accent) 12%, transparent) 73% 74%, transparent 75%);
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+.hud-disc-aura,
+.hud-disc-plate,
+.hud-ring-ticks {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.hud-disc-aura {
+  inset: 8%;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--hud-orbit-base) 92%, transparent) 0 21%, transparent 22%),
+    radial-gradient(circle at 36% 26%, var(--hud-orbit-sheen), transparent 36%),
+    radial-gradient(circle, transparent 38%, var(--hud-orbit-line) 39% 40%, transparent 41%),
+    radial-gradient(circle, transparent 56%, color-mix(in srgb, var(--ring-ink) 12%, transparent) 57% 58%, transparent 59%),
+    radial-gradient(circle, var(--hud-orbit-base), transparent 72%);
+  border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 90%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 20%, transparent),
+    inset 0 -28px 58px color-mix(in srgb, var(--ring-ink) 9%, transparent),
+    inset 0 0 0 14px color-mix(in srgb, var(--text) 2%, transparent),
+    0 26px 70px color-mix(in srgb, var(--ring-ink) 16%, transparent);
+  animation: hudOrbitBreath 7s var(--ease) infinite;
+}
+
+.hud-disc-plate {
+  inset: 17%;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle, color-mix(in srgb, var(--hud-orbit-base) 88%, transparent) 0 30%, transparent 31%),
+    radial-gradient(circle at 50% 18%, var(--hud-orbit-sheen), transparent 38%);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--hud-deck-edge) 82%, transparent),
+    inset 0 0 0 18px color-mix(in srgb, var(--hud-control) 42%, transparent);
+}
+
+.hud-disc-plate span {
+  position: absolute;
+  border-radius: inherit;
+  border: 1px solid color-mix(in srgb, var(--ring-ink) 18%, transparent);
+}
+
+.hud-disc-plate span:nth-child(1) {
+  inset: 13%;
+}
+
+.hud-disc-plate span:nth-child(2) {
+  inset: 28%;
+  opacity: 0.76;
+}
+
+.hud-disc-plate span:nth-child(3) {
+  inset: 43%;
+  opacity: 0.6;
+}
+
+.hud-ring-ticks {
+  inset: 1%;
+  z-index: 2;
+}
+
+.hud-ring-ticks span {
+  --angle: calc(var(--tick) * 15deg);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 16px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ring-ink) 30%, transparent);
+  transform: rotate(var(--angle)) translateY(calc(var(--ring-tick-radius) * -1));
+  transform-origin: 50% 0;
+  opacity: 0.28;
+}
+
+.hud-ring-ticks span:nth-child(3n) {
+  height: 24px;
+  opacity: 0.54;
+}
+
 .hud-ring-svg {
-  width: 100%;
+  width: 88%;
   height: auto;
   display: block;
   position: relative;
-  z-index: 1;
+  z-index: 3;
+  filter: drop-shadow(0 0 18px color-mix(in srgb, var(--ring-ink) 28%, transparent));
 }
 
 .hud-center {
   position: absolute;
-  inset: 0;
+  inset: 22%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  gap: 12px;
   text-align: center;
   pointer-events: none;
-  z-index: 2;
+  z-index: 4;
+  border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 82%, transparent);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 18%, color-mix(in srgb, white 18%, transparent), transparent 38%),
+    linear-gradient(180deg, color-mix(in srgb, var(--hud-control) 92%, transparent), color-mix(in srgb, var(--hud-orbit-base) 84%, transparent));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 22%, transparent),
+    inset 0 -22px 52px color-mix(in srgb, var(--ring-ink) 12%, transparent),
+    0 18px 54px color-mix(in srgb, var(--ring-ink) 14%, transparent);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
 }
 
 .hud-amount-line {
@@ -907,12 +1109,13 @@ select {
 .hud-amount {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-weight: 680;
-  font-size: clamp(3.2rem, 8.5vw, 5.8rem);
-  letter-spacing: -0.03em;
+  font-weight: 740;
+  font-size: clamp(3.2rem, 7.2vw, 5.35rem);
+  letter-spacing: 0;
   line-height: 1;
   color: var(--text);
   animation: amountBreath 6.5s ease-in-out infinite;
+  text-shadow: 0 10px 26px color-mix(in srgb, var(--ring-ink) 18%, transparent);
 }
 
 .roll-number {
@@ -958,6 +1161,18 @@ select {
   }
 }
 
+@keyframes hudOrbitBreath {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.92;
+  }
+  50% {
+    transform: scale(1.025);
+    opacity: 1;
+  }
+}
+
 .hud-currency-symbol {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
@@ -969,16 +1184,27 @@ select {
 }
 
 .hud-percent {
-  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
 .hud-metrics {
-  width: min(420px, 100%);
+  width: min(480px, 100%);
   display: grid;
   gap: 10px;
+  padding: 6px;
+  border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 78%, transparent);
+  border-radius: 25px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--hud-control) 72%, transparent), color-mix(in srgb, var(--surface-base) 24%, transparent)),
+    radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--ring-ink) 10%, transparent), transparent 44%);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 14%, transparent),
+    0 18px 52px color-mix(in srgb, var(--ring-ink) 8%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .hud-metric {
@@ -986,12 +1212,34 @@ select {
   align-items: baseline;
   justify-content: space-between;
   gap: 14px;
-  padding: 12px 14px;
-  border: 1px solid var(--s-line-ghost);
-  border-radius: 16px;
-  background: var(--s-ctrl-bg);
+  min-height: 54px;
+  padding: 13px 15px;
+  border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 62%, transparent);
+  border-radius: 18px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--hud-control) 92%, transparent), color-mix(in srgb, var(--surface-base) 44%, transparent));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 12%, transparent);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
+  transition: transform var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+
+.hud-metric:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--ring-ink) 24%, var(--hud-deck-edge));
+  background: linear-gradient(135deg, var(--hud-control-active), color-mix(in srgb, var(--hud-control) 76%, transparent));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 14%, transparent),
+    0 12px 30px color-mix(in srgb, var(--ring-ink) 10%, transparent);
+}
+
+.hud-metric--cycle {
+  align-items: center;
+  border-color: color-mix(in srgb, var(--ring-ink) 26%, var(--hud-deck-edge));
+  background:
+    radial-gradient(circle at 12% 50%, color-mix(in srgb, var(--ring-ink) 16%, transparent), transparent 38%),
+    linear-gradient(135deg, color-mix(in srgb, var(--surface-floating) 68%, transparent), var(--hud-control));
+  position: relative;
+  outline: none;
 }
 
 .hud-metric-label {
@@ -999,6 +1247,92 @@ select {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--muted);
+}
+
+.hud-metric-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.hud-metric--cycle .hud-metric-label {
+  color: var(--text);
+  font-weight: 650;
+}
+
+.hud-metric-subtitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.68rem;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  opacity: 0.72;
+}
+
+.hud-metric-subtitle::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--accent);
+  opacity: 0.54;
+}
+
+.hud-metric--cycle .hud-metric-value {
+  font-size: 1.12rem;
+  font-weight: 650;
+}
+
+.hud-metric-tip {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: calc(100% + 10px);
+  z-index: 7;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 86%, transparent);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 16% 0%, color-mix(in srgb, var(--ring-ink) 12%, transparent), transparent 42%),
+    color-mix(in srgb, var(--surface-floating) 92%, transparent);
+  box-shadow: 0 18px 46px color-mix(in srgb, var(--ring-ink) 12%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 16%, transparent);
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+  line-height: 1.55;
+  text-align: left;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(0, 4px, 0) scale(0.98);
+  transform-origin: 50% 100%;
+  transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+  backdrop-filter: blur(18px) saturate(145%);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+}
+
+.hud-metric-tip::after {
+  content: '';
+  position: absolute;
+  left: 22px;
+  bottom: -6px;
+  width: 10px;
+  height: 10px;
+  border-right: 1px solid color-mix(in srgb, var(--hud-deck-edge) 86%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--hud-deck-edge) 86%, transparent);
+  border-radius: 0 0 4px 0;
+  background: color-mix(in srgb, var(--surface-floating) 92%, transparent);
+  transform: rotate(45deg);
+}
+
+.hud-metric--cycle:hover .hud-metric-tip,
+.hud-metric--cycle:focus-visible .hud-metric-tip,
+.hud-metric--cycle:focus-within .hud-metric-tip {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
 .hud-metric-value {
@@ -1340,10 +1674,12 @@ fieldset.hud-control {
   }
 
   .hud-ring-wrap {
-    width: min(330px, 100%);
+    --ring-tick-radius: min(178px, 45vw);
+    width: min(360px, 100%);
   }
 
   .hud-center {
+    inset: 20%;
     gap: 10px;
   }
 
@@ -1356,7 +1692,7 @@ fieldset.hud-control {
   }
 
   .hud-amount {
-    font-size: clamp(2.5rem, 12vw, 4.2rem);
+    font-size: clamp(2.45rem, 11vw, 3.8rem);
   }
 
   .hud-percent {
@@ -1366,15 +1702,25 @@ fieldset.hud-control {
 
   .hud-metrics {
     gap: 8px;
+    padding: 5px;
+  }
+
+  .hud-progress-rail {
+    width: min(230px, 74%);
   }
 
   .hud-metric {
-    padding: 9px 11px;
+    min-height: 50px;
+    padding: 10px 11px;
     border-radius: 14px;
   }
 
   .hud-metric-label {
     letter-spacing: 0.14em;
+  }
+
+  .hud-metric-subtitle {
+    font-size: 0.64rem;
   }
 
   .hud-metric-value {
