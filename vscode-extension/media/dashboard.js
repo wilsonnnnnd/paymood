@@ -35,7 +35,8 @@ const els = {
   hourlyPill: document.getElementById('hourlyPill'),
   liveStatusText: document.getElementById('liveStatusText'),
   weekText: document.getElementById('weekText'),
-  monthText: document.getElementById('monthText'),
+  cycleLabel: document.getElementById('cycleLabel'),
+  cycleText: document.getElementById('cycleText'),
   codingTodayText: document.getElementById('codingTodayText'),
   thinkingTodayText: document.getElementById('thinkingTodayText'),
   codingSessionText: document.getElementById('codingSessionText'),
@@ -161,7 +162,7 @@ function applySnapshot(snapshot) {
   const earnedText = Number.isFinite(snapshot.earned) ? snapshot.earned.toFixed(2) : '0.00'
   const hourlyText = Number.isFinite(snapshot.hourly) ? snapshot.hourly.toFixed(2) : '0.00'
   const weekText = Number.isFinite(snapshot.weekEarned) ? snapshot.weekEarned.toFixed(0) : '0'
-  const monthText = Number.isFinite(snapshot.monthEarned) ? snapshot.monthEarned.toFixed(0) : '0'
+  const cycleText = Number.isFinite(snapshot.cycleEarned) ? snapshot.cycleEarned.toFixed(0) : '0'
   const pct = snapshot.isWorkDay ? Math.max(0, Math.min(100, snapshot.percent)) : 0
 
   els.earnedText.textContent = currencySymbol + earnedText
@@ -171,7 +172,8 @@ function applySnapshot(snapshot) {
   els.hourlyPill.textContent = currencySymbol + hourlyText
   els.liveStatusText.textContent = getLiveStatus(snapshot)
   els.weekText.textContent = currencySymbol + weekText
-  els.monthText.textContent = currencySymbol + monthText
+  els.cycleLabel.textContent = snapshot.cycleLabel || 'Pay cycle'
+  els.cycleText.textContent = currencySymbol + cycleText
   els.codingTodayText.textContent = formatDuration(snapshot.codingTodaySeconds)
   els.thinkingTodayText.textContent = formatDuration(snapshot.thinkingTodaySeconds)
   els.codingSessionText.textContent = formatDuration(snapshot.codingSessionSeconds)

@@ -39,7 +39,8 @@ type Snapshot = {
   hourly: number
   remainingSeconds: number
   weekEarned: number
-  monthEarned: number
+  cycleLabel: string
+  cycleEarned: number
 }
 
 type WebviewIncomingMessage =
@@ -116,7 +117,8 @@ function computeSnapshot(
     hourly: earnings.hourly,
     remainingSeconds: earnings.remainingSeconds,
     weekEarned: earnings.week.earned,
-    monthEarned: earnings.month.earned,
+    cycleLabel: earnings.cycle.label,
+    cycleEarned: earnings.cycle.earned,
   }
 }
 
@@ -230,8 +232,8 @@ function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri, nonce
               <div class="v" id="weekText">-</div>
             </div>
             <div class="metric">
-              <div class="k">This month</div>
-              <div class="v" id="monthText">-</div>
+              <div class="k" id="cycleLabel">Pay cycle</div>
+              <div class="v" id="cycleText">-</div>
             </div>
             <div class="metric" title="Coding time is counted while this VS Code window is focused and within 90 seconds of a text edit.">
               <div class="k">Coding today</div>
@@ -517,6 +519,7 @@ export function activate(context: vscode.ExtensionContext) {
           settings.currency,
         )}${snapshot.earned.toFixed(2)} earned`,
         `Remaining ${formatHM(snapshot.remainingSeconds)}`,
+        `${snapshot.cycleLabel} ${currencyCodeToSymbol(settings.currency)}${snapshot.cycleEarned.toFixed(2)}`,
         `Coding today ${formatHM(snapshot.codingTodaySeconds)}`,
         `Thinking today ${formatHM(snapshot.thinkingTodaySeconds)}`,
         'Click to open PayMood',
