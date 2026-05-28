@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import AdSenseSlot from './AdSenseSlot'
 import CircularProgress from './CircularProgress'
+import PublicHolidayCard from './PublicHolidayCard'
 import ColorModeToggle from './ColorModeToggle'
 import { useSettings } from '../hooks/useSettings'
 import { useClock } from '../hooks/useClock'
@@ -194,15 +195,7 @@ function formatTime(date: Date) {
   return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`
 }
 
-function CycleMetric({
-  label,
-  value,
-  format,
-}: {
-  label: string
-  value: number
-  format: Intl.NumberFormat
-}) {
+function CycleMetric({ label, value, format }: { label: string; value: number; format: Intl.NumberFormat }) {
   return (
     <div className="hud-metric hud-metric--cycle" tabIndex={0}>
       <span className="hud-metric-copy">
@@ -256,7 +249,6 @@ export default function Dashboard({
   const { start, end, isWorkDay } = earnings
   const prog = earnings.progress
   const earned = earnings.earned
-  const week = earnings.week
   const cycle = earnings.cycle
   const percent = earnings.percent
   const totalsFormat = new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 })
@@ -307,11 +299,8 @@ export default function Dashboard({
               <span className="hud-metric-label">今日收入</span>
               <span className="hud-metric-value">{totalsFormat.format(earned)}</span>
             </div>
-            <div className="hud-metric">
-              <span className="hud-metric-label">本周收入</span>
-              <span className="hud-metric-value">{totalsFormat.format(week.earned)}</span>
-            </div>
             <CycleMetric label={cycle.label} value={cycle.earned} format={totalsFormat} />
+            <PublicHolidayCard />
           </section>
         </div>
       ) : (
@@ -349,11 +338,8 @@ export default function Dashboard({
               <span className="hud-metric-label">今日收入</span>
               <span className="hud-metric-value">{totalsFormat.format(earned)}</span>
             </div>
-            <div className="hud-metric">
-              <span className="hud-metric-label">本周收入</span>
-              <span className="hud-metric-value">{totalsFormat.format(week.earned)}</span>
-            </div>
             <CycleMetric label={cycle.label} value={cycle.earned} format={totalsFormat} />
+            <PublicHolidayCard />
           </section>
         </div>
       )}

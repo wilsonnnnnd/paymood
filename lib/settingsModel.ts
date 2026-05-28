@@ -11,6 +11,7 @@ export type Settings = {
   colorMode?: 'system' | 'light' | 'dark'
   petEnabled?: boolean
   petVariant?: 'aqua' | 'undead' | 'magma'
+  publicHolidayEnabled?: boolean
   salaryType: SalaryType
   salaryAmount: number
   currency?: SupportedCurrency
@@ -26,6 +27,7 @@ export const defaultSettings: Settings = {
   colorMode: 'system',
   petEnabled: true,
   petVariant: 'aqua',
+  publicHolidayEnabled: true,
   salaryType: 'hourly',
   salaryAmount: 0,
   currency: 'AUD',
@@ -85,6 +87,8 @@ export function sanitizeSettings(input: unknown): Settings {
       ? salaryAmount > 0
       : defaultSettings.payLocked
   const petEnabled = typeof raw.petEnabled === 'boolean' ? raw.petEnabled : defaultSettings.petEnabled
+  const publicHolidayEnabled =
+    typeof raw.publicHolidayEnabled === 'boolean' ? raw.publicHolidayEnabled : defaultSettings.publicHolidayEnabled
 
   return {
     ...defaultSettings,
@@ -97,6 +101,7 @@ export function sanitizeSettings(input: unknown): Settings {
     colorMode: colorModes.includes(raw.colorMode) ? raw.colorMode : defaultSettings.colorMode,
     petEnabled,
     petVariant: petVariants.includes(raw.petVariant) ? raw.petVariant : defaultSettings.petVariant,
+    publicHolidayEnabled,
     salaryType,
     salaryAmount,
     currency,

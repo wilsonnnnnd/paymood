@@ -59,6 +59,7 @@ const WEBVIEW_ALLOWED_SETTING_KEYS = new Set<keyof Settings>([
   'salaryType',
   'salaryAmount',
   'currency',
+  'publicHolidayEnabled',
 ])
 
 function currencyCodeToSymbol(code: string | undefined) {
@@ -66,6 +67,23 @@ function currencyCodeToSymbol(code: string | undefined) {
   const key = normalized as keyof typeof currencySymbols
   if (key in currencySymbols) return currencySymbols[key]
   return '$'
+}
+
+function cycleLabelForSalaryType(salaryType: Settings['salaryType']) {
+  switch (salaryType) {
+    case 'hourly':
+      return 'Shift total'
+    case 'daily':
+      return 'Today'
+    case 'weekly':
+      return 'This week'
+    case 'fortnightly':
+      return 'This fortnight'
+    case 'monthly':
+      return 'This month'
+    case 'annually':
+      return 'This year'
+  }
 }
 
 function formatStatus(snapshot: Snapshot) {
@@ -117,7 +135,7 @@ function computeSnapshot(
     hourly: earnings.hourly,
     remainingSeconds: earnings.remainingSeconds,
     weekEarned: earnings.week.earned,
-    cycleLabel: earnings.cycle.label,
+    cycleLabel: cycleLabelForSalaryType(settings.salaryType),
     cycleEarned: earnings.cycle.earned,
   }
 }
@@ -159,6 +177,7 @@ function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri, nonce
     `style-src ${webview.cspSource}`,
     `script-src 'nonce-${nonce}'`,
     `font-src ${webview.cspSource}`,
+    `connect-src https://date.nager.at`,
   ].join('; ')
 
   return `<!doctype html>
@@ -228,10 +247,6 @@ function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri, nonce
           <div class="rollups-note">Coding tracks recent edits. Thinking tracks focused idle time.</div>
           <div class="insights-grid" aria-label="Work metrics">
             <div class="metric">
-              <div class="k">This week</div>
-              <div class="v" id="weekText">-</div>
-            </div>
-            <div class="metric">
               <div class="k" id="cycleLabel">Pay cycle</div>
               <div class="v" id="cycleText">-</div>
             </div>
@@ -243,9 +258,24 @@ function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri, nonce
               <div class="k">Thinking today</div>
               <div class="v" id="thinkingTodayText">-</div>
             </div>
-            <div class="metric metric-wide">
+            <div class="metric" title="Tracks focused time while this VS Code window is active.">
               <div class="k">This session</div>
               <div class="v" id="codingSessionText">-</div>
+            </div>
+
+            <div class="metric metric-wide holiday-card" id="holidayCard" aria-label="Next public holiday">
+              <div class="k">Next public holiday</div>
+              <div class="holiday-skeleton" id="holidaySkeleton" aria-hidden="true">
+                <div class="holiday-skel holiday-skel--name"></div>
+                <div class="holiday-skel holiday-skel--meta"></div>
+              </div>
+              <div class="holiday-content" id="holidayContent" hidden>
+                <div class="holiday-name" id="holidayName"></div>
+                <div class="holiday-meta" id="holidayMeta"></div>
+                <div class="holiday-progress" aria-hidden="true">
+                  <div id="holidayProgress"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -320,6 +350,21 @@ function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri, nonce
             <div class="field">
               <label for="salaryAmount">Amount</label>
               <input id="salaryAmount" type="number" min="0" step="0.01" />
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <div class="group-title">
+              <div>Extras</div>
+              <span>Optional cards and surfaces.</span>
+            </div>
+            <div class="field toggle-field">
+              <label class="toggle-row" for="publicHolidayEnabled">
+                <span>Public holiday card</span>
+                <input id="publicHolidayEnabled" type="checkbox" />
+                <span class="toggle-ui" aria-hidden="true"></span>
+              </label>
+              <div class="field-hint">Shows the next public holiday for AU-VIC.</div>
             </div>
           </div>
         </div>

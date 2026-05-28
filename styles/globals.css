@@ -586,8 +586,7 @@ select {
   width: min(780px, 100%);
   border: 1px solid var(--hud-deck-edge);
   border-radius: 34px;
-  background:
-    linear-gradient(155deg, var(--hud-deck-top), var(--hud-deck)),
+  background: linear-gradient(155deg, var(--hud-deck-top), var(--hud-deck)),
     radial-gradient(circle at 22% 0%, color-mix(in srgb, var(--ring-ink) 12%, transparent), transparent 42%),
     var(--s-shell);
   box-shadow: var(--hud-player-shadow);
@@ -923,9 +922,12 @@ select {
   border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 78%, transparent);
   border-radius: 24px;
   padding: 26px 22px;
-  background:
-    radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--ring-ink) 10%, transparent), transparent 52%),
-    linear-gradient(155deg, color-mix(in srgb, var(--hud-control) 88%, transparent), color-mix(in srgb, var(--surface-base) 42%, transparent));
+  background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--ring-ink) 10%, transparent), transparent 52%),
+    linear-gradient(
+      155deg,
+      color-mix(in srgb, var(--hud-control) 88%, transparent),
+      color-mix(in srgb, var(--surface-base) 42%, transparent)
+    );
   box-shadow: inset 0 1px 0 color-mix(in srgb, white 14%, transparent),
     0 18px 48px color-mix(in srgb, var(--ring-ink) 8%, transparent);
   backdrop-filter: blur(18px);
@@ -963,8 +965,7 @@ select {
   content: '';
   position: absolute;
   inset: -9%;
-  background:
-    radial-gradient(circle at 50% 48%, color-mix(in srgb, var(--ring-ink) 20%, transparent), transparent 42%),
+  background: radial-gradient(circle at 50% 48%, color-mix(in srgb, var(--ring-ink) 20%, transparent), transparent 42%),
     radial-gradient(circle at 50% 50%, var(--glow-ring), transparent 67%);
   filter: blur(26px);
   opacity: 0.88;
@@ -978,9 +979,18 @@ select {
   inset: 3.5%;
   z-index: 0;
   border-radius: 999px;
-  background:
-    radial-gradient(circle, transparent 59%, color-mix(in srgb, var(--ring-ink) 16%, transparent) 60% 61%, transparent 62%),
-    radial-gradient(circle, transparent 72%, color-mix(in srgb, var(--accent) 12%, transparent) 73% 74%, transparent 75%);
+  background: radial-gradient(
+      circle,
+      transparent 59%,
+      color-mix(in srgb, var(--ring-ink) 16%, transparent) 60% 61%,
+      transparent 62%
+    ),
+    radial-gradient(
+      circle,
+      transparent 72%,
+      color-mix(in srgb, var(--accent) 12%, transparent) 73% 74%,
+      transparent 75%
+    );
   opacity: 0.72;
   pointer-events: none;
 }
@@ -997,11 +1007,19 @@ select {
 .hud-disc-aura {
   inset: 8%;
   z-index: 0;
-  background:
-    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--hud-orbit-base) 92%, transparent) 0 21%, transparent 22%),
+  background: radial-gradient(
+      circle at 50% 50%,
+      color-mix(in srgb, var(--hud-orbit-base) 92%, transparent) 0 21%,
+      transparent 22%
+    ),
     radial-gradient(circle at 36% 26%, var(--hud-orbit-sheen), transparent 36%),
     radial-gradient(circle, transparent 38%, var(--hud-orbit-line) 39% 40%, transparent 41%),
-    radial-gradient(circle, transparent 56%, color-mix(in srgb, var(--ring-ink) 12%, transparent) 57% 58%, transparent 59%),
+    radial-gradient(
+      circle,
+      transparent 56%,
+      color-mix(in srgb, var(--ring-ink) 12%, transparent) 57% 58%,
+      transparent 59%
+    ),
     radial-gradient(circle, var(--hud-orbit-base), transparent 72%);
   border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 90%, transparent);
   box-shadow: inset 0 1px 0 color-mix(in srgb, white 20%, transparent),
@@ -1016,8 +1034,7 @@ select {
   z-index: 1;
   display: grid;
   place-items: center;
-  background:
-    radial-gradient(circle, color-mix(in srgb, var(--hud-orbit-base) 88%, transparent) 0 30%, transparent 31%),
+  background: radial-gradient(circle, color-mix(in srgb, var(--hud-orbit-base) 88%, transparent) 0 30%, transparent 31%),
     radial-gradient(circle at 50% 18%, var(--hud-orbit-sheen), transparent 38%);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--hud-deck-edge) 82%, transparent),
     inset 0 0 0 18px color-mix(in srgb, var(--hud-control) 42%, transparent);
@@ -1089,9 +1106,12 @@ select {
   z-index: 4;
   border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 82%, transparent);
   border-radius: 999px;
-  background:
-    radial-gradient(circle at 50% 18%, color-mix(in srgb, white 18%, transparent), transparent 38%),
-    linear-gradient(180deg, color-mix(in srgb, var(--hud-control) 92%, transparent), color-mix(in srgb, var(--hud-orbit-base) 84%, transparent));
+  background: radial-gradient(circle at 50% 18%, color-mix(in srgb, white 18%, transparent), transparent 38%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--hud-control) 92%, transparent),
+      color-mix(in srgb, var(--hud-orbit-base) 84%, transparent)
+    );
   box-shadow: inset 0 1px 0 color-mix(in srgb, white 22%, transparent),
     inset 0 -22px 52px color-mix(in srgb, var(--ring-ink) 12%, transparent),
     0 18px 54px color-mix(in srgb, var(--ring-ink) 14%, transparent);
@@ -1198,8 +1218,11 @@ select {
   padding: 6px;
   border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 78%, transparent);
   border-radius: 25px;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--hud-control) 72%, transparent), color-mix(in srgb, var(--surface-base) 24%, transparent)),
+  background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--hud-control) 72%, transparent),
+      color-mix(in srgb, var(--surface-base) 24%, transparent)
+    ),
     radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--ring-ink) 10%, transparent), transparent 44%);
   box-shadow: inset 0 1px 0 color-mix(in srgb, white 14%, transparent),
     0 18px 52px color-mix(in srgb, var(--ring-ink) 8%, transparent);
@@ -1216,7 +1239,11 @@ select {
   padding: 13px 15px;
   border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 62%, transparent);
   border-radius: 18px;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--hud-control) 92%, transparent), color-mix(in srgb, var(--surface-base) 44%, transparent));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--hud-control) 92%, transparent),
+    color-mix(in srgb, var(--surface-base) 44%, transparent)
+  );
   box-shadow: inset 0 1px 0 color-mix(in srgb, white 12%, transparent);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -1227,16 +1254,103 @@ select {
 .hud-metric:hover {
   transform: translateY(-1px);
   border-color: color-mix(in srgb, var(--ring-ink) 24%, var(--hud-deck-edge));
-  background: linear-gradient(135deg, var(--hud-control-active), color-mix(in srgb, var(--hud-control) 76%, transparent));
+  background: linear-gradient(
+    135deg,
+    var(--hud-control-active),
+    color-mix(in srgb, var(--hud-control) 76%, transparent)
+  );
   box-shadow: inset 0 1px 0 color-mix(in srgb, white 14%, transparent),
     0 12px 30px color-mix(in srgb, var(--ring-ink) 10%, transparent);
+}
+
+.hud-metric--holiday {
+  align-items: center;
+}
+
+.hud-holiday-name {
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  line-height: 1.25;
+}
+
+.hud-holiday-meta {
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  line-height: 1.25;
+  opacity: 0.86;
+}
+
+.hud-holiday-progress {
+  width: min(320px, 100%);
+  height: 6px;
+  padding: 1px;
+  border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 74%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hud-control) 78%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 12%, transparent);
+  overflow: hidden;
+  margin-top: 3px;
+}
+
+.hud-holiday-progress span {
+  display: block;
+  height: 100%;
+  min-width: 6px;
+  max-width: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--ring-ink) 74%, white 8%), var(--accent));
+  box-shadow: 0 0 16px color-mix(in srgb, var(--ring-ink) 26%, transparent);
+  transition: width 480ms var(--ease);
+}
+
+.hud-holiday-icon {
+  font-size: 1.12rem;
+  color: var(--muted);
+  opacity: 0.82;
+}
+
+@keyframes hud-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.hud-holiday-skeleton-line {
+  height: 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hud-deck-edge) 32%, transparent);
+  animation: hud-skeleton-pulse 1.6s ease-in-out infinite;
+}
+
+.hud-holiday-skeleton-line--title {
+  height: 14px;
+  width: min(220px, 62%);
+}
+
+.hud-holiday-skeleton-line--meta {
+  height: 10px;
+  width: min(260px, 82%);
+}
+
+.hud-holiday-skeleton-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hud-deck-edge) 26%, transparent);
+  animation: hud-skeleton-pulse 1.6s ease-in-out infinite;
 }
 
 .hud-metric--cycle {
   align-items: center;
   border-color: color-mix(in srgb, var(--ring-ink) 26%, var(--hud-deck-edge));
-  background:
-    radial-gradient(circle at 12% 50%, color-mix(in srgb, var(--ring-ink) 16%, transparent), transparent 38%),
+  background: radial-gradient(circle at 12% 50%, color-mix(in srgb, var(--ring-ink) 16%, transparent), transparent 38%),
     linear-gradient(135deg, color-mix(in srgb, var(--surface-floating) 68%, transparent), var(--hud-control));
   position: relative;
   outline: none;
@@ -1296,8 +1410,7 @@ select {
   padding: 10px 12px;
   border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 86%, transparent);
   border-radius: 14px;
-  background:
-    radial-gradient(circle at 16% 0%, color-mix(in srgb, var(--ring-ink) 12%, transparent), transparent 42%),
+  background: radial-gradient(circle at 16% 0%, color-mix(in srgb, var(--ring-ink) 12%, transparent), transparent 42%),
     color-mix(in srgb, var(--surface-floating) 92%, transparent);
   box-shadow: 0 18px 46px color-mix(in srgb, var(--ring-ink) 12%, transparent),
     inset 0 1px 0 color-mix(in srgb, white 16%, transparent);
