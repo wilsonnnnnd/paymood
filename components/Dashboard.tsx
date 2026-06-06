@@ -7,7 +7,7 @@ import PublicHolidayCard from './PublicHolidayCard'
 import ColorModeToggle from './ColorModeToggle'
 import { useSettings } from '../hooks/useSettings'
 import { useClock } from '../hooks/useClock'
-import { calculateWorkEarnings, getWorkWindowForNow } from '../lib/earnings'
+import { calculateWorkEarnings, getNextWorkStart, getWorkWindowForNow } from '../lib/earnings'
 import { currencySymbols } from '../lib/settings'
 
 function prefersReducedMotion() {
@@ -20,6 +20,17 @@ function formatHM(seconds: number) {
   const h = Math.floor(totalMinutes / 60)
   const m = totalMinutes % 60
   return `${String(h).padStart(2, '0')}h ${String(m).padStart(2, '0')}m`
+}
+
+function formatCountdown(seconds: number) {
+  const totalMinutes = Math.max(0, Math.floor(seconds / 60))
+  const days = Math.floor(totalMinutes / (24 * 60))
+  const hours = Math.floor((totalMinutes % (24 * 60)) / 60)
+  const minutes = totalMinutes % 60
+
+  if (days > 0) return `${days}天 ${String(hours).padStart(2, '0')}小时`
+  if (hours > 0) return `${hours}小时 ${String(minutes).padStart(2, '0')}分钟`
+  return `${minutes}分钟`
 }
 
 function currencyCodeToSymbol(code: string | undefined) {
@@ -195,6 +206,11 @@ function formatTime(date: Date) {
   return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`
 }
 
+function formatWorkNodeDate(date: Date) {
+  const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+  return `${weekdays[date.getDay()]} ${date.getMonth() + 1}/${date.getDate()} ${formatTime(date)}`
+}
+
 function CycleMetric({ label, value, format }: { label: string; value: number; format: Intl.NumberFormat }) {
   return (
     <div className="hud-metric hud-metric--cycle" tabIndex={0}>
@@ -221,6 +237,7 @@ export default function Dashboard({
   const now = useClock(1000)
   const isReady = ready && now !== null
   const workDaysPerWeek = settings.workDays?.length ? settings.workDays.length : 5
+  const hasPaySetup = ready ? settings.payLocked === true && settings.salaryAmount > 0 : true
 
   const today = now ?? new Date(0)
   const fallbackWindow = getWorkWindowForNow(today, settings.startTime, settings.endTime)
@@ -252,7 +269,7 @@ export default function Dashboard({
   const cycle = earnings.cycle
   const percent = earnings.percent
   const totalsFormat = new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 })
-  const mood = isReady ? (isWorkDay ? moodFor(today, start, end) : '今天休息。') : '热身中…'
+  const mood = !hasPaySetup ? '先放一颗起点。' : isReady ? (isWorkDay ? moodFor(today, start, end) : '今天休息。') : '热身中…'
   const currencySymbol = currencyCodeToSymbol(settings.currency)
   const liveStatus = liveStatusFor({
     isReady,
@@ -261,6 +278,11 @@ export default function Dashboard({
     start,
     end,
     remainingSeconds: prog.remainingSeconds,
+  })
+  const nextWorkStart = getNextWorkStart(today, {
+    startTime: settings.startTime,
+    endTime: settings.endTime,
+    workDays: settings.workDays,
   })
 
   return (
@@ -280,18 +302,44 @@ export default function Dashboard({
           {mood}
         </div>
         <div className="hud-live-status" aria-label="工作状态">
-          {liveStatus}
+          {hasPaySetup ? liveStatus : '需要设置'}
         </div>
         <div className="hud-progress-rail" aria-hidden="true">
-          <span style={{ width: `${isWorkDay ? percent : 0}%` }} />
+          <span style={{ width: `${hasPaySetup && isWorkDay ? percent : 0}%` }} />
         </div>
       </header>
 
-      {!isWorkDay ? (
+      {!hasPaySetup ? (
+        <div className="hud-main hud-rest" aria-label="开始设置">
+          <div className="hud-rest-panel hud-onboarding-panel">
+            <div className="hud-rest-title">先设置你的薪资。</div>
+            <div className="hud-rest-sub">PayMood 会只在本机保存，用它计算今天的进度和已赚收入。</div>
+            <Link className="hud-primary-link" href="/settings">
+              开始设置
+            </Link>
+          </div>
+        </div>
+      ) : !isWorkDay ? (
         <div className="hud-main hud-rest" aria-label="休息日">
           <div className="hud-rest-panel">
             <div className="hud-rest-title">今天就先休息。</div>
-            <div className="hud-rest-sub">周/月累计还在这里。</div>
+            <div className="hud-rest-sub">
+              {nextWorkStart
+                ? `下个工作节点：${formatWorkNodeDate(nextWorkStart.start)}`
+                : '还没有找到下一个工作节点。'}
+            </div>
+            {nextWorkStart ? (
+              <div className="hud-work-node" aria-label="下一个工作节点">
+                <span>
+                  <strong>{formatCountdown(nextWorkStart.secondsUntil)}</strong>
+                  <small>距离开工</small>
+                </span>
+                <span>
+                  <strong>{totalsFormat.format(cycle.earned)}</strong>
+                  <small>{cycle.label}已累计</small>
+                </span>
+              </div>
+            ) : null}
             <div className="hud-rest-status">{liveStatus}</div>
           </div>
           <section className="hud-metrics" aria-label="摘要">

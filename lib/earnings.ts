@@ -206,6 +206,28 @@ export function getWorkWindowForNow(now: Date | string | number, startTime: stri
   return { start: new Date(y, m, d, sh, sm), end: new Date(y, m, d + 1, eh, em), isOvernight: true }
 }
 
+export function getNextWorkStart(
+  now: Date | string | number,
+  input: { startTime: string; endTime: string; workDays?: number[] },
+) {
+  const nowDate = now instanceof Date ? now : new Date(now)
+
+  for (let offset = 0; offset <= 14; offset += 1) {
+    const cursor = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate() + offset)
+    if (!shouldCountDay(cursor, input.workDays)) continue
+
+    const { start } = getScheduledWorkWindow(cursor, input.startTime, input.endTime)
+    if (start.getTime() > nowDate.getTime()) {
+      return {
+        start,
+        secondsUntil: Math.max(0, Math.floor((start.getTime() - nowDate.getTime()) / 1000)),
+      }
+    }
+  }
+
+  return null
+}
+
 type EarnedPeriodInput = {
   startTime: string
   endTime: string

@@ -39,16 +39,16 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 
 ## Safety / Boundaries
 
-- Files never touch: TODO
-- Dangerous operations: TODO
-- External side effects: TODO
-- Secrets/config rules: TODO
+- Files never touch without explicit scope: `.env*`, deployment config, release workflows, generated build output, and third-party asset files.
+- Dangerous operations: destructive filesystem commands, dependency changes, deployment changes, and broad generated-file rewrites require explicit confirmation.
+- External side effects: do not add network calls, analytics, external APIs, or remote persistence unless the task explicitly expands the local-first model.
+- Secrets/config rules: keep salary settings local-only; never expose env values, tokens, or private user data.
 
 ## AI Collaboration Preferences
 
 - Preferred output style: compact by default
-- What requires confirmation: TODO
-- What AI should avoid: TODO
+- What requires confirmation: implementation tasks, test/build runs when gated, dependency changes, generated context refreshes, and protected-area edits.
+- What AI should avoid: unrelated refactors, enterprise dashboard tone, pet-raising/game mechanics, fragile external resources, and manual edits to generated context when a scan can refresh it.
 
 ## AI Runtime Project Design (PDGL) (v1)
 
@@ -56,65 +56,65 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 
 ### Project Identity
 
-- Project Name: TODO
-- One-line Summary: TODO
-- Target Users: TODO
-- Non-goals: TODO
+- Project Name: PayMood
+- One-line Summary: A calm workday progress and earned-income dashboard for personal salary awareness.
+- Target Users: Individual workers who want a cozy, local-only view of work time, remaining time, and estimated earned income.
+- Non-goals: Payroll accounting, tax/legal/finance advice, enterprise admin reporting, task management, pet raising, game progression, or remote data sync.
 
 ### Product / Runtime Intent
 
-- What problem does this project solve?: TODO
-- What should AI optimize for?: TODO
-- What must AI avoid?: TODO
-- What is intentionally out of scope?: TODO
+- What problem does this project solve?: It helps users feel the workday moving by turning their schedule and salary settings into live progress and estimated earnings.
+- What should AI optimize for?: Trustworthy calculations, calm ambient UI, local-first privacy, responsive interaction, accessibility, and minimal product-scope drift.
+- What must AI avoid?: Changing salary semantics casually, adding external dependencies/APIs, cluttering the dashboard, or turning the product into an enterprise finance tool or pet game.
+- What is intentionally out of scope?: Real payroll integration, public holiday data from external providers, analytics tracking, cloud accounts, notifications, and multi-user collaboration.
 
 ### Stack Decisions
 
-- Language: TODO
-- Framework: TODO
-- Runtime: TODO
-- Package Manager: TODO
-- Database: TODO
-- Deployment Environment: TODO
+- Language: TypeScript
+- Framework: Next.js App Router with React
+- Runtime: Browser-first static-compatible web app
+- Package Manager: npm
+- Database: None; settings persist in localStorage
+- Deployment Environment: Static-compatible Next.js hosting such as Vercel
 
 ### Runtime Constraints
 
-- Files never touch: TODO
-- Dangerous operations: TODO
-- Deployment boundaries: TODO
-- Network restrictions: TODO
-- Command restrictions: TODO
-- MCP write policy: TODO
+- Files never touch: `.env*`, release workflow files, deployment config, generated build output, and third-party image assets unless explicitly scoped.
+- Dangerous operations: no destructive filesystem or git operations without direct confirmation.
+- Deployment boundaries: keep deploy output static-compatible and do not introduce server/database requirements.
+- Network restrictions: avoid Google fonts/analytics and fragile external resources; no new runtime API dependency without explicit scope.
+- Command restrictions: prefer `rck scan`, `rck scan --check`, `npm test`, `npm run lint`, and `npm run build` as relevant verification commands.
+- MCP write policy: read connectors/resources when helpful; write through MCP or external systems only with explicit user confirmation.
 
 ### Development Workflow
 
-- Preferred workflow: TODO
-- Testing strategy: TODO
-- Definition of Done: TODO
-- Required verification: TODO
-- Snapshot expectations: TODO
+- Preferred workflow: read project context, draft task for clear implementation requests, wait for confirmation, implement the smallest safe change, then verify.
+- Testing strategy: Vitest for calculation helpers and critical UI logic; lint/build for broader UI or routing changes.
+- Definition of Done: changed behavior matches the task, settings and earnings remain correct, UI stays responsive/accessibile, and verification is reported.
+- Required verification: run the task's agreed command; for context maintenance run `rck scan` then `rck scan --check`.
+- Snapshot expectations: if `PROJECT.md` or repo structure changes, refresh `.aidw` generated context before final reporting.
 
 ### Architecture Notes
 
-- Entry points: TODO
-- Directory conventions: TODO
-- Config sources: TODO
-- Critical modules: TODO
-- Shared abstractions: TODO
+- Entry points: `app/page.tsx` for dashboard and `app/settings/page.tsx` for settings.
+- Directory conventions: `components/` for UI, `components/ui/` for primitives, `hooks/` for client state, `lib/` for pure helpers, `styles/` for global tokens and HUD styling.
+- Config sources: localStorage via `hooks/useSettings.ts`; public ad flags through `NEXT_PUBLIC_*` env values.
+- Critical modules: `lib/earnings.ts`, `lib/settingsModel.ts`, `hooks/useSettings.ts`, `components/Dashboard.tsx`, and pet mood/message modules under `lib/pet/` and `content/pet/`.
+- Shared abstractions: keep earnings calculations in pure `lib/` helpers and reuse settings/pet routing rather than duplicating logic across surfaces.
 
 ### Bootstrap Guidance
 
-- Recommended scaffold: TODO
-- Manual setup steps: TODO
-- Human-required setup: TODO
-- Secrets/config setup expectations: TODO
+- Recommended scaffold: use the existing Next.js app structure; do not re-scaffold.
+- Manual setup steps: install dependencies with npm, run the app with `npm run dev`, and verify calculations with `npm test`.
+- Human-required setup: optional AdSense public env values and deployment settings are provided by the project owner.
+- Secrets/config setup expectations: keep env files private; runtime salary data remains in browser localStorage only.
 
 ### AI Collaboration Rules
 
-- How AI should propose changes: TODO
-- How AI should ask for clarification: TODO
-- Preferred output structure: TODO
-- What requires confirmation: TODO
+- How AI should propose changes: keep tasks compact with Goal, Scope, Requirements, Acceptance Criteria, Test Command, and Definition of Done.
+- How AI should ask for clarification: ask only focused boundary questions when scope is vague or protected areas are involved.
+- Preferred output structure: compact Chinese-facing explanation by default, with paths/commands/flags kept literal.
+- What requires confirmation: file edits, dependency changes, generated context refreshes, tests/builds when gated, external side effects, and destructive operations.
 <!-- PDGL:v1 END -->
 
 ## Stable Human Context (SHC) (v1)
@@ -123,45 +123,45 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 
 ### Project Goal
 
-- TODO
+- PayMood helps a person see workday progress, remaining time, and estimated earned income in a calm local-first dashboard.
 
 ### Target Users
 
-- TODO
+- Individual workers and developers who want salary-progress awareness without enterprise reporting or cloud accounts.
 
 ### Non-goals
 
-- TODO
+- Not payroll, accounting, tax/legal guidance, task tracking, employee monitoring, pet raising, or a game.
 
 ### Stack Decisions
 
-- TODO
+- TypeScript, React, Next.js App Router, npm, Tailwind/PostCSS styling, Vitest, localStorage persistence, static-compatible deployment.
 
 ### Runtime Constraints
 
-- TODO
+- Browser-first, local-only settings, no backend/database requirement, no fragile external runtime resources, and no new network dependency without explicit scope.
 
 ### Directory Conventions
 
-- TODO
+- `app/` contains routes, `components/` contains feature UI, `components/ui/` contains primitives, `hooks/` contains client state hooks, `lib/` contains pure logic, `styles/` contains shared visual system, and `test/` contains regression coverage.
 
 ### Config Sources
 
-- TODO
+- `hooks/useSettings.ts` reads/writes browser localStorage; `lib/settingsModel.ts` owns defaults and sanitization; public ad configuration uses `NEXT_PUBLIC_*` env values.
 
 ### Testing Strategy
 
-- TODO
+- Use Vitest for earnings and pet logic; use lint/build when routing, UI composition, or shared components change.
 
 ### Release Constraints
 
-- TODO
+- Keep the app static-compatible and China-friendly; do not introduce server-only runtime requirements or analytics/fonts that depend on fragile external resources.
 
 ### Files Never Touch
 
-- TODO
+- Do not touch `.env*`, deployment/release workflows, generated build output, or third-party asset files unless the current task explicitly includes them.
 
 ### Deployment Boundaries
 
-- TODO
+- Deployment may rely on public env flags for optional ads, but salary/settings data must stay client-side and private.
 <!-- SHC:v1 END -->

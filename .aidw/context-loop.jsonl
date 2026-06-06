@@ -1,2 +1,6 @@
 {"at":"2026-05-17T06:33:18.759Z","type":"scan_failed","ok":false,"reason":"incomplete"}
 {"at":"2026-05-17T06:33:29.318Z","type":"scan_failed","ok":false,"reason":"incomplete"}
+{"at":"2026-06-06T08:36:35.451Z","type":"scan_check_passed","ok":true}
+{"at":"2026-06-06T08:38:28.110Z","type":"scan_check_passed","ok":true}
+{"at":"2026-06-06T08:40:06.195Z","type":"scan_check_passed","ok":true}
+{"at":"2026-06-06T08:41:39.985Z","type":"scan_check_passed","ok":true}

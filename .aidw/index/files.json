@@ -3,7 +3,7 @@
         "path": ".env.example",
         "type": "config",
         "description": "Project configuration file.",
-        "updatedAt": "2026-05-21T15:53:01.941Z",
+        "updatedAt": "2026-05-25T15:45:13.055Z",
         "confidence": 0.85,
         "source": "heuristic"
     },
@@ -19,7 +19,7 @@
         "path": "AGENTS.md",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-25T13:56:23.302Z",
+        "updatedAt": "2026-05-25T15:01:24.117Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -27,7 +27,7 @@
         "path": "app/about/page.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-21T15:18:45.141Z",
+        "updatedAt": "2026-05-25T15:48:58.441Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -43,7 +43,7 @@
         "path": "app/layout.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-21T15:34:34.197Z",
+        "updatedAt": "2026-05-25T15:03:35.362Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -51,7 +51,7 @@
         "path": "app/not-found.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T15:41:54.902Z",
+        "updatedAt": "2026-05-25T15:48:58.465Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -59,7 +59,7 @@
         "path": "app/page.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-21T15:54:55.074Z",
+        "updatedAt": "2026-05-31T03:43:11.264Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -67,7 +67,7 @@
         "path": "app/privacy/page.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-21T15:28:18.468Z",
+        "updatedAt": "2026-05-25T15:48:58.478Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -75,7 +75,7 @@
         "path": "app/settings/page.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-24T15:26:49.728Z",
+        "updatedAt": "2026-05-25T15:48:58.487Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -83,7 +83,7 @@
         "path": "app/terms/page.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-21T15:21:12.890Z",
+        "updatedAt": "2026-05-25T15:48:58.495Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -91,7 +91,7 @@
         "path": "components/AdSenseSlot.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-24T15:24:27.417Z",
+        "updatedAt": "2026-05-31T03:43:11.291Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -115,7 +115,15 @@
         "path": "components/Dashboard.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-25T13:49:13.770Z",
+        "updatedAt": "2026-05-31T03:43:11.460Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "components/HomeShell.tsx",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-31T03:43:11.484Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -123,7 +131,7 @@
         "path": "components/LegalPage.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-21T15:21:12.784Z",
+        "updatedAt": "2026-05-25T15:48:58.570Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -131,7 +139,7 @@
         "path": "components/pet/AmbientPet.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-25T13:49:59.120Z",
+        "updatedAt": "2026-05-25T14:20:10.389Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -139,7 +147,7 @@
         "path": "components/pet/FloatingPet.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-25T13:49:46.879Z",
+        "updatedAt": "2026-05-25T15:03:35.362Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -155,7 +163,15 @@
         "path": "components/pet/PetBubble.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T15:06:17.903Z",
+        "updatedAt": "2026-05-25T14:33:27.399Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "components/pet/PetCompanionImage.tsx",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-25T14:28:54.630Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -163,7 +179,7 @@
         "path": "components/pet/PetMessageBubble.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T15:06:18.405Z",
+        "updatedAt": "2026-05-25T14:35:07.613Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -171,7 +187,15 @@
         "path": "components/pet/PetSprite.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T07:25:59.762Z",
+        "updatedAt": "2026-05-25T14:19:41.643Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "components/PublicHolidayCard.tsx",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-31T03:43:11.497Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -187,7 +211,7 @@
         "path": "components/settings/setting-action.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T14:28:12.889Z",
+        "updatedAt": "2026-05-25T15:48:58.635Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -203,7 +227,7 @@
         "path": "components/settings/setting-group.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T14:28:12.889Z",
+        "updatedAt": "2026-05-25T15:48:58.642Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -211,7 +235,7 @@
         "path": "components/settings/setting-input.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T14:28:12.889Z",
+        "updatedAt": "2026-05-25T15:48:58.647Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -219,7 +243,7 @@
         "path": "components/settings/setting-row.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T15:40:53.388Z",
+        "updatedAt": "2026-05-25T15:48:58.651Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -235,7 +259,7 @@
         "path": "components/settings/setting-select.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T14:28:12.889Z",
+        "updatedAt": "2026-05-25T15:48:58.660Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -259,7 +283,7 @@
         "path": "components/settings/setting-utils.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T14:26:24.162Z",
+        "updatedAt": "2026-05-25T15:48:58.669Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -267,7 +291,7 @@
         "path": "components/SettingsForm.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-24T15:27:13.074Z",
+        "updatedAt": "2026-05-25T15:48:58.684Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -291,7 +315,7 @@
         "path": "components/ui/ConfirmModal.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T15:42:26.103Z",
+        "updatedAt": "2026-05-25T15:48:58.704Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -451,7 +475,15 @@
         "path": "hooks/usePetWalker.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T15:18:41.002Z",
+        "updatedAt": "2026-05-25T14:03:02.377Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "hooks/usePublicHoliday.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-28T13:11:48.940Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -459,7 +491,7 @@
         "path": "hooks/useSettings.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-23T13:15:08.120Z",
+        "updatedAt": "2026-05-25T15:18:56.558Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -467,7 +499,7 @@
         "path": "lib/earnings.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-25T13:48:56.463Z",
+        "updatedAt": "2026-05-28T11:15:32.019Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -499,7 +531,7 @@
         "path": "lib/settingsModel.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-23T13:15:08.145Z",
+        "updatedAt": "2026-05-31T03:43:11.516Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -507,7 +539,7 @@
         "path": "lib/utils.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T14:26:24.162Z",
+        "updatedAt": "2026-05-25T15:48:58.854Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -515,7 +547,7 @@
         "path": "next-env.d.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-24T15:28:08.866Z",
+        "updatedAt": "2026-05-28T13:48:22.174Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -531,7 +563,7 @@
         "path": "package.json",
         "type": "config",
         "description": "Package metadata, scripts, and CLI binary configuration.",
-        "updatedAt": "2026-05-25T13:44:44.830Z",
+        "updatedAt": "2026-05-25T15:01:24.171Z",
         "confidence": 0.85,
         "source": "heuristic"
     },
@@ -544,10 +576,26 @@
         "source": "heuristic"
     },
     {
+        "path": "proxy.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-31T03:43:11.522Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
         "path": "README.md",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-17T15:18:40.990Z",
+        "updatedAt": "2026-05-25T15:03:35.362Z",
+        "confidence": 0.55,
+        "source": "heuristic"
+    },
+    {
+        "path": "services/publicHoliday.ts",
+        "type": "other",
+        "description": "Project file relevant to repository structure.",
+        "updatedAt": "2026-05-31T03:43:11.543Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -563,7 +611,7 @@
         "path": "test/earnings.test.ts",
         "type": "test",
         "description": "Automated test coverage for CLI behavior.",
-        "updatedAt": "2026-05-25T13:50:18.431Z",
+        "updatedAt": "2026-05-28T11:16:15.747Z",
         "confidence": 0.75,
         "source": "heuristic"
     },
@@ -587,7 +635,7 @@
         "path": "vscode-extension/media/dashboard.js",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-23T12:20:40.402Z",
+        "updatedAt": "2026-05-31T03:43:11.679Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -595,7 +643,7 @@
         "path": "vscode-extension/package.json",
         "type": "config",
         "description": "Project configuration file.",
-        "updatedAt": "2026-05-25T13:39:44.871Z",
+        "updatedAt": "2026-05-28T13:11:49.529Z",
         "confidence": 0.85,
         "source": "heuristic"
     },
@@ -603,7 +651,7 @@
         "path": "vscode-extension/src/extension.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-25T13:49:29.154Z",
+        "updatedAt": "2026-05-31T03:43:13.173Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -619,7 +667,7 @@
         "path": "vscode-extension/src/storage.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-05-23T09:26:19.644Z",
+        "updatedAt": "2026-05-25T15:03:35.363Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -627,7 +675,7 @@
         "path": "vscode-extension/tsconfig.json",
         "type": "config",
         "description": "Project configuration file.",
-        "updatedAt": "2026-05-23T13:15:08.408Z",
+        "updatedAt": "2026-05-25T15:48:59.378Z",
         "confidence": 0.85,
         "source": "heuristic"
     }

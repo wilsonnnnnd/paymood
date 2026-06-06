@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-25T13:56:23.512Z",
+    "generatedAt": "2026-06-06T08:38:13.730Z",
     "kind": "context",
     "payload": {
         "entrypoints": [],
@@ -34,11 +34,19 @@
             },
             {
                 "description": "",
+                "label": "services"
+            },
+            {
+                "description": "",
                 "label": "test"
             },
             {
                 "description": "",
                 "label": "content"
+            },
+            {
+                "description": "",
+                "label": "hooks"
             },
             {
                 "description": "",
@@ -50,16 +58,12 @@
             },
             {
                 "description": "",
-                "label": "hooks"
-            },
-            {
-                "description": "",
                 "label": "app"
             }
         ],
         "index": {
-            "fileGroups": 13,
-            "indexedFiles": 79,
+            "fileGroups": 14,
+            "indexedFiles": 85,
             "indexedSymbols": 0,
             "truncated": false
         },
@@ -68,7 +72,10 @@
             "shared UI components affect many pages and should remain backward compatible",
             "routing and page entry points affect navigation and screen-level behavior",
             "shared layout wrappers can impact many routes at once",
-            "global styles and spacing tokens can create broad visual regressions"
+            "global styles and spacing tokens can create broad visual regressions",
+            "API routing changes can break request handling and integrations",
+            "service and business-logic changes can alter behavior across multiple endpoints",
+            "shared config and environment changes can affect multiple runtime paths"
         ],
         "techStack": [
             "npm package",
@@ -158,6 +165,11 @@
             },
             {
                 "description": "Project file relevant to repository structure.",
+                "path": "components/HomeShell.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
                 "path": "components/LegalPage.tsx",
                 "type": "other"
             },
@@ -183,12 +195,22 @@
             },
             {
                 "description": "Project file relevant to repository structure.",
+                "path": "components/pet/PetCompanionImage.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
                 "path": "components/pet/PetMessageBubble.tsx",
                 "type": "other"
             },
             {
                 "description": "Project file relevant to repository structure.",
                 "path": "components/pet/PetSprite.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/PublicHolidayCard.tsx",
                 "type": "other"
             },
             {
@@ -368,6 +390,11 @@
             },
             {
                 "description": "Project file relevant to repository structure.",
+                "path": "hooks/usePublicHoliday.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
                 "path": "hooks/useSettings.ts",
                 "type": "other"
             },
@@ -423,7 +450,17 @@
             },
             {
                 "description": "Project file relevant to repository structure.",
+                "path": "proxy.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
                 "path": "README.md",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "services/publicHoliday.ts",
                 "type": "other"
             },
             {
@@ -450,31 +487,6 @@
                 "description": "Project file relevant to repository structure.",
                 "path": "vscode-extension/media/dashboard.js",
                 "type": "other"
-            },
-            {
-                "description": "Project configuration file.",
-                "path": "vscode-extension/package.json",
-                "type": "config"
-            },
-            {
-                "description": "Project file relevant to repository structure.",
-                "path": "vscode-extension/src/extension.ts",
-                "type": "other"
-            },
-            {
-                "description": "Project file relevant to repository structure.",
-                "path": "vscode-extension/src/storage.test.ts",
-                "type": "other"
-            },
-            {
-                "description": "Project file relevant to repository structure.",
-                "path": "vscode-extension/src/storage.ts",
-                "type": "other"
-            },
-            {
-                "description": "Project configuration file.",
-                "path": "vscode-extension/tsconfig.json",
-                "type": "config"
             }
         ]
     },

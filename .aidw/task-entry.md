@@ -1,6 +1,7 @@
 Load:
 - AGENTS.md
-- .aidw/project.md
+- PROJECT.md
+- .aidw/AI_project.md
 - .aidw/rules.md
 - .aidw/rules-canonical.md
 - .aidw/workflow.md
@@ -24,7 +25,7 @@ Use `AGENTS.md` as the source of truth.
   - IMPLEMENT: otherwise.
 - If vague: ask only implementation-boundary questions, then stop.
 - If clear: draft a task (Goal, Background, Scope, Requirements, Acceptance Criteria, Test Command, Definition of Done), request click-to-confirm, then implement and verify.
-- Prefer running tests via `repo-context-kit gate run-test <taskId>` when available.
+- Prefer running tests via the repository-approved test command or `rck gate run-test <taskId>` when available.
 - For REVIEW without Task/AC: draft minimal Task/AC first, then review against it.
 
 # Constraints

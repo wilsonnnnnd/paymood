@@ -1,7 +1,7 @@
 [
     {
         "path": ".",
-        "fileCount": 12,
+        "fileCount": 13,
         "summary": "Repository root files and package metadata.",
         "keyFiles": [
             ".env.example",
@@ -11,7 +11,7 @@
     },
     {
         "path": "components",
-        "fileCount": 26,
+        "fileCount": 29,
         "summary": "Reusable UI components.",
         "keyFiles": [
             "components/AdSenseSlot.tsx",
@@ -60,6 +60,14 @@
         ]
     },
     {
+        "path": "services",
+        "fileCount": 1,
+        "summary": "Service-layer and business logic modules.",
+        "keyFiles": [
+            "services/publicHoliday.ts"
+        ]
+    },
+    {
         "path": "test",
         "fileCount": 2,
         "summary": "Automated tests and regression coverage.",
@@ -76,6 +84,16 @@
             "content/pet/messages/hover/default.ts",
             "content/pet/messages/hover/index.ts",
             "content/pet/messages/hover/nearOffwork.ts"
+        ]
+    },
+    {
+        "path": "hooks",
+        "fileCount": 6,
+        "summary": "Project files grouped by directory.",
+        "keyFiles": [
+            "hooks/useClock.ts",
+            "hooks/usePetMessage.ts",
+            "hooks/usePetMood.ts"
         ]
     },
     {
@@ -99,19 +117,9 @@
         ]
     },
     {
-        "path": "hooks",
-        "fileCount": 5,
-        "summary": "Project files grouped by directory.",
-        "keyFiles": [
-            "hooks/useClock.ts",
-            "hooks/usePetMessage.ts",
-            "hooks/usePetMood.ts"
-        ]
-    },
-    {
         "path": "app",
         "fileCount": 3,
-        "summary": "Python backend application package.",
+        "summary": "Application routes, layouts, and screen-level entry files.",
         "keyFiles": [
             "app/layout.tsx",
             "app/not-found.tsx",

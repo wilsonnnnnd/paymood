@@ -6,6 +6,7 @@ import {
   earnedSoFarThisMonth,
   earnedSoFarThisWeek,
   earnedSoFarThisYear,
+  getNextWorkStart,
   getWorkWindowForNow,
   normalizeSalaryToHourly,
   workProgress,
@@ -58,6 +59,39 @@ describe('getWorkWindowForNow', () => {
     expect(isOvernight).toBe(true)
     expect(start.toISOString().slice(0, 16)).toBe(new Date('2026-05-11T22:00:00').toISOString().slice(0, 16))
     expect(end.toISOString().slice(0, 16)).toBe(new Date('2026-05-12T06:00:00').toISOString().slice(0, 16))
+  })
+})
+
+describe('getNextWorkStart', () => {
+  it('returns today start when the workday has not started yet', () => {
+    const next = getNextWorkStart(new Date('2026-06-03T08:30:00'), {
+      startTime: '09:00',
+      endTime: '17:00',
+      workDays: [1, 2, 3, 4, 5],
+    })
+
+    expect(next?.start.toISOString().slice(0, 16)).toBe(new Date('2026-06-03T09:00:00').toISOString().slice(0, 16))
+    expect(next?.secondsUntil).toBe(30 * 60)
+  })
+
+  it('skips from a rest day to the next configured workday', () => {
+    const next = getNextWorkStart(new Date('2026-06-06T12:00:00'), {
+      startTime: '09:00',
+      endTime: '17:00',
+      workDays: [1, 2, 3, 4, 5],
+    })
+
+    expect(next?.start.toISOString().slice(0, 16)).toBe(new Date('2026-06-08T09:00:00').toISOString().slice(0, 16))
+  })
+
+  it('respects custom work days', () => {
+    const next = getNextWorkStart(new Date('2026-06-08T18:00:00'), {
+      startTime: '10:00',
+      endTime: '18:00',
+      workDays: [3],
+    })
+
+    expect(next?.start.toISOString().slice(0, 16)).toBe(new Date('2026-06-10T10:00:00').toISOString().slice(0, 16))
   })
 })
 

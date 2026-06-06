@@ -7,7 +7,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-21T15:53:01.941Z"
+        "updatedAt": "2026-05-25T15:45:13.055Z"
     },
     {
         "path": ".eslintrc.cjs",
@@ -27,7 +27,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-25T13:56:23.302Z"
+        "updatedAt": "2026-05-25T15:01:24.117Z"
     },
     {
         "path": "app/about/page.tsx",
@@ -37,7 +37,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-21T15:18:45.141Z"
+        "updatedAt": "2026-05-25T15:48:58.441Z"
     },
     {
         "path": "app/contact/page.tsx",
@@ -57,7 +57,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-21T15:34:34.197Z"
+        "updatedAt": "2026-05-25T15:03:35.362Z"
     },
     {
         "path": "app/not-found.tsx",
@@ -67,7 +67,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T15:41:54.902Z"
+        "updatedAt": "2026-05-25T15:48:58.465Z"
     },
     {
         "path": "app/page.tsx",
@@ -77,7 +77,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-21T15:54:55.074Z"
+        "updatedAt": "2026-05-31T03:43:11.264Z"
     },
     {
         "path": "app/privacy/page.tsx",
@@ -87,7 +87,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-21T15:28:18.468Z"
+        "updatedAt": "2026-05-25T15:48:58.478Z"
     },
     {
         "path": "app/settings/page.tsx",
@@ -97,7 +97,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-24T15:26:49.728Z"
+        "updatedAt": "2026-05-25T15:48:58.487Z"
     },
     {
         "path": "app/terms/page.tsx",
@@ -107,7 +107,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-21T15:21:12.890Z"
+        "updatedAt": "2026-05-25T15:48:58.495Z"
     },
     {
         "path": "components/AdSenseSlot.tsx",
@@ -117,7 +117,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-24T15:24:27.417Z"
+        "updatedAt": "2026-05-31T03:43:11.291Z"
     },
     {
         "path": "components/CircularProgress.tsx",
@@ -147,7 +147,17 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-25T13:49:13.770Z"
+        "updatedAt": "2026-05-31T03:43:11.460Z"
+    },
+    {
+        "path": "components/HomeShell.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-31T03:43:11.484Z"
     },
     {
         "path": "components/LegalPage.tsx",
@@ -157,7 +167,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-21T15:21:12.784Z"
+        "updatedAt": "2026-05-25T15:48:58.570Z"
     },
     {
         "path": "components/pet/AmbientPet.tsx",
@@ -167,7 +177,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-25T13:49:59.120Z"
+        "updatedAt": "2026-05-25T14:20:10.389Z"
     },
     {
         "path": "components/pet/FloatingPet.tsx",
@@ -177,7 +187,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-25T13:49:46.879Z"
+        "updatedAt": "2026-05-25T15:03:35.362Z"
     },
     {
         "path": "components/pet/PetAvatar.tsx",
@@ -197,7 +207,17 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T15:06:17.903Z"
+        "updatedAt": "2026-05-25T14:33:27.399Z"
+    },
+    {
+        "path": "components/pet/PetCompanionImage.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-25T14:28:54.630Z"
     },
     {
         "path": "components/pet/PetMessageBubble.tsx",
@@ -207,7 +227,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T15:06:18.405Z"
+        "updatedAt": "2026-05-25T14:35:07.613Z"
     },
     {
         "path": "components/pet/PetSprite.tsx",
@@ -217,7 +237,17 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T07:25:59.762Z"
+        "updatedAt": "2026-05-25T14:19:41.643Z"
+    },
+    {
+        "path": "components/PublicHolidayCard.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-31T03:43:11.497Z"
     },
     {
         "path": "components/settings/index.ts",
@@ -237,7 +267,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T14:28:12.889Z"
+        "updatedAt": "2026-05-25T15:48:58.635Z"
     },
     {
         "path": "components/settings/setting-description.tsx",
@@ -257,7 +287,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T14:28:12.889Z"
+        "updatedAt": "2026-05-25T15:48:58.642Z"
     },
     {
         "path": "components/settings/setting-input.tsx",
@@ -267,7 +297,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T14:28:12.889Z"
+        "updatedAt": "2026-05-25T15:48:58.647Z"
     },
     {
         "path": "components/settings/setting-row.tsx",
@@ -277,7 +307,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T15:40:53.388Z"
+        "updatedAt": "2026-05-25T15:48:58.651Z"
     },
     {
         "path": "components/settings/setting-section.tsx",
@@ -297,7 +327,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T14:28:12.889Z"
+        "updatedAt": "2026-05-25T15:48:58.660Z"
     },
     {
         "path": "components/settings/setting-time-input.tsx",
@@ -327,7 +357,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T14:26:24.162Z"
+        "updatedAt": "2026-05-25T15:48:58.669Z"
     },
     {
         "path": "components/SettingsForm.tsx",
@@ -337,7 +367,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-24T15:27:13.074Z"
+        "updatedAt": "2026-05-25T15:48:58.684Z"
     },
     {
         "path": "components/SettingsProvider.tsx",
@@ -367,7 +397,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T15:42:26.103Z"
+        "updatedAt": "2026-05-25T15:48:58.704Z"
     },
     {
         "path": "content/pet/messages/hover/default.ts",
@@ -567,7 +597,17 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T15:18:41.002Z"
+        "updatedAt": "2026-05-25T14:03:02.377Z"
+    },
+    {
+        "path": "hooks/usePublicHoliday.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-28T13:11:48.940Z"
     },
     {
         "path": "hooks/useSettings.ts",
@@ -577,7 +617,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-23T13:15:08.120Z"
+        "updatedAt": "2026-05-25T15:18:56.558Z"
     },
     {
         "path": "lib/earnings.ts",
@@ -587,7 +627,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-25T13:48:56.463Z"
+        "updatedAt": "2026-05-28T11:15:32.019Z"
     },
     {
         "path": "lib/pet/petMessages.ts",
@@ -627,7 +667,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-23T13:15:08.145Z"
+        "updatedAt": "2026-05-31T03:43:11.516Z"
     },
     {
         "path": "lib/utils.ts",
@@ -637,7 +677,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T14:26:24.162Z"
+        "updatedAt": "2026-05-25T15:48:58.854Z"
     },
     {
         "path": "next-env.d.ts",
@@ -647,7 +687,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-24T15:28:08.866Z"
+        "updatedAt": "2026-05-28T13:48:22.174Z"
     },
     {
         "path": "next.config.js",
@@ -667,7 +707,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-25T13:44:44.830Z"
+        "updatedAt": "2026-05-25T15:01:24.171Z"
     },
     {
         "path": "postcss.config.cjs",
@@ -680,6 +720,16 @@
         "updatedAt": "2026-05-17T07:25:59.996Z"
     },
     {
+        "path": "proxy.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-31T03:43:11.522Z"
+    },
+    {
         "path": "README.md",
         "roleSummary": "Project file relevant to repository structure.",
         "exports": [],
@@ -687,7 +737,17 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T15:18:40.990Z"
+        "updatedAt": "2026-05-25T15:03:35.362Z"
+    },
+    {
+        "path": "services/publicHoliday.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-05-31T03:43:11.543Z"
     },
     {
         "path": "tailwind.config.cjs",
@@ -707,7 +767,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-25T13:50:18.431Z"
+        "updatedAt": "2026-05-28T11:16:15.747Z"
     },
     {
         "path": "test/petMoodRules.test.ts",
@@ -737,7 +797,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-23T12:20:40.402Z"
+        "updatedAt": "2026-05-31T03:43:11.679Z"
     },
     {
         "path": "vscode-extension/package.json",
@@ -747,7 +807,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-25T13:39:44.871Z"
+        "updatedAt": "2026-05-28T13:11:49.529Z"
     },
     {
         "path": "vscode-extension/src/extension.ts",
@@ -757,7 +817,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-25T13:49:29.154Z"
+        "updatedAt": "2026-05-31T03:43:13.173Z"
     },
     {
         "path": "vscode-extension/src/storage.test.ts",
@@ -777,7 +837,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-23T09:26:19.644Z"
+        "updatedAt": "2026-05-25T15:03:35.363Z"
     },
     {
         "path": "vscode-extension/tsconfig.json",
@@ -787,6 +847,6 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-23T13:15:08.408Z"
+        "updatedAt": "2026-05-25T15:48:59.378Z"
     }
 ]
