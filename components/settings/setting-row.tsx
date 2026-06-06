@@ -19,6 +19,7 @@ export type SettingRowProps = React.HTMLAttributes<HTMLDivElement> &
     controlId?: string
     description?: React.ReactNode
     value?: React.ReactNode
+    controlLayout?: 'inline' | 'stacked'
   }
 
 export function SettingRow({
@@ -26,6 +27,7 @@ export function SettingRow({
   controlId,
   description,
   value,
+  controlLayout = 'inline',
   density,
   className,
   children,
@@ -43,7 +45,12 @@ export function SettingRow({
         )}
         {description ? <div className="setting-row__description">{description}</div> : null}
       </div>
-      <div className="setting-row__control">
+      <div
+        className={cn(
+          'setting-row__control',
+          controlLayout === 'stacked' ? 'setting-row__control--stacked' : null
+        )}
+      >
         {value ? <div className="setting-row__value">{value}</div> : null}
         {children}
       </div>

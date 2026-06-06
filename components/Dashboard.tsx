@@ -11,7 +11,7 @@ import { calculateWorkEarnings, getNextWorkStart, getWorkWindowForNow } from '..
 import { currencySymbols } from '../lib/settings'
 
 function prefersReducedMotion() {
-  if (typeof window === 'undefined' || !('matchMedia' in window)) return false
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return false
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
@@ -348,7 +348,6 @@ export default function Dashboard({
               <span className="hud-metric-value">{totalsFormat.format(earned)}</span>
             </div>
             <CycleMetric label={cycle.label} value={cycle.earned} format={totalsFormat} />
-            <PublicHolidayCard />
           </section>
         </div>
       ) : (

@@ -1,3 +1,5 @@
+import { getCurrentPayCycle } from './payCycle'
+
 export type SalaryType = 'hourly' | 'daily' | 'weekly' | 'fortnightly' | 'monthly' | 'annually'
 
 export function normalizeSalaryToHourly(
@@ -235,6 +237,7 @@ type EarnedPeriodInput = {
   workDays?: number[]
   salaryAmount: number
   salaryType: SalaryType
+  paydayDayOfMonth?: number
   opts?: { workDayHours?: number; workDaysPerWeek?: number }
 }
 
@@ -344,6 +347,16 @@ export function earnedSoFarThisMonth(now: Date | string | number, input: EarnedP
     return earnedBetweenDates(nowDate, rangeStart, input)
   }
 
+  if (typeof input.paydayDayOfMonth === 'number') {
+    const { previousPayday, nextPayday } = getCurrentPayCycle(nowDate, input.paydayDayOfMonth)
+    const cycleWorkSeconds = scheduledWorkSecondsBetween(previousPayday, nextPayday, input)
+    if (!isFinite(input.salaryAmount) || input.salaryAmount <= 0 || cycleWorkSeconds <= 0) {
+      return { hourly: 0, earned: 0 }
+    }
+    const hourly = input.salaryAmount / (cycleWorkSeconds / 3600)
+    return earnedBetweenDates(nowDate, previousPayday, input, hourly)
+  }
+
   const monthWorkSeconds = scheduledWorkSecondsBetween(rangeStart, startOfNextMonth(nowDate), input)
   if (!isFinite(input.salaryAmount) || input.salaryAmount <= 0 || monthWorkSeconds <= 0) {
     return { hourly: 0, earned: 0 }
@@ -359,6 +372,16 @@ export function earnedSoFarThisYear(now: Date | string | number, input: EarnedPe
 
   if (input.salaryType !== 'annually') {
     return earnedBetweenDates(nowDate, rangeStart, input)
+  }
+
+  if (typeof input.paydayDayOfMonth === 'number') {
+    const { previousPayday, nextPayday } = getCurrentPayCycle(nowDate, input.paydayDayOfMonth)
+    const cycleWorkSeconds = scheduledWorkSecondsBetween(previousPayday, nextPayday, input)
+    if (!isFinite(input.salaryAmount) || input.salaryAmount <= 0 || cycleWorkSeconds <= 0) {
+      return { hourly: 0, earned: 0 }
+    }
+    const hourly = input.salaryAmount / (cycleWorkSeconds / 3600)
+    return earnedBetweenDates(nowDate, previousPayday, input, hourly)
   }
 
   const yearWorkSeconds = scheduledWorkSecondsBetween(rangeStart, startOfNextYear(nowDate), input)
@@ -378,6 +401,7 @@ function selectCycleEarnings(
     fortnight: { earned: number }
     month: { earned: number }
     year: { earned: number }
+    isPayCycle?: boolean
   },
 ) {
   switch (salaryType) {
@@ -390,9 +414,9 @@ function selectCycleEarnings(
     case 'fortnightly':
       return { label: '本双周', earned: snapshots.fortnight.earned }
     case 'monthly':
-      return { label: '本月', earned: snapshots.month.earned }
+      return { label: snapshots.isPayCycle ? '本周期' : '本月', earned: snapshots.month.earned }
     case 'annually':
-      return { label: '今年', earned: snapshots.year.earned }
+      return { label: snapshots.isPayCycle ? '本周期' : '今年', earned: snapshots.year.earned }
   }
 }
 
@@ -432,6 +456,7 @@ export function calculateWorkEarnings(now: Date | string | number, input: WorkEa
     fortnight,
     month,
     year,
+    isPayCycle: typeof input.paydayDayOfMonth === 'number',
   })
 
   return {

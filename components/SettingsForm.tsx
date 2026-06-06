@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useSettings } from '../hooks/useSettings'
 import type { Settings } from '../hooks/useSettings'
 import { salaryBoundsByType } from '../lib/settings'
+import { formatLocalDate, paydayDayFromDate, validateLastPaydayDate } from '../lib/payCycle'
+import { trackEvent } from '../lib/analytics'
 import ConfirmModal from './ui/ConfirmModal'
 import {
   SettingAction,
@@ -55,6 +57,9 @@ export default function SettingsForm() {
   const [salaryDraft, setSalaryDraft] = useState('')
   const [salaryTypeDraft, setSalaryTypeDraft] = useState<Settings['salaryType']>(() => settings.salaryType ?? 'hourly')
   const [salaryConfirmOpen, setSalaryConfirmOpen] = useState(false)
+  const [paydayConfirmOpen, setPaydayConfirmOpen] = useState(false)
+  const [paydayDraft, setPaydayDraft] = useState(settings.lastPaydayDate ?? '')
+  const [paydayError, setPaydayError] = useState<string | undefined>()
   const [prefersDark, setPrefersDark] = useState(false)
 
   const workDays = settings.workDays ?? []
@@ -66,6 +71,8 @@ export default function SettingsForm() {
   const activeSalaryBounds = salaryBoundsByType[salaryTypeDraft]
   const salaryDraftValid =
     Number.isFinite(salaryAmountNumber) && salaryAmountNumber > 0 && salaryAmountNumber <= activeSalaryBounds.max
+
+  const paydayStatusLabel = settings.lastPaydayDate ? `已校准：${settings.lastPaydayDate}` : '未校准'
 
   useEffect(() => {
     if (payLocked) return
@@ -105,6 +112,39 @@ export default function SettingsForm() {
     if (!salaryDraftValid) return
     updateSettings({ salaryType: salaryTypeDraft, salaryAmount: salaryAmountNumber, payLocked: true })
     setSalaryDraft('')
+  }
+
+  const openPaydayModal = () => {
+    setPaydayError(undefined)
+    setPaydayDraft(settings.lastPaydayDate ?? '')
+    setPaydayConfirmOpen(true)
+    trackEvent('payday_reset_opened')
+  }
+
+  const cancelPaydayModal = () => {
+    setPaydayConfirmOpen(false)
+    trackEvent('payday_reset_cancelled')
+  }
+
+  const submitPaydayDate = async (value?: string) => {
+    const payloadValue = value ?? paydayDraft
+    trackEvent('payday_reset_submitted', { value: payloadValue })
+    const validation = validateLastPaydayDate(payloadValue)
+    if (!validation.valid) {
+      setPaydayError(validation.reason)
+      trackEvent('payday_reset_invalid_date', { value: payloadValue, reason: validation.reason })
+      trackEvent('payday_reset_failed', { reason: validation.reason })
+      throw new Error(validation.reason)
+    }
+    const formatted = formatLocalDate(validation.date)
+    const paydayDayOfMonth = paydayDayFromDate(validation.date)
+    updateSettings({ lastPaydayDate: formatted, paydayDayOfMonth })
+    trackEvent('payday_reset_success', { lastPaydayDate: formatted, paydayDayOfMonth })
+  }
+
+  const resetPaydayCycle = () => {
+    updateSettings({ lastPaydayDate: undefined, paydayDayOfMonth: undefined })
+    trackEvent('payday_reset_success', { lastPaydayDate: undefined, paydayDayOfMonth: undefined })
   }
 
   return (
@@ -227,6 +267,23 @@ export default function SettingsForm() {
         </SettingSection>
 
         <SettingSection title="薪资模式" description="仅保存在本机，只用于收入估算。" tone="vault">
+          <SettingRow
+            label="校准工资日"
+            description="输入最近一次实际到账日期，按新工资周期计算本期收入。"
+            value={paydayStatusLabel}
+            controlLayout="stacked"
+          >
+            <div className="flex flex-wrap gap-2">
+              <SettingAction variant="primary" onClick={openPaydayModal}>
+                校准工资日
+              </SettingAction>
+              {settings.lastPaydayDate ? (
+                <SettingAction variant="quiet" onClick={resetPaydayCycle}>
+                  取消校准
+                </SettingAction>
+              ) : null}
+            </div>
+          </SettingRow>
           {payLocked ? (
             <SettingGroup density="loose">
               <div className="setting-vault-state">
@@ -313,6 +370,21 @@ export default function SettingsForm() {
         cancelText="再想想"
         variant="success"
         onConfirm={saveSalary}
+      />
+      <ConfirmModal
+        open={paydayConfirmOpen}
+        onOpenChange={setPaydayConfirmOpen}
+        title="校准工资日"
+        description="使用最近一次实际到账日期重新计算当前工资周期。"
+        confirmText="保存"
+        cancelText="取消"
+        variant="success"
+        confirmationLabel="最近一次实际工资到账日期"
+        confirmationInputType="date"
+        confirmationPlaceholder="选择日期"
+        errorText={paydayError}
+        onConfirm={submitPaydayDate}
+        onCancel={cancelPaydayModal}
       />
     </>
   )

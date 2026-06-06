@@ -1,5 +1,6 @@
 import type { SalaryType } from './earnings'
 import { salaryBoundsByType, supportedCurrencies, type SupportedCurrency } from './settings'
+import { normalizeLocalDateString, paydayDayFromDate, parseLocalDate } from './payCycle'
 
 export type Settings = {
   startTime: string
@@ -12,6 +13,8 @@ export type Settings = {
   petEnabled?: boolean
   petVariant?: 'aqua' | 'undead' | 'magma'
   publicHolidayEnabled?: boolean
+  lastPaydayDate?: string
+  paydayDayOfMonth?: number
   salaryType: SalaryType
   salaryAmount: number
   currency?: SupportedCurrency
@@ -28,6 +31,8 @@ export const defaultSettings: Settings = {
   petEnabled: true,
   petVariant: 'aqua',
   publicHolidayEnabled: true,
+  lastPaydayDate: undefined,
+  paydayDayOfMonth: undefined,
   salaryType: 'hourly',
   salaryAmount: 0,
   currency: 'AUD',
@@ -89,6 +94,12 @@ export function sanitizeSettings(input: unknown): Settings {
   const petEnabled = typeof raw.petEnabled === 'boolean' ? raw.petEnabled : defaultSettings.petEnabled
   const publicHolidayEnabled =
     typeof raw.publicHolidayEnabled === 'boolean' ? raw.publicHolidayEnabled : defaultSettings.publicHolidayEnabled
+  const lastPaydayDate = normalizeLocalDateString(raw.lastPaydayDate)
+  const paydayDayOfMonth = typeof raw.paydayDayOfMonth === 'number' && Number.isInteger(raw.paydayDayOfMonth)
+    ? Math.min(Math.max(1, raw.paydayDayOfMonth), 31)
+    : lastPaydayDate
+    ? paydayDayFromDate(parseLocalDate(lastPaydayDate) as Date)
+    : undefined
 
   return {
     ...defaultSettings,
@@ -102,6 +113,8 @@ export function sanitizeSettings(input: unknown): Settings {
     petEnabled,
     petVariant: petVariants.includes(raw.petVariant) ? raw.petVariant : defaultSettings.petVariant,
     publicHolidayEnabled,
+    lastPaydayDate,
+    paydayDayOfMonth,
     salaryType,
     salaryAmount,
     currency,

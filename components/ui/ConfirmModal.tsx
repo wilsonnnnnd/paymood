@@ -11,7 +11,7 @@ export type ConfirmModalProps = {
   description?: string
   confirmText?: string
   cancelText?: string
-  onConfirm?: () => void | Promise<void>
+  onConfirm?: (value?: string) => void | Promise<void>
   onCancel?: () => void
   loading?: boolean
   variant?: ConfirmModalVariant
@@ -20,8 +20,9 @@ export type ConfirmModalProps = {
   confirmationPlaceholder?: string
   confirmationHelpText?: string
   confirmationCaseSensitive?: boolean
-  confirmationInputType?: 'text' | 'number'
+  confirmationInputType?: 'text' | 'number' | 'date'
   requireConfirmationValue?: boolean
+  errorText?: string
 }
 
 const focusableSelector = 'button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])'
@@ -59,6 +60,7 @@ export default function ConfirmModal({
   confirmationCaseSensitive = false,
   confirmationInputType = 'text',
   requireConfirmationValue = false,
+  errorText,
 }: ConfirmModalProps) {
   const titleId = useId()
   const descriptionId = useId()
@@ -181,7 +183,7 @@ export default function ConfirmModal({
   const handleConfirm = async () => {
     if (confirmDisabled) return
     try {
-      await onConfirm?.()
+      await onConfirm?.(confirmationDraft)
     } catch {
       return
     }
@@ -236,7 +238,7 @@ export default function ConfirmModal({
             </div>
           </div>
 
-          {requireConfirmationValue ? (
+          {requireConfirmationValue || confirmationInputType === 'date' ? (
             <div className="mt-4">
               {confirmationLabel ? (
                 <div className="text-secondary mb-2 text-xs tracking-wide">{confirmationLabel}</div>
@@ -253,6 +255,7 @@ export default function ConfirmModal({
                 autoCorrect="off"
                 spellCheck={false}
               />
+              {errorText ? <div className="text-danger mt-2 text-xs leading-relaxed">{errorText}</div> : null}
               {confirmationHelpText ? (
                 <div className="text-secondary mt-2 text-xs leading-relaxed">{confirmationHelpText}</div>
               ) : null}

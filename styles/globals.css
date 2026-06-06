@@ -2292,6 +2292,13 @@ fieldset.hud-control {
   min-width: 0;
   align-items: center;
   justify-content: flex-end;
+  gap: 8px;
+}
+
+.setting-row__control--stacked {
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
   gap: 10px;
 }
 
@@ -2301,6 +2308,9 @@ fieldset.hud-control {
   font-size: 0.76rem;
   font-variant-numeric: tabular-nums;
   text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   opacity: 0.7;
 }
 
@@ -2663,6 +2673,10 @@ fieldset.hud-control {
 
   .setting-row__control {
     justify-content: flex-start;
+  }
+
+  .setting-row__control--stacked {
+    align-items: flex-start;
   }
 
   .setting-row__value {

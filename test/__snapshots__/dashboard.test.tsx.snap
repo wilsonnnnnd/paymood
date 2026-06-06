@@ -1,0 +1,196 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Dashboard UI > keeps the workday dashboard focused and does not render the holiday card in the main workday view 1`] = `
+<div>
+  <section
+    aria-label="PayMood 仪表盘"
+    class="hud-shell hud-shell--rest"
+  >
+    <div
+      aria-label="顶部操作"
+      class="hud-top-actions"
+    >
+      <button
+        aria-label="主题模式：跟随系统，点击切换"
+        class="hud-icon-button"
+        type="button"
+      >
+        <span
+          aria-hidden="true"
+        >
+          ◐
+        </span>
+      </button>
+      <a
+        aria-label="打开设置"
+        class="hud-icon-button"
+        href="/settings"
+      >
+        <span
+          aria-hidden="true"
+        >
+          ⚙
+        </span>
+      </a>
+    </div>
+    <header
+      class="hud-header"
+    >
+      <div
+        class="hud-title"
+      >
+        PayMood
+      </div>
+      <div
+        aria-label="域名"
+        class="hud-subtitle"
+      >
+        paymood.work
+      </div>
+      <div
+        aria-label="状态"
+        class="hud-mood"
+      >
+        今天休息。
+      </div>
+      <div
+        aria-label="工作状态"
+        class="hud-live-status"
+      >
+        Off today
+      </div>
+      <div
+        aria-hidden="true"
+        class="hud-progress-rail"
+      >
+        <span
+          style="width: 0%;"
+        />
+      </div>
+    </header>
+    <div
+      aria-label="休息日"
+      class="hud-main hud-rest"
+    >
+      <div
+        class="hud-rest-panel"
+      >
+        <div
+          class="hud-rest-title"
+        >
+          今天就先休息。
+        </div>
+        <div
+          class="hud-rest-sub"
+        >
+          下个工作节点：周一 6/8 09:00
+        </div>
+        <div
+          aria-label="下一个工作节点"
+          class="hud-work-node"
+        >
+          <span>
+            <strong>
+              1天 13小时
+            </strong>
+            <small>
+              距离开工
+            </small>
+          </span>
+          <span>
+            <strong>
+              2,000
+            </strong>
+            <small>
+              本月
+              已累计
+            </small>
+          </span>
+        </div>
+        <div
+          class="hud-rest-status"
+        >
+          Off today
+        </div>
+      </div>
+      <section
+        aria-label="摘要"
+        class="hud-metrics"
+      >
+        <div
+          class="hud-metric"
+        >
+          <span
+            class="hud-metric-label"
+          >
+            今日收入
+          </span>
+          <span
+            class="hud-metric-value"
+          >
+            0
+          </span>
+        </div>
+        <div
+          class="hud-metric hud-metric--cycle"
+          tabindex="0"
+        >
+          <span
+            class="hud-metric-copy"
+          >
+            <span
+              class="hud-metric-label"
+            >
+              累计收入
+            </span>
+            <span
+              class="hud-metric-subtitle"
+            >
+              本月
+            </span>
+          </span>
+          <span
+            class="hud-metric-value"
+          >
+            2,000
+          </span>
+          <span
+            class="hud-metric-tip"
+            role="tooltip"
+          >
+            根据你的薪资类型显示当前周期已赚金额；小时/日薪看今日，周薪看本周，双周薪看本双周，月薪看本月，年薪看今年。
+          </span>
+        </div>
+      </section>
+    </div>
+    <footer
+      aria-label="Site information"
+      class="hud-footnote"
+    >
+      <a
+        href="/about"
+      >
+        About
+      </a>
+       
+      <a
+        href="/privacy"
+      >
+        Privacy
+      </a>
+       
+      <a
+        href="/terms"
+      >
+        Terms
+      </a>
+       
+      <a
+        href="/contact"
+      >
+        Contact
+      </a>
+    </footer>
+  </section>
+</div>
+`;
