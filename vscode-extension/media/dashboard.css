@@ -127,6 +127,16 @@ label,
   background: var(--vscode-toolbar-hoverBackground, var(--pm-row-hover));
 }
 
+.ghost-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.ghost-button:disabled:hover {
+  border-color: transparent;
+  background: transparent;
+}
+
 .ghost-button:active {
   transform: translateY(1px);
 }
@@ -467,6 +477,42 @@ label,
 
 .field:hover {
   background: var(--pm-row-hover);
+}
+
+.field.payday-field {
+  gap: 8px;
+}
+
+.payday-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.payday-status {
+  max-width: 52%;
+  color: var(--pm-muted);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: right;
+}
+
+.payday-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.payday-actions input {
+  flex: 1 1 180px;
+  min-width: 160px;
 }
 
 input,

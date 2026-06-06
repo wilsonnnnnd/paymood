@@ -59,6 +59,7 @@ const WEBVIEW_ALLOWED_SETTING_KEYS = new Set<keyof Settings>([
   'salaryType',
   'salaryAmount',
   'currency',
+  'lastPaydayDate',
   'publicHolidayEnabled',
 ])
 
@@ -69,7 +70,7 @@ function currencyCodeToSymbol(code: string | undefined) {
   return '$'
 }
 
-function cycleLabelForSalaryType(salaryType: Settings['salaryType']) {
+function cycleLabelForSalaryType(salaryType: Settings['salaryType'], isPayCycle: boolean) {
   switch (salaryType) {
     case 'hourly':
       return 'Shift total'
@@ -80,9 +81,9 @@ function cycleLabelForSalaryType(salaryType: Settings['salaryType']) {
     case 'fortnightly':
       return 'This fortnight'
     case 'monthly':
-      return 'This month'
+      return isPayCycle ? 'This cycle' : 'This month'
     case 'annually':
-      return 'This year'
+      return isPayCycle ? 'This cycle' : 'This year'
   }
 }
 
@@ -118,9 +119,11 @@ function computeSnapshot(
     workDays: settings.workDays,
     salaryAmount: settings.salaryAmount,
     salaryType: settings.salaryType,
+    paydayDayOfMonth: settings.paydayDayOfMonth,
     opts: { workDaysPerWeek },
   })
 
+  const isPayCycle = typeof settings.paydayDayOfMonth === 'number'
   return {
     settings,
     now: now.toISOString(),
@@ -135,7 +138,7 @@ function computeSnapshot(
     hourly: earnings.hourly,
     remainingSeconds: earnings.remainingSeconds,
     weekEarned: earnings.week.earned,
-    cycleLabel: cycleLabelForSalaryType(settings.salaryType),
+    cycleLabel: cycleLabelForSalaryType(settings.salaryType, isPayCycle),
     cycleEarned: earnings.cycle.earned,
   }
 }
@@ -351,6 +354,22 @@ function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri, nonce
               <label for="salaryAmount">Amount</label>
               <input id="salaryAmount" type="number" min="0" step="0.01" />
             </div>
+
+            <div class="field payday-field">
+              <div class="payday-head">
+                <div>
+                  <label for="lastPaydayDate">Payday calibration</label>
+                  <div class="field-hint">Set the most recent payday date to align your cycle estimates.</div>
+                </div>
+                <div class="payday-status" id="paydayStatus">Not calibrated</div>
+              </div>
+              <div class="payday-actions">
+                <input id="lastPaydayDate" type="date" />
+                <button class="ghost-button" id="clearPayday" type="button">
+                  Clear
+                </button>
+              </div>
+            </div>
           </div>
 
           <div class="settings-group">
@@ -559,14 +578,11 @@ export function activate(context: vscode.ExtensionContext) {
     if (statusItem) {
       statusItem.text = formatStatus(snapshot)
       const tooltipLines = [
-        'Work progress',
         `${Math.max(0, Math.min(100, snapshot.percent))}% · ${currencyCodeToSymbol(
           settings.currency,
         )}${snapshot.earned.toFixed(2)} earned`,
         `Remaining ${formatHM(snapshot.remainingSeconds)}`,
         `${snapshot.cycleLabel} ${currencyCodeToSymbol(settings.currency)}${snapshot.cycleEarned.toFixed(2)}`,
-        `Coding today ${formatHM(snapshot.codingTodaySeconds)}`,
-        `Thinking today ${formatHM(snapshot.thinkingTodaySeconds)}`,
         'Click to open PayMood',
       ]
       statusItem.tooltip = tooltipLines.join('\n')

@@ -25,6 +25,9 @@ const els = {
   salaryType: document.getElementById('salaryType'),
   salaryAmount: document.getElementById('salaryAmount'),
   currency: document.getElementById('currency'),
+  lastPaydayDate: document.getElementById('lastPaydayDate'),
+  paydayStatus: document.getElementById('paydayStatus'),
+  clearPayday: document.getElementById('clearPayday'),
   publicHolidayEnabled: document.getElementById('publicHolidayEnabled'),
   statusToggle: document.getElementById('statusToggle'),
   resetTodayActivity: document.getElementById('resetTodayActivity'),
@@ -132,6 +135,10 @@ function bind() {
   bindControl('salaryType', 'change', (el) => ({ salaryType: el.value }))
   bindControl('salaryAmount', 'input', (el) => ({ salaryAmount: Number(el.value) }))
   bindControl('currency', 'change', (el) => ({ currency: el.value }))
+  bindControl('lastPaydayDate', 'change', (el) => ({ lastPaydayDate: el.value || '' }))
+  els.clearPayday?.addEventListener('click', () => {
+    setPatch({ lastPaydayDate: '' })
+  })
   bindControl('publicHolidayEnabled', 'change', (el) => ({ publicHolidayEnabled: Boolean(el.checked) }))
   els.statusToggle.addEventListener('click', () => {
     vscode.postMessage({ type: 'toggleStatusBar' })
@@ -163,8 +170,18 @@ function applySnapshot(snapshot) {
   els.salaryType.value = snapshot.settings.salaryType || 'hourly'
   els.salaryAmount.value = String(snapshot.settings.salaryAmount ?? 0)
   els.currency.value = String(snapshot.settings.currency || 'AUD').toUpperCase()
+  if (els.lastPaydayDate) els.lastPaydayDate.value = snapshot.settings.lastPaydayDate || ''
   if (els.publicHolidayEnabled) els.publicHolidayEnabled.checked = snapshot.settings.publicHolidayEnabled !== false
   renderWorkDays(snapshot.settings.workDays || [])
+
+  if (els.paydayStatus) {
+    const value = snapshot.settings.lastPaydayDate
+    els.paydayStatus.textContent = value ? `Calibrated: ${value}` : 'Not calibrated'
+  }
+  if (els.clearPayday) {
+    const value = snapshot.settings.lastPaydayDate
+    els.clearPayday.disabled = !value
+  }
 
   const currencySymbol = currencyToSymbol(snapshot.settings.currency)
   const earnedText = Number.isFinite(snapshot.earned) ? snapshot.earned.toFixed(2) : '0.00'
