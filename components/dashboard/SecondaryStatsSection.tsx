@@ -1,5 +1,4 @@
 import React from 'react'
-import PublicHolidayCard from '../PublicHolidayCard'
 import PayCycleProgress from './PayCycleProgress'
 import StatusMetricCard from './StatusMetricCard'
 
@@ -36,7 +35,6 @@ export default function SecondaryStatsSection({
       {typeof cycleProgress === 'number' ? <PayCycleProgress percent={cycleProgress} /> : null}
       <StatusMetricCard label="本周收入" value={format.format(weekEarned)} />
       <CycleMetric label={cycleLabel} value={cycleEarned} format={format} />
-      <PublicHolidayCard />
     </section>
   )
 }

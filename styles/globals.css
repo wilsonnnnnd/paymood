@@ -714,7 +714,8 @@ select {
   .hud-ring-wrap::after,
   .hud-disc-aura,
   .hud-disc-plate,
-  .hud-ring-ticks {
+  .hud-ring-ticks,
+  .hud-state-orbit {
     animation: none;
   }
 
@@ -828,19 +829,21 @@ select {
 }
 
 .hud-title {
-  font-size: 0.66rem;
-  letter-spacing: 0.2em;
+  font-size: 0.72rem;
+  font-weight: 780;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--muted);
-  opacity: 0.82;
+  color: var(--text);
+  opacity: 0.9;
 }
 
 .hud-subtitle {
-  display: none;
+  display: block;
   font-size: 0.82rem;
   letter-spacing: 0.02em;
   color: var(--muted);
   font-family: var(--font-mono);
+  opacity: 0.68;
 }
 
 .hud-mood {
@@ -914,16 +917,22 @@ select {
   padding: 2px 6px 0;
 }
 
+.hud-main--workday {
+  gap: 13px;
+}
+
 .hud-rest {
-  min-height: 520px;
+  min-height: 460px;
   justify-content: center;
 }
 
 .hud-rest-panel {
+  position: relative;
+  isolation: isolate;
   width: min(520px, 100%);
   border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 78%, transparent);
   border-radius: 24px;
-  padding: 26px 22px;
+  padding: 34px 22px 28px;
   background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--ring-ink) 10%, transparent), transparent 52%),
     linear-gradient(
       155deg,
@@ -935,6 +944,40 @@ select {
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   text-align: center;
+  overflow: hidden;
+}
+
+.hud-state-orbit {
+  position: relative;
+  width: 98px;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 18px;
+  border-radius: 999px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--hud-orbit-base) 86%, transparent) 0 38%, transparent 39%),
+    radial-gradient(circle, transparent 58%, color-mix(in srgb, var(--ring-ink) 22%, transparent) 59% 61%, transparent 62%),
+    radial-gradient(circle, var(--glow-ring), transparent 70%);
+  border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 78%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 18%, transparent),
+    0 18px 44px color-mix(in srgb, var(--ring-ink) 13%, transparent);
+  animation: hudOrbitBreath 7.4s var(--ease) infinite;
+}
+
+.hud-state-orbit span {
+  width: 34%;
+  aspect-ratio: 1 / 1;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ring-ink) 68%, var(--surface-floating));
+  box-shadow: 0 0 24px color-mix(in srgb, var(--ring-ink) 34%, transparent);
+}
+
+.hud-state-orbit--setup span {
+  opacity: 0.72;
+}
+
+.hud-state-orbit--rest {
+  opacity: 0.82;
 }
 
 .hud-rest-title {
@@ -1036,8 +1079,10 @@ select {
 }
 
 .hud-wrap-up-card {
+  position: relative;
+  isolation: isolate;
   width: min(560px, 100%);
-  padding: 24px;
+  padding: 30px 24px 24px;
   border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 72%, transparent);
   border-radius: 24px;
   background: color-mix(in srgb, var(--hud-control) 70%, var(--surface-base));
@@ -1045,6 +1090,7 @@ select {
     0 18px 48px color-mix(in srgb, var(--ring-ink) 8%, transparent);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
+  overflow: hidden;
 }
 
 .hud-wrap-up-copy {
@@ -1263,7 +1309,7 @@ select {
 
 .hud-center {
   position: absolute;
-  inset: 22%;
+  inset: 20%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1291,7 +1337,7 @@ select {
   display: flex;
   align-items: baseline;
   justify-content: center;
-  gap: 10px;
+  gap: 7px;
 }
 
 .hud-center-label {
@@ -1307,7 +1353,7 @@ select {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
   font-weight: 740;
-  font-size: clamp(3.2rem, 7.2vw, 5.35rem);
+  font-size: clamp(2.35rem, 4.2vw, 3.2rem);
   letter-spacing: 0;
   line-height: 1;
   color: var(--text);
@@ -1373,7 +1419,7 @@ select {
 .hud-currency-symbol {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 1.6rem;
+  font-size: 1.05rem;
   line-height: 1;
   color: var(--muted);
   width: 2ch;
@@ -1389,10 +1435,10 @@ select {
 }
 
 .hud-core-status {
-  width: min(640px, 100%);
+  width: min(610px, 100%);
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  gap: 8px;
 }
 
 .hud-metrics {
@@ -1489,21 +1535,29 @@ select {
 }
 
 .hud-secondary-stats {
-  width: min(560px, 100%);
-  margin-top: 6px;
-  border-color: color-mix(in srgb, var(--hud-deck-edge) 46%, transparent);
-  background: color-mix(in srgb, var(--hud-control) 36%, transparent);
-  box-shadow: inset 0 1px 0 color-mix(in srgb, white 8%, transparent);
+  width: min(520px, 100%);
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 4px;
+  margin-top: 0;
+  padding: 4px;
+  border-radius: 20px;
+  border-color: color-mix(in srgb, var(--hud-deck-edge) 34%, transparent);
+  background: color-mix(in srgb, var(--hud-control) 22%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 5%, transparent);
+  opacity: 0.84;
 }
 
 .hud-secondary-stats .hud-metric {
-  min-height: 50px;
-  border-color: color-mix(in srgb, var(--hud-deck-edge) 42%, transparent);
-  background: color-mix(in srgb, var(--hud-control) 48%, transparent);
+  min-height: 42px;
+  padding: 9px 10px;
+  border-color: transparent;
+  border-radius: 15px;
+  background: transparent;
   box-shadow: none;
 }
 
-.hud-secondary-stats .hud-metric:hover {
+.hud-secondary-stats .hud-metric:hover,
+.hud-secondary-stats .hud-metric--cycle:focus-visible {
   transform: none;
   border-color: color-mix(in srgb, var(--hud-deck-edge) 52%, transparent);
   background: color-mix(in srgb, var(--hud-control) 56%, transparent);
@@ -1511,12 +1565,12 @@ select {
 }
 
 .hud-secondary-stats .hud-metric-label {
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
 }
 
 .hud-secondary-stats .hud-metric-value {
-  font-size: 0.96rem;
+  font-size: 0.9rem;
 }
 
 .hud-cycle-progress {
@@ -1685,8 +1739,8 @@ select {
 }
 
 .hud-secondary-stats .hud-metric--cycle {
-  border-color: color-mix(in srgb, var(--hud-deck-edge) 46%, transparent);
-  background: color-mix(in srgb, var(--hud-control) 48%, transparent);
+  border-color: transparent;
+  background: transparent;
 }
 
 .hud-secondary-stats .hud-metric--cycle .hud-metric-label {
@@ -2024,10 +2078,86 @@ fieldset.hud-control {
   }
 
   .hud-shell {
-    padding: 22px 16px 18px;
+    padding: 20px 14px 16px;
     border-radius: 28px;
     min-height: calc(100svh - 36px);
     justify-content: center;
+  }
+
+  .hud-ring-wrap {
+    --ring-tick-radius: min(176px, 40vw);
+    width: min(360px, 100%);
+  }
+
+  .hud-core-status {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    margin-inline: 0;
+    gap: 7px;
+    padding: 1px 4px 4px;
+  }
+
+  .hud-core-status .hud-status-card {
+    min-width: 0;
+  }
+
+  .hud-core-status .hud-status-card:nth-child(3) {
+    grid-column: 1 / -1;
+    min-height: 54px;
+  }
+
+  .hud-secondary-stats {
+    width: 100%;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 0;
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+    opacity: 0.82;
+  }
+
+  .hud-secondary-stats .hud-cycle-progress {
+    grid-column: auto;
+    padding-bottom: 9px;
+  }
+
+  .hud-secondary-stats .hud-metric {
+    min-height: 44px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 12px;
+    border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 34%, transparent);
+    border-radius: 15px;
+    background: color-mix(in srgb, var(--hud-control) 26%, transparent);
+  }
+
+  .hud-secondary-stats .hud-metric-copy {
+    gap: 3px;
+  }
+
+  .hud-secondary-stats .hud-metric-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+  }
+
+  .hud-secondary-stats .hud-metric-subtitle {
+    font-size: 0.62rem;
+  }
+
+  .hud-secondary-stats .hud-metric-value {
+    font-size: 0.92rem;
+    text-align: right;
+  }
+
+  .hud-secondary-stats .hud-cycle-progress-bar {
+    position: static;
+    grid-column: 1 / -1;
+    width: 100%;
+    margin-top: 1px;
   }
 
   .hud-controls {
@@ -2049,7 +2179,7 @@ fieldset.hud-control {
   }
 
   .hud-shell {
-    padding: 18px 12px 14px;
+    padding: 14px 10px 12px;
     border-radius: 24px;
   }
 
@@ -2066,27 +2196,31 @@ fieldset.hud-control {
   }
 
   .hud-header {
-    gap: 6px;
-    padding: 42px 4px 0;
+    gap: 4px;
+    padding: 38px 4px 0;
   }
 
   .hud-title {
-    font-size: 0.66rem;
-    letter-spacing: 0.18em;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+  }
+
+  .hud-subtitle {
+    font-size: 0.72rem;
   }
 
   .hud-mood {
-    font-size: 0.92rem;
+    font-size: 0.86rem;
+  }
+
+  .hud-live-status {
+    padding: 4px 8px;
+    font-size: 0.66rem;
   }
 
   .hud-main {
-    gap: 10px;
-    padding: 4px 4px 0;
-  }
-
-  .hud-core-status {
-    grid-template-columns: 1fr;
     gap: 8px;
+    padding: 4px 4px 0;
   }
 
   .hud-wrap-up {
@@ -2118,25 +2252,25 @@ fieldset.hud-control {
   }
 
   .hud-ring-wrap {
-    --ring-tick-radius: min(156px, 40vw);
-    width: min(320px, 100%);
+    --ring-tick-radius: min(136px, 37vw);
+    width: min(286px, 100%);
   }
 
   .hud-center {
-    inset: 20%;
-    gap: 10px;
+    inset: 19%;
+    gap: 9px;
   }
 
   .hud-amount-line {
-    gap: 8px;
+    gap: 6px;
   }
 
   .hud-currency-symbol {
-    font-size: 1.3rem;
+    font-size: 0.88rem;
   }
 
   .hud-amount {
-    font-size: clamp(2.25rem, 10vw, 3.35rem);
+    font-size: clamp(1.68rem, 6.8vw, 2.18rem);
   }
 
   .hud-percent {
@@ -2149,8 +2283,12 @@ fieldset.hud-control {
     padding: 5px;
   }
 
+  .hud-secondary-stats {
+    gap: 6px;
+  }
+
   .hud-progress-rail {
-    width: min(210px, 70%);
+    width: min(190px, 68%);
   }
 
   .hud-metric {
@@ -2160,7 +2298,11 @@ fieldset.hud-control {
   }
 
   .hud-status-card {
-    min-height: 68px;
+    min-height: 62px;
+  }
+
+  .hud-status-card .hud-metric-value {
+    font-size: 0.96rem;
   }
 
   .hud-metric-label {

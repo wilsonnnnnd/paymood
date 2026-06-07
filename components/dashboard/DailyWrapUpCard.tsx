@@ -11,9 +11,12 @@ export default function DailyWrapUpCard({
 }) {
   return (
     <section className="hud-wrap-up-card" aria-label="今日收工总结">
+      <div className="hud-state-orbit hud-state-orbit--wrap" aria-hidden="true">
+        <span />
+      </div>
       <div className="hud-wrap-up-copy">
         <span className="hud-wrap-up-kicker">今天已收工</span>
-        <h2>今天收工啦 🎉</h2>
+        <h2>今天收工啦</h2>
         <p>明天继续。</p>
       </div>
 

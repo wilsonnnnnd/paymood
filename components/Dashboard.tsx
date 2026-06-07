@@ -282,6 +282,9 @@ export default function Dashboard({
       {!hasPaySetup ? (
         <div className="hud-main hud-rest" aria-label="开始设置">
           <div className="hud-rest-panel hud-onboarding-panel">
+            <div className="hud-state-orbit hud-state-orbit--setup" aria-hidden="true">
+              <span />
+            </div>
             <div className="hud-rest-title">先设置你的薪资。</div>
             <div className="hud-rest-sub">PayMood 会只在本机保存，用它计算今天的进度和已赚收入。</div>
             <Link className="hud-primary-link" href="/settings">
@@ -292,6 +295,9 @@ export default function Dashboard({
       ) : !isWorkDay ? (
         <div className="hud-main hud-rest" aria-label="休息日">
           <div className="hud-rest-panel">
+            <div className="hud-state-orbit hud-state-orbit--rest" aria-hidden="true">
+              <span />
+            </div>
             <div className="hud-rest-title">今天就先休息。</div>
             <div className="hud-rest-sub">
               {nextWorkStart
@@ -336,7 +342,7 @@ export default function Dashboard({
           />
         </div>
       ) : (
-        <div className="hud-main">
+        <div className="hud-main hud-main--workday">
           <TodayEarningsHero
             earned={earned}
             percent={percent}

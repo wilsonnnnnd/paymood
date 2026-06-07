@@ -1,3 +1,5 @@
+// @vitest-environment jsdom
+
 import { beforeEach, describe, expect, it } from 'vitest'
 import { defaultSettings, sanitizeSettings } from '../lib/settingsModel'
 import { readSettingsFromStorage, writeSettingsToStorage } from '../hooks/useSettings'
