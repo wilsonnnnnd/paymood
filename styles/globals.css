@@ -772,20 +772,8 @@ select {
 }
 
 @layer utilities {
-  .bg-background {
-    background: linear-gradient(180deg, var(--bg0), var(--bg1));
-  }
-
-  .bg-card {
-    background: var(--surface-strong);
-  }
-
   .bg-overlay {
     background: var(--overlay);
-  }
-
-  .border-border {
-    border-color: var(--border);
   }
 
   .text-primary {
@@ -794,10 +782,6 @@ select {
 
   .text-secondary {
     color: var(--muted);
-  }
-
-  .ring-ring {
-    --tw-ring-color: var(--focus);
   }
 
   .cm-overlay-in {
@@ -1807,14 +1791,6 @@ select {
   color: var(--text);
 }
 
-.hud-controls {
-  margin-top: 2px;
-  padding: 18px 6px 0;
-  border-top: 1px solid var(--border);
-  position: relative;
-  z-index: 1;
-}
-
 .hud-footnote {
   margin-top: 14px;
   font-size: 0.78rem;
@@ -1837,239 +1813,6 @@ select {
 
 .adsense-slot--bottom {
   display: none;
-}
-
-.hud-controls-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.hud-control {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-width: 0;
-}
-
-fieldset.hud-control {
-  border: 0;
-  padding: 0;
-  margin: 0;
-  min-width: 0;
-}
-
-.hud-control legend.hud-control-label {
-  padding: 0;
-  margin: 0 0 8px;
-}
-
-.settings-metric-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.settings-metric {
-  padding: 14px 16px;
-}
-
-.settings-metric-control {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 10px;
-  min-width: 160px;
-}
-
-.settings-metric-control .hud-control-input {
-  width: 100%;
-  min-width: 160px;
-}
-
-.settings-metric-control .hud-sensitive.hud-control-input {
-  width: 100%;
-  min-width: 220px;
-}
-
-.settings-metric-value {
-  font-variant-numeric: tabular-nums;
-  color: var(--muted);
-}
-
-.hud-control-wide {
-  grid-column: 1 / -1;
-}
-
-.hud-weekdays {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.hud-weekday {
-  min-height: 40px;
-  border: 1px solid var(--s-line-ghost);
-  border-radius: 14px;
-  background: var(--s-ctrl-bg);
-  color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 0.76rem;
-  letter-spacing: 0.08em;
-  cursor: pointer;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  transition: border-color var(--s-dur) var(--s-ease), background var(--s-dur) var(--s-ease),
-    box-shadow var(--s-dur) var(--s-ease), color var(--s-dur) var(--s-ease);
-}
-
-.hud-weekday[aria-pressed='true'] {
-  border-color: var(--border-active);
-  color: var(--text);
-  background: var(--state-active);
-  box-shadow: 0 0 0 1px var(--border-active), 0 14px 32px var(--glow-accent);
-}
-
-.hud-weekday:focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 2px;
-}
-
-.hud-locked-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: 44px;
-  border: 1px solid var(--s-line-ghost);
-  border-radius: 16px;
-  padding: 0 12px;
-  background: var(--s-ctrl-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-
-.hud-locked-text {
-  font-family: var(--font-mono);
-  font-size: 0.86rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-  background: var(--accent-glow);
-  border-radius: 999px;
-  padding: 6px 10px;
-}
-
-:root[data-color-mode='light'] .hud-locked-text {
-  color: rgba(15, 23, 42, 0.52);
-  background: rgba(15, 23, 42, 0.06);
-}
-
-:root[data-color-mode='light'] .hud-weekday:not([aria-pressed='true']) {
-  color: rgba(15, 23, 42, 0.42);
-  background: rgba(15, 23, 42, 0.035);
-  border-color: rgba(15, 23, 42, 0.08);
-}
-
-.hud-reset {
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 8px 12px;
-  background: transparent;
-  color: var(--muted);
-  cursor: pointer;
-  font-family: var(--font-mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.hud-reset:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.hud-reset:focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 2px;
-}
-
-.hud-control-label {
-  font-size: 0.66rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.hud-control-input {
-  width: 100%;
-  min-height: 44px;
-  border: 1px solid var(--s-line-ghost);
-  border-radius: 14px;
-  padding: 0 12px;
-  outline: none;
-  background: var(--s-ctrl-bg);
-  color: var(--text);
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  transition: transform var(--s-dur) var(--s-ease), border-color var(--s-dur) var(--s-ease),
-    background var(--s-dur) var(--s-ease), box-shadow var(--s-dur) var(--s-ease);
-}
-
-.hud-control-input:hover {
-  border-color: var(--s-line);
-  background: var(--s-ctrl-hover);
-}
-
-.hud-control-input:focus {
-  transform: translate3d(0, -1px, 0);
-  border-color: var(--s-line-active);
-  background: var(--s-ctrl-focus);
-  box-shadow: 0 0 0 3px var(--s-glow-focus), 0 12px 36px var(--s-glow-ambient), inset 0 1px 0 rgba(255, 255, 255, 0.032);
-}
-
-.hud-sensitive {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding-right: 72px;
-}
-
-.hud-control-input-inner {
-  width: 100%;
-  border: 0;
-  outline: none;
-  background: transparent;
-  color: inherit;
-  font-family: inherit;
-  font-variant-numeric: inherit;
-}
-
-.hud-privacy-toggle {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  min-width: 56px;
-  min-height: 30px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--surface);
-  color: var(--muted);
-  cursor: pointer;
-  font-family: var(--font-mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-.hud-privacy-toggle:focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 2px;
 }
 
 @media (max-width: 680px) {
@@ -2160,17 +1903,6 @@ fieldset.hud-control {
     margin-top: 1px;
   }
 
-  .hud-controls {
-    padding: 16px 2px 0;
-  }
-
-  .hud-controls-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .hud-weekdays {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
 }
 
 @media (max-width: 420px) {
@@ -2317,47 +2049,6 @@ fieldset.hud-control {
     font-size: 1rem;
   }
 
-  .hud-controls {
-    padding: 14px 0 0;
-  }
-
-  .settings-metric {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-
-  .settings-metric-control {
-    justify-content: flex-start;
-    min-width: 0;
-  }
-
-  .settings-metric-control .hud-control-input {
-    min-width: 0;
-  }
-
-  .settings-metric-control .hud-sensitive.hud-control-input {
-    min-width: 0;
-  }
-
-  .hud-sensitive {
-    padding-right: 66px;
-  }
-
-  .hud-privacy-toggle {
-    right: 8px;
-    min-width: 52px;
-  }
-
-  .hud-weekdays {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
-  }
-
-  .hud-weekday {
-    min-height: 42px;
-    border-radius: 14px;
-  }
 }
 
 /* ── SETTINGS COMPONENT TOKENS ─────────────────────────────────────────────
@@ -2497,40 +2188,6 @@ fieldset.hud-control {
   display: flex;
   flex-direction: column;
   gap: clamp(14px, 2.2vw, 20px);
-}
-
-.settings-overview {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.settings-overview > div {
-  min-width: 0;
-  border: 1px solid var(--s-line-ghost);
-  border-radius: 18px;
-  background: var(--s-section-quiet);
-  padding: 13px 14px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-
-.settings-overview span {
-  display: block;
-  color: var(--s-muted);
-  font-size: 0.66rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.settings-overview strong {
-  display: block;
-  margin-top: 7px;
-  color: var(--s-text);
-  font-size: 0.82rem;
-  font-weight: 520;
-  line-height: 1.35;
-  overflow-wrap: anywhere;
 }
 
 /* ── SECTION ──────────────────────────────────────────────────────────────── */
@@ -3051,15 +2708,6 @@ fieldset.hud-control {
   .setting-section {
     border-radius: 20px;
     padding: 16px;
-  }
-
-  .settings-overview {
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-
-  .settings-overview > div {
-    padding: 12px 13px;
   }
 
   .setting-row {
