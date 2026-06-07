@@ -16,10 +16,10 @@ type LegalPageProps = {
 }
 
 const siteLinks = [
-  { href: '/about', label: 'About' },
-  { href: '/privacy', label: 'Privacy' },
-  { href: '/terms', label: 'Terms' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/about', label: '关于' },
+  { href: '/privacy', label: '隐私' },
+  { href: '/terms', label: '条款' },
+  { href: '/contact', label: '联系' },
 ]
 
 export default function LegalPage({ eyebrow = 'PayMood', title, subtitle, ariaLabel, sections }: LegalPageProps) {

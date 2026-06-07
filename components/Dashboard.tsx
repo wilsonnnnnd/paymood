@@ -360,6 +360,17 @@ export default function Dashboard({
           />
         </div>
       )}
+      <section className="hud-info-panel" aria-label="关于 PayMood">
+        <h2>PayMood 如何工作</h2>
+        <p>
+          PayMood 会把你的工作时间和薪资设置，转换成今天进度、剩余时间和预估已赚收入的安静视图。
+        </p>
+        <ul>
+          <li>你的工作时间、货币、主题和薪资偏好会保存在本机浏览器存储中。</li>
+          <li>PayMood 不需要账号、工资单上传、银行信息或雇主记录。</li>
+          <li>PayMood 不是 payroll 软件、税务建议、财务建议，也不是正式工资记录。</li>
+        </ul>
+      </section>
       <footer className="hud-footnote" aria-label="Site information">
         <Link href="/about">关于</Link> <Link href="/privacy">隐私</Link> <Link href="/terms">条款</Link>{' '}
         <Link href="/contact">联系</Link>

@@ -53,4 +53,15 @@ describe('Dashboard UI', () => {
     expect(screen.getAllByText('本月').length).toBeGreaterThan(0)
     expect(screen.queryByText('下次法定节假日')).toBeNull()
   })
+
+  it('shows localized public product context for first-time visitors and crawlers', async () => {
+    render(<Dashboard adsenseEnabled={false} />)
+    act(() => {
+      vi.runOnlyPendingTimers()
+    })
+
+    expect(screen.getByText('PayMood 如何工作')).toBeTruthy()
+    expect(screen.getByText(/本机浏览器存储/)).toBeTruthy()
+    expect(screen.getByText(/不是 payroll 软件/)).toBeTruthy()
+  })
 })

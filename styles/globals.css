@@ -1799,6 +1799,40 @@ select {
   text-align: center;
 }
 
+.hud-info-panel {
+  position: relative;
+  z-index: 1;
+  width: min(640px, 100%);
+  margin: 18px auto 0;
+  padding-top: 18px;
+  border-top: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  color: var(--muted);
+  text-align: left;
+}
+
+.hud-info-panel h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.hud-info-panel p,
+.hud-info-panel ul {
+  margin: 8px 0 0;
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.hud-info-panel ul {
+  padding-left: 1.1rem;
+}
+
+.hud-info-panel li + li {
+  margin-top: 4px;
+}
+
 .adsense-slot {
   width: 100%;
   min-height: 90px;
@@ -1863,7 +1897,9 @@ select {
 
   .hud-secondary-stats .hud-cycle-progress {
     grid-column: auto;
-    padding-bottom: 9px;
+    align-items: start;
+    row-gap: 6px;
+    padding-bottom: 10px;
   }
 
   .hud-secondary-stats .hud-metric {
@@ -1900,7 +1936,7 @@ select {
     position: static;
     grid-column: 1 / -1;
     width: 100%;
-    margin-top: 1px;
+    margin-top: 0;
   }
 
 }

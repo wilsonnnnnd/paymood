@@ -1,7 +1,6 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-
-const ADS_COOKIE = 'pm_ads'
+import { adRegionCookieForCountry, ADS_REGION_COOKIE } from './lib/ads'
 
 function geoCountryFor(request: NextRequest) {
   const header = request.headers.get('x-vercel-ip-country')
@@ -11,12 +10,11 @@ function geoCountryFor(request: NextRequest) {
 
 export function proxy(request: NextRequest) {
   const country = geoCountryFor(request)
-  const existing = request.cookies.get(ADS_COOKIE)?.value
-  const nextValue = country === 'CN' ? 'off' : existing ?? 'on'
+  const nextValue = adRegionCookieForCountry(country)
 
   const response = NextResponse.next()
   const secure = request.nextUrl.protocol === 'https:'
-  response.cookies.set(ADS_COOKIE, nextValue, {
+  response.cookies.set(ADS_REGION_COOKIE, nextValue, {
     path: '/',
     sameSite: 'lax',
     secure,
