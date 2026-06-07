@@ -823,26 +823,28 @@ select {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 8px 6px 0;
+  gap: 6px;
+  padding: 2px 6px 0;
 }
 
 .hud-title {
-  font-size: 0.74rem;
-  letter-spacing: 0.22em;
+  font-size: 0.66rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--muted);
+  opacity: 0.82;
 }
 
 .hud-subtitle {
-  font-size: 0.9rem;
+  display: none;
+  font-size: 0.82rem;
   letter-spacing: 0.02em;
   color: var(--muted);
   font-family: var(--font-mono);
 }
 
 .hud-mood {
-  font-size: 1.02rem;
+  font-size: 0.96rem;
   line-height: 1.35;
   font-weight: 600;
   color: var(--text);
@@ -871,12 +873,12 @@ select {
 }
 
 .hud-live-status {
-  padding: 7px 11px;
+  padding: 5px 9px;
 }
 
 .hud-progress-rail {
-  width: min(280px, 72%);
-  height: 6px;
+  width: min(240px, 64%);
+  height: 5px;
   padding: 1px;
   border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 74%, transparent);
   border-radius: 999px;
@@ -908,8 +910,8 @@ select {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  padding: 6px 6px 0;
+  gap: 16px;
+  padding: 2px 6px 0;
 }
 
 .hud-rest {
@@ -1028,9 +1030,96 @@ select {
   text-transform: uppercase;
 }
 
+.hud-wrap-up {
+  min-height: 420px;
+  justify-content: center;
+}
+
+.hud-wrap-up-card {
+  width: min(560px, 100%);
+  padding: 24px;
+  border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 72%, transparent);
+  border-radius: 24px;
+  background: color-mix(in srgb, var(--hud-control) 70%, var(--surface-base));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 12%, transparent),
+    0 18px 48px color-mix(in srgb, var(--ring-ink) 8%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.hud-wrap-up-copy {
+  text-align: center;
+}
+
+.hud-wrap-up-kicker {
+  display: inline-flex;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.16em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.hud-wrap-up-copy h2 {
+  margin: 8px 0 0;
+  color: var(--text);
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  font-weight: 720;
+  letter-spacing: 0;
+}
+
+.hud-wrap-up-copy p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.hud-wrap-up-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.hud-wrap-up-metrics div {
+  min-width: 0;
+  padding: 14px 12px;
+  border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 56%, transparent);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--hud-control) 58%, transparent);
+  text-align: center;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 10%, transparent);
+}
+
+.hud-wrap-up-metrics span,
+.hud-wrap-up-metrics strong {
+  display: block;
+}
+
+.hud-wrap-up-metrics span {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.hud-wrap-up-metrics strong {
+  margin-top: 8px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 680;
+  line-height: 1.2;
+}
+
 .hud-ring-wrap {
-  --ring-tick-radius: 222px;
-  width: min(480px, 100%);
+  --ring-tick-radius: 194px;
+  width: min(420px, 100%);
   aspect-ratio: 1 / 1;
   position: relative;
   display: grid;
@@ -1205,6 +1294,15 @@ select {
   gap: 10px;
 }
 
+.hud-center-label {
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
 .hud-amount {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
@@ -1290,6 +1388,13 @@ select {
   color: var(--muted);
 }
 
+.hud-core-status {
+  width: min(640px, 100%);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
 .hud-metrics {
   width: min(480px, 100%);
   display: grid;
@@ -1340,6 +1445,105 @@ select {
   );
   box-shadow: inset 0 1px 0 color-mix(in srgb, white 14%, transparent),
     0 12px 30px color-mix(in srgb, var(--ring-ink) 10%, transparent);
+}
+
+.hud-status-card {
+  min-height: 76px;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.hud-status-card .hud-metric-value {
+  font-size: 1.12rem;
+  font-weight: 680;
+}
+
+.hud-status-card-meta {
+  display: flex;
+  min-width: 0;
+  width: 100%;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.hud-status-card-meta strong {
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.96rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 680;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.hud-status-card--emphasis {
+  border-color: color-mix(in srgb, var(--ring-ink) 24%, var(--hud-deck-edge));
+}
+
+.hud-secondary-stats {
+  width: min(560px, 100%);
+  margin-top: 6px;
+  border-color: color-mix(in srgb, var(--hud-deck-edge) 46%, transparent);
+  background: color-mix(in srgb, var(--hud-control) 36%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 8%, transparent);
+}
+
+.hud-secondary-stats .hud-metric {
+  min-height: 50px;
+  border-color: color-mix(in srgb, var(--hud-deck-edge) 42%, transparent);
+  background: color-mix(in srgb, var(--hud-control) 48%, transparent);
+  box-shadow: none;
+}
+
+.hud-secondary-stats .hud-metric:hover {
+  transform: none;
+  border-color: color-mix(in srgb, var(--hud-deck-edge) 52%, transparent);
+  background: color-mix(in srgb, var(--hud-control) 56%, transparent);
+  box-shadow: none;
+}
+
+.hud-secondary-stats .hud-metric-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+}
+
+.hud-secondary-stats .hud-metric-value {
+  font-size: 0.96rem;
+}
+
+.hud-cycle-progress {
+  position: relative;
+  padding-bottom: 18px;
+}
+
+.hud-cycle-progress-bar {
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  bottom: 9px;
+  height: 5px;
+  padding: 1px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hud-deck-edge) 30%, transparent);
+  overflow: hidden;
+}
+
+.hud-cycle-progress-bar span {
+  display: block;
+  height: 100%;
+  min-width: 5px;
+  max-width: 100%;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--ring-ink) 58%, var(--accent));
+  transition: width 480ms var(--ease);
 }
 
 .hud-metric--holiday {
@@ -1478,6 +1682,21 @@ select {
 .hud-metric--cycle .hud-metric-value {
   font-size: 1.12rem;
   font-weight: 650;
+}
+
+.hud-secondary-stats .hud-metric--cycle {
+  border-color: color-mix(in srgb, var(--hud-deck-edge) 46%, transparent);
+  background: color-mix(in srgb, var(--hud-control) 48%, transparent);
+}
+
+.hud-secondary-stats .hud-metric--cycle .hud-metric-label {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.hud-secondary-stats .hud-metric--cycle .hud-metric-value {
+  font-size: 0.98rem;
+  font-weight: 620;
 }
 
 .hud-metric-tip {
@@ -1847,27 +2066,60 @@ fieldset.hud-control {
   }
 
   .hud-header {
-    gap: 8px;
-    padding: 46px 4px 0;
+    gap: 6px;
+    padding: 42px 4px 0;
   }
 
   .hud-title {
-    font-size: 0.7rem;
+    font-size: 0.66rem;
     letter-spacing: 0.18em;
   }
 
   .hud-mood {
-    font-size: 0.98rem;
+    font-size: 0.92rem;
   }
 
   .hud-main {
-    gap: 12px;
+    gap: 10px;
     padding: 4px 4px 0;
   }
 
+  .hud-core-status {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .hud-wrap-up {
+    min-height: 360px;
+  }
+
+  .hud-wrap-up-card {
+    padding: 20px 16px;
+    border-radius: 20px;
+  }
+
+  .hud-wrap-up-metrics {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .hud-wrap-up-metrics div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    text-align: left;
+  }
+
+  .hud-wrap-up-metrics strong {
+    margin-top: 0;
+    text-align: right;
+  }
+
   .hud-ring-wrap {
-    --ring-tick-radius: min(178px, 45vw);
-    width: min(360px, 100%);
+    --ring-tick-radius: min(156px, 40vw);
+    width: min(320px, 100%);
   }
 
   .hud-center {
@@ -1884,7 +2136,7 @@ fieldset.hud-control {
   }
 
   .hud-amount {
-    font-size: clamp(2.45rem, 11vw, 3.8rem);
+    font-size: clamp(2.25rem, 10vw, 3.35rem);
   }
 
   .hud-percent {
@@ -1898,13 +2150,17 @@ fieldset.hud-control {
   }
 
   .hud-progress-rail {
-    width: min(230px, 74%);
+    width: min(210px, 70%);
   }
 
   .hud-metric {
     min-height: 50px;
     padding: 10px 11px;
     border-radius: 14px;
+  }
+
+  .hud-status-card {
+    min-height: 68px;
   }
 
   .hud-metric-label {

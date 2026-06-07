@@ -1,28 +1,22 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useSettings } from '../hooks/useSettings'
 import type { Settings } from '../hooks/useSettings'
-import { salaryBoundsByType } from '../lib/settings'
+import { normalizeSalaryToHourly } from '../lib/earnings'
+import { salaryBoundsByType, currencySymbols } from '../lib/settings'
 import { formatLocalDate, paydayDayFromDate, validateLastPaydayDate } from '../lib/payCycle'
 import { trackEvent } from '../lib/analytics'
 import ConfirmModal from './ui/ConfirmModal'
 import {
-  SettingAction,
-  SettingDescription,
-  SettingGroup,
-  SettingInput,
-  SettingRow,
-  SettingSection,
-  SettingSelect,
-  SettingTimeInput,
-  SettingToggle,
+  AdvancedSection,
+  DisplaySection,
+  PayCycleSection,
+  QuickSetupSection,
+  type SalaryTypeOption,
+  type WeekdayChoice,
 } from './settings'
 
-import slime1Idle from '../craftpix/PNG/Slime1/With_shadow/Slime1_Idle_with_shadow.png'
-import slime2Idle from '../craftpix/PNG/Slime2/With_shadow/Slime2_Idle_with_shadow.png'
-import slime3Idle from '../craftpix/PNG/Slime3/With_shadow/Slime3_Idle_with_shadow.png'
-
-const salaryTypeOptions: Array<{ value: Settings['salaryType']; label: string }> = [
+const salaryTypeOptions: SalaryTypeOption[] = [
   { value: 'hourly', label: '时薪' },
   { value: 'daily', label: '日薪' },
   { value: 'weekly', label: '周薪' },
@@ -31,25 +25,19 @@ const salaryTypeOptions: Array<{ value: Settings['salaryType']; label: string }>
   { value: 'annually', label: '年薪' },
 ]
 
-function PetIcon({ sheet }: { sheet: { height: number; width: number; src: string } }) {
-  const rowCount = 4
-  const frameSize = Math.floor(sheet.height / rowCount)
-  const size = 40
-  const scale = size / frameSize
-  return (
-    <span
-      aria-hidden="true"
-      className="block"
-      style={{
-        width: size,
-        height: size,
-        backgroundImage: `url(${sheet.src})`,
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: `${sheet.width * scale}px ${sheet.height * scale}px`,
-        backgroundPosition: '0px 0px',
-      }}
-    />
-  )
+const weekdayChoices: WeekdayChoice[] = [
+  { label: '一', value: 1 },
+  { label: '二', value: 2 },
+  { label: '三', value: 3 },
+  { label: '四', value: 4 },
+  { label: '五', value: 5 },
+  { label: '六', value: 6 },
+  { label: '日', value: 0 },
+]
+
+function getCurrencySymbol(code: Settings['currency']) {
+  const normalized = (code ?? 'AUD').toUpperCase() as keyof typeof currencySymbols
+  return currencySymbols[normalized] ?? '$'
 }
 
 export default function SettingsForm() {
@@ -71,8 +59,18 @@ export default function SettingsForm() {
   const activeSalaryBounds = salaryBoundsByType[salaryTypeDraft]
   const salaryDraftValid =
     Number.isFinite(salaryAmountNumber) && salaryAmountNumber > 0 && salaryAmountNumber <= activeSalaryBounds.max
+  const workDaysPerWeek = workDays.length ? workDays.length : 5
 
-  const paydayStatusLabel = settings.lastPaydayDate ? `已校准：${settings.lastPaydayDate}` : '未校准'
+  const paydayStatusLabel = settings.lastPaydayDate ? `已设置：${settings.lastPaydayDate}` : '未设置'
+
+  const estimatedHourly = useMemo(() => {
+    if (!payLocked || settings.salaryAmount <= 0) return undefined
+
+    const hourly = normalizeSalaryToHourly(settings.salaryAmount, settings.salaryType, { workDaysPerWeek })
+    if (!Number.isFinite(hourly) || hourly <= 0) return undefined
+
+    return `${getCurrencySymbol(settings.currency)}${hourly.toFixed(2)}/h`
+  }, [payLocked, settings.currency, settings.salaryAmount, settings.salaryType, workDaysPerWeek])
 
   useEffect(() => {
     if (payLocked) return
@@ -98,20 +96,16 @@ export default function SettingsForm() {
       ? '浅色'
       : '深色'
 
-  const weekdayChoices = [
-    { label: '一', value: 1 },
-    { label: '二', value: 2 },
-    { label: '三', value: 3 },
-    { label: '四', value: 4 },
-    { label: '五', value: 5 },
-    { label: '六', value: 6 },
-    { label: '日', value: 0 },
-  ]
-
   const saveSalary = () => {
     if (!salaryDraftValid) return
     updateSettings({ salaryType: salaryTypeDraft, salaryAmount: salaryAmountNumber, payLocked: true })
     setSalaryDraft('')
+  }
+
+  const resetSalary = () => {
+    setSalaryDraft('')
+    setSalaryTypeDraft('hourly')
+    updateSettings({ salaryAmount: 0, salaryType: 'hourly', payLocked: false })
   }
 
   const openPaydayModal = () => {
@@ -150,215 +144,48 @@ export default function SettingsForm() {
   return (
     <>
       <form className="settings-system" aria-label="设置表单">
-        <div className="settings-overview" aria-label="设置摘要">
-          <div>
-            <span>本机保存</span>
-            <strong>只保存在当前设备</strong>
-          </div>
-          <div>
-            <span>实时估算</span>
-            <strong>用于进度与收入展示</strong>
-          </div>
-          <div>
-            <span>安静陪伴</span>
-            <strong>{petEnabled ? '桌宠已开启' : '桌宠已关闭'}</strong>
-          </div>
-        </div>
+        <QuickSetupSection
+          payLocked={payLocked}
+          salaryDraft={salaryDraft}
+          salaryTypeDraft={salaryTypeDraft}
+          salaryTypeOptions={salaryTypeOptions}
+          salaryDraftValid={salaryDraftValid}
+          activeSalaryMax={activeSalaryBounds.max}
+          estimatedHourly={estimatedHourly}
+          startTime={settings.startTime}
+          endTime={settings.endTime}
+          onSalaryDraftChange={setSalaryDraft}
+          onSalaryTypeDraftChange={setSalaryTypeDraft}
+          onSaveSalary={() => setSalaryConfirmOpen(true)}
+          onResetSalary={resetSalary}
+          onStartTimeChange={(startTime) => updateSettings({ startTime })}
+          onEndTimeChange={(endTime) => updateSettings({ endTime })}
+        />
 
-        <SettingSection title="工作空间" description="界面偏好和陪伴感放在这里，不影响收入计算。" tone="quiet">
-          <SettingRow
-            label="主题模式"
-            description="当前颜色模式会跟随系统或固定为你选择的状态。"
-            value={colorModeLabel}
-          />
+        <PayCycleSection
+          paydayStatusLabel={paydayStatusLabel}
+          hasPayday={Boolean(settings.lastPaydayDate)}
+          onOpenPayday={openPaydayModal}
+          onResetPayday={resetPaydayCycle}
+        />
 
-          <SettingRow
-            label="桌宠"
-            description="默认开启。关闭后将不再显示，也不会消耗动画与计时性能。"
-            value={petEnabled ? '开启' : '关闭'}
-            density="quiet"
-          >
-            <SettingToggle
-              aria-label={petEnabled ? '关闭桌宠' : '开启桌宠'}
-              pressed={petEnabled}
-              onClick={() => updateSettings({ petEnabled: !petEnabled })}
-            >
-              {petEnabled ? '开' : '关'}
-            </SettingToggle>
-          </SettingRow>
+        <DisplaySection
+          colorModeLabel={colorModeLabel}
+          petEnabled={petEnabled}
+          petVariant={petVariant}
+          onPetEnabledChange={(petEnabled) => updateSettings({ petEnabled })}
+          onPetVariantChange={(petVariant) => updateSettings({ petVariant })}
+        />
 
-          {petEnabled ? (
-            <SettingRow label="陪伴角色" description="选择一个在工作日里安静陪着你的角色。" density="quiet">
-              <div className="setting-pet-grid">
-                {[
-                  { key: 'aqua' as const, label: '水蓝史莱姆', sheet: slime1Idle },
-                  { key: 'undead' as const, label: '幽灵史莱姆', sheet: slime2Idle },
-                  { key: 'magma' as const, label: '熔岩史莱姆', sheet: slime3Idle },
-                ].map((item) => (
-                  <SettingToggle
-                    key={item.key}
-                    className="setting-pet-choice"
-                    aria-label={item.label}
-                    pressed={petVariant === item.key}
-                    onClick={() => updateSettings({ petVariant: item.key })}
-                  >
-                    <PetIcon sheet={item.sheet} />
-                  </SettingToggle>
-                ))}
-              </div>
-            </SettingRow>
-          ) : null}
-        </SettingSection>
-
-        <SettingSection title="工作时间" description="用于计算今日进度、剩余时间和收入估算。" tone="default">
-          <SettingGroup>
-            <SettingRow label="开始时间" controlId="settings-start-time">
-              <SettingTimeInput
-                id="settings-start-time"
-                value={settings.startTime}
-                onChange={(e) => updateSettings({ startTime: e.target.value })}
-              />
-            </SettingRow>
-
-            <SettingRow label="结束时间" controlId="settings-end-time">
-              <SettingTimeInput
-                id="settings-end-time"
-                value={settings.endTime}
-                onChange={(e) => updateSettings({ endTime: e.target.value })}
-              />
-            </SettingRow>
-
-            <SettingRow
-              label="休息时间"
-              description="从收入计算时段中扣除的分钟数。"
-              controlId="settings-break-minutes"
-            >
-              <SettingInput
-                id="settings-break-minutes"
-                value={String(settings.breakMinutes)}
-                onChange={(e) => updateSettings({ breakMinutes: Number(e.target.value) || 0 })}
-                type="number"
-                min={0}
-                inputMode="numeric"
-              />
-            </SettingRow>
-          </SettingGroup>
-
-          <SettingRow label="工作日" description="用于周/月收入估算，不会创建提醒。">
-            <div className="setting-weekdays" role="group" aria-label="工作日">
-              {weekdayChoices.map((day) => {
-                const pressed = workDays.includes(day.value)
-                return (
-                  <SettingToggle
-                    key={day.label}
-                    pressed={pressed}
-                    size="compact"
-                    onClick={() => {
-                      const next = pressed ? workDays.filter((d) => d !== day.value) : [...workDays, day.value]
-                      updateSettings({ workDays: next })
-                    }}
-                  >
-                    {day.label}
-                  </SettingToggle>
-                )
-              })}
-            </div>
-          </SettingRow>
-        </SettingSection>
-
-        <SettingSection title="薪资模式" description="仅保存在本机，只用于收入估算。" tone="vault">
-          <SettingRow
-            label="校准工资日"
-            description="输入最近一次实际到账日期，按新工资周期计算本期收入。"
-            value={paydayStatusLabel}
-            controlLayout="stacked"
-          >
-            <div className="flex flex-wrap gap-2">
-              <SettingAction variant="primary" onClick={openPaydayModal}>
-                校准工资日
-              </SettingAction>
-              {settings.lastPaydayDate ? (
-                <SettingAction variant="quiet" onClick={resetPaydayCycle}>
-                  取消校准
-                </SettingAction>
-              ) : null}
-            </div>
-          </SettingRow>
-          {payLocked ? (
-            <SettingGroup density="loose">
-              <div className="setting-vault-state">
-                <div>
-                  <div className="setting-vault-state__label">薪资已保存</div>
-                  <SettingDescription tone="quiet">具体金额已隐藏。若要修改，需要先重置后重新输入。</SettingDescription>
-                </div>
-                <SettingAction
-                  variant="quiet"
-                  onClick={() => {
-                    setSalaryDraft('')
-                    setSalaryTypeDraft('hourly')
-                    updateSettings({ salaryAmount: 0, salaryType: 'hourly', payLocked: false })
-                  }}
-                >
-                  重置薪资
-                </SettingAction>
-              </div>
-              <SettingDescription tone="quiet">数据仅保存在当前设备，不会上传服务器。</SettingDescription>
-              <SettingDescription tone="quiet">清除缓存、隐身模式或更换设备会导致数据丢失。</SettingDescription>
-            </SettingGroup>
-          ) : (
-            <SettingGroup density="loose">
-              <div className="setting-salary-entry">
-                <SettingInput
-                  tone="vault"
-                  value={salaryDraft}
-                  onChange={(e) => setSalaryDraft(e.target.value)}
-                  type="number"
-                  inputMode="decimal"
-                  min={0}
-                  max={activeSalaryBounds.max}
-                  step="any"
-                  placeholder="金额"
-                  aria-label="金额"
-                />
-                <SettingSelect
-                  tone="vault"
-                  value={salaryTypeDraft}
-                  onChange={(e) => setSalaryTypeDraft(e.target.value as Settings['salaryType'])}
-                  aria-label="薪资类型"
-                >
-                  {salaryTypeOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </SettingSelect>
-                <SettingAction
-                  variant="primary"
-                  disabled={!salaryDraftValid}
-                  onClick={() => setSalaryConfirmOpen(true)}
-                >
-                  保存
-                </SettingAction>
-              </div>
-              <SettingDescription tone="quiet">
-                保存后将无法再次查看具体薪资金额，只能重置后重新输入。
-              </SettingDescription>
-            </SettingGroup>
-          )}
-        </SettingSection>
-
-        <SettingSection title="显示" description="只影响金额显示方式，不改变你的原始薪资设置。" tone="quiet">
-          <SettingRow label="货币" controlId="settings-currency">
-            <SettingSelect
-              id="settings-currency"
-              value={(settings.currency ?? 'AUD').toUpperCase()}
-              onChange={(e) => updateSettings({ currency: e.target.value as Settings['currency'] })}
-            >
-              <option value="AUD">澳元（AUD）</option>
-              <option value="CNY">人民币（CNY）</option>
-            </SettingSelect>
-          </SettingRow>
-        </SettingSection>
+        <AdvancedSection
+          breakMinutes={settings.breakMinutes}
+          workDays={workDays}
+          weekdayChoices={weekdayChoices}
+          currency={settings.currency}
+          onBreakMinutesChange={(breakMinutes) => updateSettings({ breakMinutes })}
+          onWorkDaysChange={(workDays) => updateSettings({ workDays })}
+          onCurrencyChange={(currency) => updateSettings({ currency })}
+        />
       </form>
 
       <ConfirmModal
@@ -374,8 +201,8 @@ export default function SettingsForm() {
       <ConfirmModal
         open={paydayConfirmOpen}
         onOpenChange={setPaydayConfirmOpen}
-        title="校准工资日"
-        description="使用最近一次实际到账日期重新计算当前工资周期。"
+        title="我的发薪日"
+        description="使用最近一次实际到账日期校准当前薪资周期。"
         confirmText="保存"
         cancelText="取消"
         variant="success"

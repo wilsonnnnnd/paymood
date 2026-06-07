@@ -1,19 +1,17 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import AdSenseSlot from './AdSenseSlot'
-import CircularProgress from './CircularProgress'
-import PublicHolidayCard from './PublicHolidayCard'
 import ColorModeToggle from './ColorModeToggle'
+import CoreStatusCards, { type CoreStatusCard } from './dashboard/CoreStatusCards'
+import DailyWrapUpCard from './dashboard/DailyWrapUpCard'
+import SecondaryStatsSection from './dashboard/SecondaryStatsSection'
+import TodayEarningsHero from './dashboard/TodayEarningsHero'
 import { useSettings } from '../hooks/useSettings'
 import { useClock } from '../hooks/useClock'
 import { calculateWorkEarnings, getNextWorkStart, getWorkWindowForNow } from '../lib/earnings'
+import { getCurrentPayCycle } from '../lib/payCycle'
 import { currencySymbols } from '../lib/settings'
-
-function prefersReducedMotion() {
-  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return false
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
-}
 
 function formatHM(seconds: number) {
   const totalMinutes = Math.max(0, Math.floor(seconds / 60))
@@ -33,127 +31,16 @@ function formatCountdown(seconds: number) {
   return `${minutes}分钟`
 }
 
+function formatDaysUntil(days: number) {
+  if (days <= 0) return '今天'
+  return `${days}天`
+}
+
 function currencyCodeToSymbol(code: string | undefined) {
   const normalized = (code ?? '').trim().toUpperCase()
   const key = normalized as keyof typeof currencySymbols
   if (key in currencySymbols) return currencySymbols[key]
   return '$'
-}
-
-function RollingChar({
-  from,
-  to,
-  direction,
-  animate,
-}: {
-  from: string
-  to: string
-  direction: number
-  animate: boolean
-}) {
-  const isStatic = !animate || from === to || to === '.' || from === '.' || to === ' ' || from === ' '
-  const [yEm, setYEm] = useState(0)
-
-  useEffect(() => {
-    if (isStatic) {
-      setYEm(0)
-      return
-    }
-
-    const startY = direction >= 0 ? 0 : -1
-    const endY = direction >= 0 ? -1 : 0
-    setYEm(startY)
-    const id = requestAnimationFrame(() => setYEm(endY))
-    return () => cancelAnimationFrame(id)
-  }, [direction, from, isStatic, to])
-
-  if (isStatic) {
-    return <span className="roll-static">{to}</span>
-  }
-
-  const stack = direction >= 0 ? [from, to] : [to, from]
-
-  return (
-    <span className="roll-char" aria-hidden="true">
-      <span className="roll-stack" style={{ transform: `translate3d(0, ${yEm}em, 0)` }}>
-        <span className="roll-item">{stack[0]}</span>
-        <span className="roll-item">{stack[1]}</span>
-      </span>
-    </span>
-  )
-}
-
-const defaultMoneyFormat = (v: number) => v.toFixed(2)
-
-function RollingNumber({ value, format = defaultMoneyFormat }: { value: number; format?: (v: number) => string }) {
-  const timerRef = useRef<number | null>(null)
-  const prevValueRef = useRef(value)
-  const formatRef = useRef(format)
-  const [fromText, setFromText] = useState(() => formatRef.current(value))
-  const [toText, setToText] = useState(() => formatRef.current(value))
-  const [direction, setDirection] = useState(1)
-  const [animating, setAnimating] = useState(false)
-  const [maxLen, setMaxLen] = useState(() => formatRef.current(value).length)
-
-  useEffect(() => {
-    formatRef.current = format
-  }, [format])
-
-  useEffect(() => {
-    const next = formatRef.current(value)
-    if (next === toText) return
-
-    if (timerRef.current !== null) {
-      clearTimeout(timerRef.current)
-      timerRef.current = null
-    }
-
-    const dir = value >= prevValueRef.current ? 1 : -1
-    prevValueRef.current = value
-    setDirection(dir)
-
-    if (prefersReducedMotion()) {
-      setFromText(next)
-      setToText(next)
-      setAnimating(false)
-      return
-    }
-
-    setFromText(toText)
-    setToText(next)
-    setAnimating(true)
-    setMaxLen((current) => Math.max(current, next.length))
-
-    timerRef.current = window.setTimeout(() => {
-      setFromText(next)
-      setAnimating(false)
-      timerRef.current = null
-    }, 560)
-  }, [toText, value])
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current !== null) clearTimeout(timerRef.current)
-    }
-  }, [])
-
-  const len = Math.max(maxLen, fromText.length, toText.length)
-  const prevPadded = fromText.padStart(len, ' ')
-  const nextPadded = toText.padStart(len, ' ')
-
-  return (
-    <span className="roll-number" aria-label={toText} style={{ width: `${len}ch` }}>
-      {Array.from({ length: len }).map((_, index) => (
-        <RollingChar
-          key={index}
-          from={prevPadded[index]}
-          to={nextPadded[index]}
-          direction={direction}
-          animate={animating}
-        />
-      ))}
-    </span>
-  )
 }
 
 function moodFor(now: Date, start: Date, end: Date) {
@@ -198,7 +85,7 @@ function liveStatusFor({
   if (!isReady) return 'Warming up'
   if (!isWorkDay) return 'Off today'
   if (now.getTime() < start.getTime()) return `Before shift · starts at ${formatTime(start)}`
-  if (now.getTime() >= end.getTime()) return 'Shift complete'
+  if (now.getTime() >= end.getTime()) return '今天已收工'
   return `In shift · ${formatHM(remainingSeconds)} left`
 }
 
@@ -209,6 +96,54 @@ function formatTime(date: Date) {
 function formatWorkNodeDate(date: Date) {
   const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
   return `${weekdays[date.getDay()]} ${date.getMonth() + 1}/${date.getDate()} ${formatTime(date)}`
+}
+
+function getPaydayStatusCard({
+  now,
+  paydayDayOfMonth,
+  salaryAmount,
+  salaryType,
+  formatMoney,
+  fallback,
+}: {
+  now: Date
+  paydayDayOfMonth?: number
+  salaryAmount: number
+  salaryType: string
+  formatMoney: (value: number) => string
+  fallback: CoreStatusCard
+}): CoreStatusCard {
+  if (typeof paydayDayOfMonth !== 'number') return fallback
+
+  const { nextPayday } = getCurrentPayCycle(now, paydayDayOfMonth)
+  const localToday = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  const daysUntilPayday = Math.max(
+    0,
+    Math.ceil((nextPayday.getTime() - localToday.getTime()) / (24 * 60 * 60 * 1000)),
+  )
+
+  const expectedAmount = salaryType === 'monthly' && salaryAmount > 0 ? formatMoney(salaryAmount) : null
+  if (!expectedAmount) return fallback
+
+  return {
+    label: '下一次工资到账',
+    value: formatDaysUntil(daysUntilPayday),
+    metaLabel: '预计到账',
+    metaValue: expectedAmount,
+    emphasis: true,
+  }
+}
+
+function getPayCycleProgress(now: Date, paydayDayOfMonth?: number) {
+  if (typeof paydayDayOfMonth !== 'number') return null
+
+  const { previousPayday: currentCycleStart, nextPayday: currentCycleEnd } = getCurrentPayCycle(now, paydayDayOfMonth)
+  const cycleMs = currentCycleEnd.getTime() - currentCycleStart.getTime()
+  if (!Number.isFinite(cycleMs) || cycleMs <= 0) return null
+
+  const rawProgress = (now.getTime() - currentCycleStart.getTime()) / cycleMs
+  const progress = Math.min(1, Math.max(0, rawProgress))
+  return Math.round(progress * 100)
 }
 
 function CycleMetric({ label, value, format }: { label: string; value: number; format: Intl.NumberFormat }) {
@@ -256,7 +191,9 @@ export default function Dashboard({
         end: fallbackWindow.end,
         isWorkDay: true,
         progress: { progress: 0, elapsedSeconds: 0, remainingSeconds: 0, totalWorkSeconds: 0 },
+        day: { earned: 0, hourly: 0 },
         earned: 0,
+        hourly: 0,
         week: { earned: 0, hourly: 0 },
         month: { earned: 0, hourly: 0 },
         cycle: { label: '本月', earned: 0 },
@@ -284,6 +221,39 @@ export default function Dashboard({
     endTime: settings.endTime,
     workDays: settings.workDays,
   })
+  const moneyValue = (value: number) => `${currencySymbol}${totalsFormat.format(value)}`
+  const todayRemainingEarned = earnings.hourly * (prog.remainingSeconds / 3600)
+  const secondsUntilOffwork = Math.max(0, Math.floor((end.getTime() - today.getTime()) / 1000))
+  const fallbackPaydayCard: CoreStatusCard = {
+    label: '本周期收入',
+    value: moneyValue(cycle.earned),
+    detail: cycle.label,
+    emphasis: true,
+  }
+  const paydayCard = getPaydayStatusCard({
+    now: today,
+    paydayDayOfMonth: settings.paydayDayOfMonth,
+    salaryAmount: settings.salaryAmount,
+    salaryType: settings.salaryType,
+    formatMoney: moneyValue,
+    fallback: fallbackPaydayCard,
+  })
+  const payCycleProgress = getPayCycleProgress(today, settings.paydayDayOfMonth)
+  const isAfterWork = hasPaySetup && isWorkDay && today.getTime() >= end.getTime()
+  const coreStatusCards: CoreStatusCard[] = [
+    {
+      label: '距离下班',
+      value: today.getTime() >= end.getTime() ? '已下班' : formatCountdown(secondsUntilOffwork),
+      detail: formatTime(end),
+      emphasis: true,
+    },
+    {
+      label: '今天还能赚',
+      value: moneyValue(todayRemainingEarned),
+      detail: '按剩余工作时间估算',
+    },
+    paydayCard,
+  ]
 
   return (
     <section className={`hud-shell ${isWorkDay ? 'hud-shell--active' : 'hud-shell--rest'}`} aria-label="PayMood 仪表盘">
@@ -350,49 +320,43 @@ export default function Dashboard({
             <CycleMetric label={cycle.label} value={cycle.earned} format={totalsFormat} />
           </section>
         </div>
+      ) : isAfterWork ? (
+        <div className="hud-main hud-wrap-up" aria-label="今日收工">
+          <DailyWrapUpCard
+            earned={moneyValue(earned)}
+            workDuration={formatCountdown(prog.totalWorkSeconds)}
+            percent={percent}
+          />
+          <SecondaryStatsSection
+            weekEarned={earnings.week.earned}
+            cycleLabel={cycle.label}
+            cycleEarned={cycle.earned}
+            cycleProgress={payCycleProgress}
+            format={totalsFormat}
+          />
+        </div>
       ) : (
         <div className="hud-main">
-          <div className="hud-ring-wrap" aria-label="收入与进度">
-            <div className="hud-disc-aura" aria-hidden="true" />
-            <div className="hud-disc-plate" aria-hidden="true">
-              <span />
-              <span />
-              <span />
-            </div>
-            <div className="hud-ring-ticks" aria-hidden="true">
-              {Array.from({ length: 24 }).map((_, index) => (
-                <span key={index} style={{ '--tick': index } as React.CSSProperties} />
-              ))}
-            </div>
-            <CircularProgress value={prog.progress} size={480} />
-            <div className="hud-center">
-              <div className="hud-amount-line">
-                <span className="hud-currency-symbol" aria-hidden="true">
-                  {currencySymbol}
-                </span>
-                <span className="hud-amount">
-                  <RollingNumber value={earned} />
-                </span>
-              </div>
-              <div className="hud-percent" aria-label="工作进度">
-                {percent}%
-              </div>
-            </div>
-          </div>
+          <TodayEarningsHero
+            earned={earned}
+            percent={percent}
+            progress={prog.progress}
+            currencySymbol={currencySymbol}
+          />
 
-          <section className="hud-metrics" aria-label="摘要">
-            <div className="hud-metric">
-              <span className="hud-metric-label">今日收入</span>
-              <span className="hud-metric-value">{totalsFormat.format(earned)}</span>
-            </div>
-            <CycleMetric label={cycle.label} value={cycle.earned} format={totalsFormat} />
-            <PublicHolidayCard />
-          </section>
+          <CoreStatusCards cards={coreStatusCards} />
+          <SecondaryStatsSection
+            weekEarned={earnings.week.earned}
+            cycleLabel={cycle.label}
+            cycleEarned={cycle.earned}
+            cycleProgress={payCycleProgress}
+            format={totalsFormat}
+          />
         </div>
       )}
       <footer className="hud-footnote" aria-label="Site information">
-        <Link href="/about">About</Link> <Link href="/privacy">Privacy</Link> <Link href="/terms">Terms</Link>{' '}
-        <Link href="/contact">Contact</Link>
+        <Link href="/about">关于</Link> <Link href="/privacy">隐私</Link> <Link href="/terms">条款</Link>{' '}
+        <Link href="/contact">联系</Link>
       </footer>
       {adsenseEnabled ? <AdSenseSlot onNoFill={onNoFill} /> : null}
     </section>
