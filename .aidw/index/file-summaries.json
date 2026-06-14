@@ -7,7 +7,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-25T15:45:13.055Z"
+        "updatedAt": "2026-06-07T14:45:44.222Z"
     },
     {
         "path": ".eslintrc.cjs",
@@ -37,7 +37,17 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-25T15:48:58.441Z"
+        "updatedAt": "2026-06-07T14:40:28.212Z"
+    },
+    {
+        "path": "app/ads.txt/route.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-07T14:35:13.196Z"
     },
     {
         "path": "app/contact/page.tsx",
@@ -47,7 +57,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-21T15:18:45.264Z"
+        "updatedAt": "2026-06-07T14:42:41.919Z"
     },
     {
         "path": "app/layout.tsx",
@@ -77,7 +87,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-31T03:43:11.264Z"
+        "updatedAt": "2026-06-14T05:30:23.347Z"
     },
     {
         "path": "app/privacy/page.tsx",
@@ -87,7 +97,17 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-25T15:48:58.478Z"
+        "updatedAt": "2026-06-07T14:40:57.141Z"
+    },
+    {
+        "path": "app/robots.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-07T14:35:18.128Z"
     },
     {
         "path": "app/settings/page.tsx",
@@ -100,6 +120,16 @@
         "updatedAt": "2026-05-25T15:48:58.487Z"
     },
     {
+        "path": "app/sitemap.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-07T14:35:24.065Z"
+    },
+    {
         "path": "app/terms/page.tsx",
         "roleSummary": "Project file relevant to repository structure.",
         "exports": [],
@@ -107,7 +137,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-25T15:48:58.495Z"
+        "updatedAt": "2026-06-07T14:41:17.447Z"
     },
     {
         "path": "components/AdSenseSlot.tsx",
@@ -117,7 +147,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-31T03:43:11.291Z"
+        "updatedAt": "2026-06-06T09:36:04.197Z"
     },
     {
         "path": "components/CircularProgress.tsx",
@@ -147,7 +177,67 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-31T03:43:11.460Z"
+        "updatedAt": "2026-06-07T14:39:32.928Z"
+    },
+    {
+        "path": "components/dashboard/CoreStatusCards.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-07T01:11:28.200Z"
+    },
+    {
+        "path": "components/dashboard/DailyWrapUpCard.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-07T07:20:00.630Z"
+    },
+    {
+        "path": "components/dashboard/PayCycleProgress.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-07T01:34:34.971Z"
+    },
+    {
+        "path": "components/dashboard/SecondaryStatsSection.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-07T07:19:43.974Z"
+    },
+    {
+        "path": "components/dashboard/StatusMetricCard.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-07T01:11:28.127Z"
+    },
+    {
+        "path": "components/dashboard/TodayEarningsHero.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-07T01:18:18.634Z"
     },
     {
         "path": "components/HomeShell.tsx",
@@ -157,7 +247,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-31T03:43:11.484Z"
+        "updatedAt": "2026-06-14T05:30:23.414Z"
     },
     {
         "path": "components/LegalPage.tsx",
@@ -167,7 +257,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-25T15:48:58.570Z"
+        "updatedAt": "2026-06-07T14:39:39.143Z"
     },
     {
         "path": "components/pet/AmbientPet.tsx",
@@ -247,7 +337,27 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-31T03:43:11.497Z"
+        "updatedAt": "2026-06-06T09:36:04.316Z"
+    },
+    {
+        "path": "components/settings/AdvancedSection.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-07T01:37:14.437Z"
+    },
+    {
+        "path": "components/settings/DisplaySection.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-07T01:36:46.857Z"
     },
     {
         "path": "components/settings/index.ts",
@@ -257,7 +367,27 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-17T14:07:13.692Z"
+        "updatedAt": "2026-06-07T01:37:24.685Z"
+    },
+    {
+        "path": "components/settings/PayCycleSection.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-07T01:36:28.061Z"
+    },
+    {
+        "path": "components/settings/QuickSetupSection.tsx",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-07T01:36:18.209Z"
     },
     {
         "path": "components/settings/setting-action.tsx",
@@ -307,7 +437,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-25T15:48:58.651Z"
+        "updatedAt": "2026-06-06T10:03:29.642Z"
     },
     {
         "path": "components/settings/setting-section.tsx",
@@ -367,7 +497,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-25T15:48:58.684Z"
+        "updatedAt": "2026-06-07T07:17:30.247Z"
     },
     {
         "path": "components/SettingsProvider.tsx",
@@ -397,7 +527,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-25T15:48:58.704Z"
+        "updatedAt": "2026-06-06T09:56:14.902Z"
     },
     {
         "path": "content/pet/messages/hover/default.ts",
@@ -620,6 +750,26 @@
         "updatedAt": "2026-05-25T15:18:56.558Z"
     },
     {
+        "path": "lib/ads.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-14T05:30:23.280Z"
+    },
+    {
+        "path": "lib/analytics.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-06T09:52:36.074Z"
+    },
+    {
         "path": "lib/earnings.ts",
         "roleSummary": "Project file relevant to repository structure.",
         "exports": [],
@@ -627,7 +777,17 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-28T11:15:32.019Z"
+        "updatedAt": "2026-06-06T09:52:36.074Z"
+    },
+    {
+        "path": "lib/payCycle.ts",
+        "roleSummary": "Project file relevant to repository structure.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-06T09:52:35.053Z"
     },
     {
         "path": "lib/pet/petMessages.ts",
@@ -667,7 +827,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-31T03:43:11.516Z"
+        "updatedAt": "2026-06-06T09:52:36.074Z"
     },
     {
         "path": "lib/utils.ts",
@@ -687,7 +847,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-28T13:48:22.174Z"
+        "updatedAt": "2026-06-14T05:31:23.790Z"
     },
     {
         "path": "next.config.js",
@@ -707,7 +867,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-25T15:01:24.171Z"
+        "updatedAt": "2026-06-06T09:31:28.397Z"
     },
     {
         "path": "postcss.config.cjs",
@@ -727,7 +887,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-31T03:43:11.522Z"
+        "updatedAt": "2026-06-07T14:50:20.408Z"
     },
     {
         "path": "README.md",
@@ -737,7 +897,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-25T15:03:35.362Z"
+        "updatedAt": "2026-06-07T14:47:04.308Z"
     },
     {
         "path": "services/publicHoliday.ts",
@@ -747,7 +907,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-31T03:43:11.543Z"
+        "updatedAt": "2026-06-06T09:36:04.450Z"
     },
     {
         "path": "tailwind.config.cjs",
@@ -760,6 +920,26 @@
         "updatedAt": "2026-05-17T07:26:00.102Z"
     },
     {
+        "path": "test/ads.test.ts",
+        "roleSummary": "Automated test coverage for CLI behavior.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-14T05:29:52.332Z"
+    },
+    {
+        "path": "test/dashboard.test.tsx",
+        "roleSummary": "Automated test coverage for CLI behavior.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-07T14:39:47.798Z"
+    },
+    {
         "path": "test/earnings.test.ts",
         "roleSummary": "Automated test coverage for CLI behavior.",
         "exports": [],
@@ -767,7 +947,17 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-28T11:16:15.747Z"
+        "updatedAt": "2026-06-06T09:21:20.719Z"
+    },
+    {
+        "path": "test/payCycle.test.ts",
+        "roleSummary": "Automated test coverage for CLI behavior.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-06T09:52:36.078Z"
     },
     {
         "path": "test/petMoodRules.test.ts",
@@ -778,6 +968,16 @@
         "calls": [],
         "risks": [],
         "updatedAt": "2026-05-17T07:26:00.132Z"
+    },
+    {
+        "path": "test/settings.test.ts",
+        "roleSummary": "Automated test coverage for CLI behavior.",
+        "exports": [],
+        "keySymbols": [],
+        "imports": [],
+        "calls": [],
+        "risks": [],
+        "updatedAt": "2026-06-07T07:23:55.914Z"
     },
     {
         "path": "tsconfig.json",
@@ -797,7 +997,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-31T03:43:11.679Z"
+        "updatedAt": "2026-06-07T07:17:30.440Z"
     },
     {
         "path": "vscode-extension/package.json",
@@ -807,7 +1007,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-28T13:11:49.529Z"
+        "updatedAt": "2026-06-07T01:43:09.268Z"
     },
     {
         "path": "vscode-extension/src/extension.ts",
@@ -817,7 +1017,7 @@
         "imports": [],
         "calls": [],
         "risks": [],
-        "updatedAt": "2026-05-31T03:43:13.173Z"
+        "updatedAt": "2026-06-06T10:17:06.758Z"
     },
     {
         "path": "vscode-extension/src/storage.test.ts",

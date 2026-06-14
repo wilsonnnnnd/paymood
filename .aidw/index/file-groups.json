@@ -11,7 +11,7 @@
     },
     {
         "path": "components",
-        "fileCount": 29,
+        "fileCount": 39,
         "summary": "Reusable UI components.",
         "keyFiles": [
             "components/AdSenseSlot.tsx",
@@ -25,6 +25,14 @@
         "summary": "Project files grouped by directory.",
         "keyFiles": [
             "app/about/page.tsx"
+        ]
+    },
+    {
+        "path": "app/ads.txt",
+        "fileCount": 1,
+        "summary": "Project files grouped by directory.",
+        "keyFiles": [
+            "app/ads.txt/route.ts"
         ]
     },
     {
@@ -69,11 +77,12 @@
     },
     {
         "path": "test",
-        "fileCount": 2,
+        "fileCount": 6,
         "summary": "Automated tests and regression coverage.",
         "keyFiles": [
-            "test/earnings.test.ts",
-            "test/petMoodRules.test.ts"
+            "test/ads.test.ts",
+            "test/dashboard.test.tsx",
+            "test/earnings.test.ts"
         ]
     },
     {
@@ -87,6 +96,16 @@
         ]
     },
     {
+        "path": "lib",
+        "fileCount": 9,
+        "summary": "Project files grouped by directory.",
+        "keyFiles": [
+            "lib/ads.ts",
+            "lib/analytics.ts",
+            "lib/earnings.ts"
+        ]
+    },
+    {
         "path": "hooks",
         "fileCount": 6,
         "summary": "Project files grouped by directory.",
@@ -94,16 +113,6 @@
             "hooks/useClock.ts",
             "hooks/usePetMessage.ts",
             "hooks/usePetMood.ts"
-        ]
-    },
-    {
-        "path": "lib",
-        "fileCount": 6,
-        "summary": "Project files grouped by directory.",
-        "keyFiles": [
-            "lib/earnings.ts",
-            "lib/pet/petMessages.ts",
-            "lib/pet/petMoodRules.ts"
         ]
     },
     {
@@ -118,8 +127,8 @@
     },
     {
         "path": "app",
-        "fileCount": 3,
-        "summary": "Application routes, layouts, and screen-level entry files.",
+        "fileCount": 5,
+        "summary": "Python backend application package.",
         "keyFiles": [
             "app/layout.tsx",
             "app/not-found.tsx",

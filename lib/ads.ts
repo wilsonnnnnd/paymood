@@ -21,6 +21,19 @@ export function regionCookieAllowsAds(value: string | null | undefined) {
   return value !== ADS_REGION_BLOCKED
 }
 
+export function adsRegionCookieValueFromCookieString(cookieString: string | null | undefined) {
+  if (!cookieString) return null
+
+  const cookies = cookieString.split(';')
+  for (const cookie of cookies) {
+    const [rawName, ...rawValue] = cookie.trim().split('=')
+    if (rawName !== ADS_REGION_COOKIE) continue
+    return decodeURIComponent(rawValue.join('='))
+  }
+
+  return null
+}
+
 export function regionAllowsAds({
   country,
   cookieValue,

@@ -3,6 +3,7 @@ import {
   adRegionCookieForCountry,
   ADS_REGION_ALLOWED,
   ADS_REGION_BLOCKED,
+  adsRegionCookieValueFromCookieString,
   regionAllowsAds,
   shouldServeAdsForCountry,
 } from '../lib/ads'
@@ -34,5 +35,11 @@ describe('ad geo targeting', () => {
     expect(regionAllowsAds({ country: 'AU', cookieValue: ADS_REGION_BLOCKED })).toBe(true)
     expect(regionAllowsAds({ country: null, cookieValue: ADS_REGION_BLOCKED })).toBe(false)
     expect(regionAllowsAds({ country: null, cookieValue: null })).toBe(true)
+  })
+
+  it('reads the ad region cookie from a browser cookie string', () => {
+    expect(adsRegionCookieValueFromCookieString('theme=dark; pm_ads=off; other=1')).toBe(ADS_REGION_BLOCKED)
+    expect(adsRegionCookieValueFromCookieString('pm_ads=on')).toBe(ADS_REGION_ALLOWED)
+    expect(adsRegionCookieValueFromCookieString('theme=dark')).toBeNull()
   })
 })

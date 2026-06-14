@@ -45,6 +45,11 @@ The repository is packaged for npm distribution.
 - Best Practice: Always inspect and reuse project UI system before writing new styles
 
 ## AI Development Notes
+- This is an npm CLI tool
+- Entry point: bin/cli.js
+- Template files are copied into user projects during init
+- template/ paths are runtime template sources; do not rewrite them as generated output paths
+- .claude/skills and .aidw/tests are generated in user projects when present in the template
 - Do not modify generated files unless explicitly required
 - Preserve package manager (npm/yarn/pnpm)
 - Follow existing file structure when adding new features
@@ -77,9 +82,6 @@ The repository is packaged for npm distribution.
 - routing and page entry points affect navigation and screen-level behavior
 - shared layout wrappers can impact many routes at once
 - global styles and spacing tokens can create broad visual regressions
-- API routing changes can break request handling and integrations
-- service and business-logic changes can alter behavior across multiple endpoints
-- shared config and environment changes can affect multiple runtime paths
 
 ## Project Notes
 - Reuse existing structures before creating new ones

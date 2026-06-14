@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-06-06T08:38:13.730Z",
+    "generatedAt": "2026-06-14T05:31:23.790Z",
     "kind": "context",
     "payload": {
         "entrypoints": [],
@@ -15,6 +15,10 @@
             {
                 "description": "",
                 "label": "app/about"
+            },
+            {
+                "description": "",
+                "label": "app/ads.txt"
             },
             {
                 "description": "",
@@ -46,11 +50,11 @@
             },
             {
                 "description": "",
-                "label": "hooks"
+                "label": "lib"
             },
             {
                 "description": "",
-                "label": "lib"
+                "label": "hooks"
             },
             {
                 "description": "",
@@ -62,8 +66,8 @@
             }
         ],
         "index": {
-            "fileGroups": 14,
-            "indexedFiles": 85,
+            "fileGroups": 15,
+            "indexedFiles": 105,
             "indexedSymbols": 0,
             "truncated": false
         },
@@ -72,10 +76,7 @@
             "shared UI components affect many pages and should remain backward compatible",
             "routing and page entry points affect navigation and screen-level behavior",
             "shared layout wrappers can impact many routes at once",
-            "global styles and spacing tokens can create broad visual regressions",
-            "API routing changes can break request handling and integrations",
-            "service and business-logic changes can alter behavior across multiple endpoints",
-            "shared config and environment changes can affect multiple runtime paths"
+            "global styles and spacing tokens can create broad visual regressions"
         ],
         "techStack": [
             "npm package",
@@ -110,6 +111,11 @@
             },
             {
                 "description": "Project file relevant to repository structure.",
+                "path": "app/ads.txt/route.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
                 "path": "app/contact/page.tsx",
                 "type": "other"
             },
@@ -135,7 +141,17 @@
             },
             {
                 "description": "Project file relevant to repository structure.",
+                "path": "app/robots.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
                 "path": "app/settings/page.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "app/sitemap.ts",
                 "type": "other"
             },
             {
@@ -161,6 +177,36 @@
             {
                 "description": "Project file relevant to repository structure.",
                 "path": "components/Dashboard.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/dashboard/CoreStatusCards.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/dashboard/DailyWrapUpCard.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/dashboard/PayCycleProgress.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/dashboard/SecondaryStatsSection.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/dashboard/StatusMetricCard.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/dashboard/TodayEarningsHero.tsx",
                 "type": "other"
             },
             {
@@ -215,7 +261,27 @@
             },
             {
                 "description": "Project file relevant to repository structure.",
+                "path": "components/settings/AdvancedSection.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/settings/DisplaySection.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
                 "path": "components/settings/index.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/settings/PayCycleSection.tsx",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "components/settings/QuickSetupSection.tsx",
                 "type": "other"
             },
             {
@@ -400,92 +466,27 @@
             },
             {
                 "description": "Project file relevant to repository structure.",
+                "path": "lib/ads.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
+                "path": "lib/analytics.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
                 "path": "lib/earnings.ts",
                 "type": "other"
             },
             {
                 "description": "Project file relevant to repository structure.",
+                "path": "lib/payCycle.ts",
+                "type": "other"
+            },
+            {
+                "description": "Project file relevant to repository structure.",
                 "path": "lib/pet/petMessages.ts",
-                "type": "other"
-            },
-            {
-                "description": "Project file relevant to repository structure.",
-                "path": "lib/pet/petMoodRules.ts",
-                "type": "other"
-            },
-            {
-                "description": "Project file relevant to repository structure.",
-                "path": "lib/settings.ts",
-                "type": "other"
-            },
-            {
-                "description": "Project file relevant to repository structure.",
-                "path": "lib/settingsModel.ts",
-                "type": "other"
-            },
-            {
-                "description": "Project file relevant to repository structure.",
-                "path": "lib/utils.ts",
-                "type": "other"
-            },
-            {
-                "description": "Project file relevant to repository structure.",
-                "path": "next-env.d.ts",
-                "type": "other"
-            },
-            {
-                "description": "Project configuration file.",
-                "path": "next.config.js",
-                "type": "config"
-            },
-            {
-                "description": "Package metadata, scripts, and CLI binary configuration.",
-                "path": "package.json",
-                "type": "config"
-            },
-            {
-                "description": "Project file relevant to repository structure.",
-                "path": "postcss.config.cjs",
-                "type": "other"
-            },
-            {
-                "description": "Project file relevant to repository structure.",
-                "path": "proxy.ts",
-                "type": "other"
-            },
-            {
-                "description": "Project file relevant to repository structure.",
-                "path": "README.md",
-                "type": "other"
-            },
-            {
-                "description": "Project file relevant to repository structure.",
-                "path": "services/publicHoliday.ts",
-                "type": "other"
-            },
-            {
-                "description": "Project configuration file.",
-                "path": "tailwind.config.cjs",
-                "type": "config"
-            },
-            {
-                "description": "Automated test coverage for CLI behavior.",
-                "path": "test/earnings.test.ts",
-                "type": "test"
-            },
-            {
-                "description": "Automated test coverage for CLI behavior.",
-                "path": "test/petMoodRules.test.ts",
-                "type": "test"
-            },
-            {
-                "description": "Project configuration file.",
-                "path": "tsconfig.json",
-                "type": "config"
-            },
-            {
-                "description": "Project file relevant to repository structure.",
-                "path": "vscode-extension/media/dashboard.js",
                 "type": "other"
             }
         ]
