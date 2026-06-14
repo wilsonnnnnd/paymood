@@ -584,6 +584,7 @@ select {
   --hud-control-active: color-mix(in srgb, var(--ring-ink) 16%, var(--surface-floating));
   --hud-player-shadow: 0 24px 70px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.42);
   width: min(780px, 100%);
+  min-height: min(860px, calc(100svh - 60px));
   border: 1px solid var(--hud-deck-edge);
   border-radius: 34px;
   background: linear-gradient(155deg, var(--hud-deck-top), var(--hud-deck)),
@@ -596,6 +597,7 @@ select {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  justify-content: center;
   position: relative;
   overflow: hidden;
   isolation: isolate;
@@ -894,6 +896,8 @@ select {
 .hud-main {
   position: relative;
   z-index: 1;
+  flex: 1 0 auto;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -902,6 +906,7 @@ select {
 }
 
 .hud-main--workday {
+  justify-content: center;
   gap: 13px;
 }
 
@@ -1540,6 +1545,14 @@ select {
   box-shadow: none;
 }
 
+.hud-secondary-stats .hud-cycle-progress {
+  grid-column: 1 / -1;
+  height: 76px;
+  padding: 12px 14px 13px;
+  border-color: color-mix(in srgb, var(--hud-deck-edge) 34%, transparent);
+  background: color-mix(in srgb, var(--hud-control) 24%, transparent);
+}
+
 .hud-secondary-stats .hud-metric:hover,
 .hud-secondary-stats .hud-metric--cycle:focus-visible {
   transform: none;
@@ -1557,16 +1570,54 @@ select {
   font-size: 0.9rem;
 }
 
+.hud-secondary-stats .hud-cycle-progress .hud-metric-value {
+  font-size: 1.08rem;
+  font-weight: 680;
+}
+
+.hud-secondary-stats .hud-metric--holiday {
+  height: 64px;
+  overflow: hidden;
+}
+
+.hud-secondary-stats .hud-metric--holiday .hud-metric-copy {
+  min-width: 0;
+  gap: 2px;
+}
+
+.hud-secondary-stats .hud-holiday-name {
+  font-family: var(--font-mono);
+  font-size: 0.96rem;
+  font-weight: 650;
+  line-height: 1.1;
+}
+
+.hud-secondary-stats .hud-holiday-meta {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hud-secondary-stats .hud-holiday-progress {
+  height: 4px;
+  margin-top: 3px;
+}
+
 .hud-cycle-progress {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 10px 18px;
   position: relative;
-  padding-bottom: 18px;
+  padding-bottom: 12px;
+  overflow: hidden;
 }
 
 .hud-cycle-progress-bar {
-  position: absolute;
-  left: 15px;
-  right: 15px;
-  bottom: 9px;
+  grid-column: 1 / -1;
+  position: static;
+  width: 100%;
   height: 5px;
   padding: 1px;
   border-radius: 999px;
@@ -1582,6 +1633,25 @@ select {
   border-radius: inherit;
   background: color-mix(in srgb, var(--ring-ink) 58%, var(--accent));
   transition: width 480ms var(--ease);
+}
+
+.hud-cycle-progress-side {
+  display: flex;
+  min-width: max-content;
+  min-height: 32px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  text-align: right;
+}
+
+.hud-cycle-countdown {
+  color: var(--muted);
+  font-size: 0.68rem;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  opacity: 0.78;
+  white-space: nowrap;
 }
 
 .hud-metric--holiday {
@@ -1899,6 +1969,7 @@ select {
     grid-column: auto;
     align-items: start;
     row-gap: 6px;
+    height: 74px;
     padding-bottom: 10px;
   }
 
@@ -1912,6 +1983,10 @@ select {
     border: 1px solid color-mix(in srgb, var(--hud-deck-edge) 34%, transparent);
     border-radius: 15px;
     background: color-mix(in srgb, var(--hud-control) 26%, transparent);
+  }
+
+  .hud-secondary-stats .hud-metric--holiday {
+    height: 62px;
   }
 
   .hud-secondary-stats .hud-metric-copy {

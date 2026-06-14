@@ -14,21 +14,19 @@ function formatHolidayDateZh(date: Date) {
 
 export default function PublicHolidayCard() {
   const { holiday, loading, error } = usePublicHoliday()
+  const label = '距离下次假期'
 
   if (error) return null
   if (!loading && !holiday) return null
 
-  const label = '下次法定节假日'
-
   if (loading || !holiday) {
     return (
       <div className="hud-metric hud-metric--holiday" aria-label={label}>
-        <div className="hud-metric-copy">
+        <span className="hud-metric-copy">
           <span className="hud-metric-label">{label}</span>
-          <div className="hud-holiday-skeleton-line hud-holiday-skeleton-line--title" />
-          <div className="hud-holiday-skeleton-line hud-holiday-skeleton-line--meta" />
-        </div>
-        <div className="hud-holiday-skeleton-dot" aria-hidden="true" />
+          <span className="hud-holiday-skeleton-line hud-holiday-skeleton-line--title" />
+          <span className="hud-holiday-skeleton-line hud-holiday-skeleton-line--meta" />
+        </span>
       </div>
     )
   }
@@ -36,26 +34,22 @@ export default function PublicHolidayCard() {
   const displayName = (holiday.localName?.trim() || holiday.name).trim()
   const date = parseLocalDate(holiday.date)
   const dateText = formatHolidayDateZh(date)
-  const copy = holiday.daysLeft <= 14 ? ' · 长周末快到了 ✨' : ''
   const progress = typeof holiday.progress === 'number' ? holiday.progress : null
 
   return (
     <div className="hud-metric hud-metric--holiday" aria-label={label}>
-      <div className="hud-metric-copy">
+      <span className="hud-metric-copy">
         <span className="hud-metric-label">{label}</span>
-        <div className="hud-holiday-name">{displayName}</div>
-        <div className="hud-holiday-meta">
-          {dateText} · {holiday.daysLeft}天后{copy}
-        </div>
+        <span className="hud-holiday-name">{holiday.daysLeft}天</span>
+        <span className="hud-holiday-meta">
+          {dateText} · {displayName}
+        </span>
         {progress !== null ? (
-          <div className="hud-holiday-progress" aria-hidden="true">
+          <span className="hud-holiday-progress" aria-hidden="true">
             <span style={{ width: `${Math.round(progress * 100)}%` }} />
-          </div>
+          </span>
         ) : null}
-      </div>
-      <div className="hud-holiday-icon" aria-hidden="true">
-        🎉
-      </div>
+      </span>
     </div>
   )
 }

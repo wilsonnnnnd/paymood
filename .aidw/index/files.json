@@ -139,7 +139,7 @@
         "path": "components/Dashboard.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-06-07T14:39:32.928Z",
+        "updatedAt": "2026-06-14T05:38:19.520Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -155,7 +155,7 @@
         "path": "components/dashboard/DailyWrapUpCard.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-06-07T07:20:00.630Z",
+        "updatedAt": "2026-06-14T05:37:56.881Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -163,7 +163,7 @@
         "path": "components/dashboard/PayCycleProgress.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-06-07T01:34:34.971Z",
+        "updatedAt": "2026-06-14T05:44:10.685Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -171,7 +171,7 @@
         "path": "components/dashboard/SecondaryStatsSection.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-06-07T07:19:43.974Z",
+        "updatedAt": "2026-06-14T05:54:04.472Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -267,7 +267,7 @@
         "path": "components/PublicHolidayCard.tsx",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-06-06T09:36:04.316Z",
+        "updatedAt": "2026-06-14T05:54:25.059Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -675,7 +675,7 @@
         "path": "next-env.d.ts",
         "type": "other",
         "description": "Project file relevant to repository structure.",
-        "updatedAt": "2026-06-14T05:31:23.790Z",
+        "updatedAt": "2026-06-14T05:56:20.902Z",
         "confidence": 0.55,
         "source": "heuristic"
     },
@@ -747,7 +747,7 @@
         "path": "test/dashboard.test.tsx",
         "type": "test",
         "description": "Automated test coverage for CLI behavior.",
-        "updatedAt": "2026-06-07T14:39:47.798Z",
+        "updatedAt": "2026-06-14T05:53:40.990Z",
         "confidence": 0.75,
         "source": "heuristic"
     },

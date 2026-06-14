@@ -36,6 +36,26 @@ function formatDaysUntil(days: number) {
   return `${days}天`
 }
 
+function formatMonthDay(date: Date) {
+  return `${date.getMonth() + 1}/${date.getDate()}`
+}
+
+function getPayCycleSummary(now: Date, paydayDayOfMonth?: number) {
+  if (typeof paydayDayOfMonth !== 'number') return null
+
+  const { previousPayday, nextPayday } = getCurrentPayCycle(now, paydayDayOfMonth)
+  const localToday = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  const daysUntilPayday = Math.max(
+    0,
+    Math.ceil((nextPayday.getTime() - localToday.getTime()) / (24 * 60 * 60 * 1000)),
+  )
+
+  return {
+    rangeLabel: `${formatMonthDay(previousPayday)} - ${formatMonthDay(nextPayday)}`,
+    paydayCountdownLabel: `距离发薪 ${formatDaysUntil(daysUntilPayday)}`,
+  }
+}
+
 function currencyCodeToSymbol(code: string | undefined) {
   const normalized = (code ?? '').trim().toUpperCase()
   const key = normalized as keyof typeof currencySymbols
@@ -184,6 +204,7 @@ export default function Dashboard({
         workDays: settings.workDays,
         salaryAmount: settings.salaryAmount,
         salaryType: settings.salaryType,
+        paydayDayOfMonth: settings.paydayDayOfMonth,
         opts: { workDaysPerWeek },
       })
     : {
@@ -239,6 +260,7 @@ export default function Dashboard({
     fallback: fallbackPaydayCard,
   })
   const payCycleProgress = getPayCycleProgress(today, settings.paydayDayOfMonth)
+  const payCycleSummary = getPayCycleSummary(today, settings.paydayDayOfMonth)
   const isAfterWork = hasPaySetup && isWorkDay && today.getTime() >= end.getTime()
   const coreStatusCards: CoreStatusCard[] = [
     {
@@ -332,12 +354,16 @@ export default function Dashboard({
             earned={moneyValue(earned)}
             workDuration={formatCountdown(prog.totalWorkSeconds)}
             percent={percent}
+            cycleEarned={moneyValue(cycle.earned)}
+            paydayCountdownLabel={payCycleSummary?.paydayCountdownLabel}
           />
           <SecondaryStatsSection
             weekEarned={earnings.week.earned}
             cycleLabel={cycle.label}
             cycleEarned={cycle.earned}
             cycleProgress={payCycleProgress}
+            cycleRangeLabel={payCycleSummary?.rangeLabel}
+            paydayCountdownLabel={payCycleSummary?.paydayCountdownLabel}
             format={totalsFormat}
           />
         </div>
@@ -356,6 +382,8 @@ export default function Dashboard({
             cycleLabel={cycle.label}
             cycleEarned={cycle.earned}
             cycleProgress={payCycleProgress}
+            cycleRangeLabel={payCycleSummary?.rangeLabel}
+            paydayCountdownLabel={payCycleSummary?.paydayCountdownLabel}
             format={totalsFormat}
           />
         </div>

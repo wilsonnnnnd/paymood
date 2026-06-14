@@ -1,4 +1,5 @@
 import React from 'react'
+import PublicHolidayCard from '../PublicHolidayCard'
 import PayCycleProgress from './PayCycleProgress'
 import StatusMetricCard from './StatusMetricCard'
 
@@ -22,17 +23,28 @@ export default function SecondaryStatsSection({
   cycleLabel,
   cycleEarned,
   cycleProgress,
+  cycleRangeLabel,
+  paydayCountdownLabel,
   format,
 }: {
   weekEarned: number
   cycleLabel: string
   cycleEarned: number
   cycleProgress?: number | null
+  cycleRangeLabel?: string
+  paydayCountdownLabel?: string
   format: Intl.NumberFormat
 }) {
   return (
     <section className="hud-metrics hud-secondary-stats" aria-label="辅助统计">
-      {typeof cycleProgress === 'number' ? <PayCycleProgress percent={cycleProgress} /> : null}
+      {typeof cycleProgress === 'number' ? (
+        <PayCycleProgress
+          percent={cycleProgress}
+          rangeLabel={cycleRangeLabel}
+          paydayCountdownLabel={paydayCountdownLabel}
+        />
+      ) : null}
+      <PublicHolidayCard />
       <StatusMetricCard label="本周收入" value={format.format(weekEarned)} />
       <CycleMetric label={cycleLabel} value={cycleEarned} format={format} />
     </section>
