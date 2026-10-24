@@ -42,25 +42,25 @@ PayMood 刻意保持简单。它不是工资系统、税务建议、HR 软件，
 安装依赖：
 
 ```bash
-npm install
+pnpm install
 ```
 
 本地运行网站：
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 运行测试：
 
 ```bash
-npm test
+pnpm test
 ```
 
 构建网站：
 
 ```bash
-npm run build
+pnpm build
 ```
 
 ## AdSense 部署开关
@@ -78,11 +78,9 @@ npm run build
 常用命令：
 
 ```bash
-cd vscode-extension
-npm install
-npm run typecheck
-npm run build
-npm test
+pnpm --filter paymood typecheck
+pnpm --filter paymood build
+pnpm --filter paymood test
 ```
 
 ## 开发注意事项

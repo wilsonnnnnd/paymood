@@ -51,16 +51,15 @@
 From the repo root:
 
 ```bash
-cd vscode-extension
-npm install
-npm run build
+pnpm install
+pnpm --filter paymood build
 ```
 
 Then open the repo in VS Code and run the **Run Extension** launch config to start an Extension Development Host.
 
 - Entry point: `src/extension.ts`
 - Storage helpers: `src/storage.ts`
-- Build output: `dist/extension.js` (esbuild via `npm run build`)
+- Build output: `dist/extension.js` (esbuild via `pnpm --filter paymood build`)
 - Webview assets (CSS/JS): `media/`
 - Webview security: strict CSP with nonce-based script loading
 
