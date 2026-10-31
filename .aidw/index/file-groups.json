@@ -1,138 +1,41 @@
 [
     {
         "path": ".",
-        "fileCount": 13,
+        "fileCount": 5,
         "summary": "Repository root files and package metadata.",
         "keyFiles": [
             ".env.example",
-            "eslint.config.js",
-            "next.config.js"
-        ]
-    },
-    {
-        "path": "components",
-        "fileCount": 39,
-        "summary": "Reusable UI components.",
-        "keyFiles": [
-            "components/AdSenseSlot.tsx",
-            "components/CircularProgress.tsx",
-            "components/ColorModeToggle.tsx"
-        ]
-    },
-    {
-        "path": "app/about",
-        "fileCount": 1,
-        "summary": "Project files grouped by directory.",
-        "keyFiles": [
-            "app/about/page.tsx"
-        ]
-    },
-    {
-        "path": "app/ads.txt",
-        "fileCount": 1,
-        "summary": "Project files grouped by directory.",
-        "keyFiles": [
-            "app/ads.txt/route.ts"
-        ]
-    },
-    {
-        "path": "app/contact",
-        "fileCount": 1,
-        "summary": "Project files grouped by directory.",
-        "keyFiles": [
-            "app/contact/page.tsx"
-        ]
-    },
-    {
-        "path": "app/privacy",
-        "fileCount": 1,
-        "summary": "Project files grouped by directory.",
-        "keyFiles": [
-            "app/privacy/page.tsx"
-        ]
-    },
-    {
-        "path": "app/settings",
-        "fileCount": 1,
-        "summary": "Project files grouped by directory.",
-        "keyFiles": [
-            "app/settings/page.tsx"
-        ]
-    },
-    {
-        "path": "app/terms",
-        "fileCount": 1,
-        "summary": "Project files grouped by directory.",
-        "keyFiles": [
-            "app/terms/page.tsx"
-        ]
-    },
-    {
-        "path": "services",
-        "fileCount": 1,
-        "summary": "Service-layer and business logic modules.",
-        "keyFiles": [
-            "services/publicHoliday.ts"
+            "package.json",
+            "tsconfig.json"
         ]
     },
     {
         "path": "test",
-        "fileCount": 6,
+        "fileCount": 2,
         "summary": "Automated tests and regression coverage.",
         "keyFiles": [
-            "test/ads.test.ts",
-            "test/dashboard.test.tsx",
-            "test/earnings.test.ts"
-        ]
-    },
-    {
-        "path": "content",
-        "fileCount": 14,
-        "summary": "Project files grouped by directory.",
-        "keyFiles": [
-            "content/pet/messages/hover/default.ts",
-            "content/pet/messages/hover/index.ts",
-            "content/pet/messages/hover/nearOffwork.ts"
-        ]
-    },
-    {
-        "path": "lib",
-        "fileCount": 9,
-        "summary": "Project files grouped by directory.",
-        "keyFiles": [
-            "lib/ads.ts",
-            "lib/analytics.ts",
-            "lib/earnings.ts"
-        ]
-    },
-    {
-        "path": "hooks",
-        "fileCount": 6,
-        "summary": "Project files grouped by directory.",
-        "keyFiles": [
-            "hooks/useClock.ts",
-            "hooks/usePetMessage.ts",
-            "hooks/usePetMood.ts"
+            "test/earnings.test.ts",
+            "test/payCycle.test.ts"
         ]
     },
     {
         "path": "vscode-extension",
-        "fileCount": 6,
+        "fileCount": 8,
         "summary": "Project files grouped by directory.",
         "keyFiles": [
             "vscode-extension/package.json",
             "vscode-extension/tsconfig.json",
-            "vscode-extension/media/dashboard.js"
+            "vscode-extension/.tmp/storage.test.cjs"
         ]
     },
     {
-        "path": "app",
-        "fileCount": 5,
-        "summary": "Python backend application package.",
+        "path": "lib",
+        "fileCount": 4,
+        "summary": "Project files grouped by directory.",
         "keyFiles": [
-            "app/layout.tsx",
-            "app/not-found.tsx",
-            "app/page.tsx"
+            "lib/earnings.ts",
+            "lib/payCycle.ts",
+            "lib/settings.ts"
         ]
     }
 ]

@@ -1,16 +1,16 @@
 {
-    "generatedAt": "2026-10-24T10:42:42.238Z",
-    "totalFilesScanned": 700,
-    "indexedFiles": 105,
+    "generatedAt": "2026-10-31T00:45:12.134Z",
+    "totalFilesScanned": 614,
+    "indexedFiles": 19,
     "indexedSymbols": 0,
-    "fileGroups": 15,
-    "packageJsonDigest": "4604479d0013cc9b388931131e5621596d8bca8c37b7646b7beaad176364b46a",
+    "fileGroups": 4,
+    "packageJsonDigest": "3c3f1a837680da66c4bb41bf1138b5800abc9128ce8d782624b056ae18ebce53",
     "lockfileFingerprints": {
         "packageLock": null,
         "pnpmLock": {
             "path": "pnpm-lock.yaml",
-            "sha256": "3d3ff8c0f62f9e81ddbb110a68e6f615d98c4e0212215ea9896f2c885a514507",
-            "bytes": 193590,
+            "sha256": "bed685e1cf83db5f209c46d51113588307854c8585cb905c6d41b4d37994ee61",
+            "bytes": 199394,
             "truncated": false,
             "maxBytes": null
         },
