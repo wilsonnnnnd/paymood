@@ -67,6 +67,28 @@ export async function writeSettings(context: vscode.ExtensionContext, next: Sett
   await context.globalState.update(SETTINGS_KEY, next)
 }
 
+export function applySettingsPatch(current: Settings, patch: Partial<Settings>): Settings {
+  const merged = { ...current, ...patch }
+  if (Object.prototype.hasOwnProperty.call(patch, 'lastPaydayDate')) {
+    // Re-derive the cycle day for both a changed date and an explicit clear.
+    merged.paydayDayOfMonth = undefined
+  }
+  return sanitizeSettings(merged)
+}
+
+export function activityDelta(lastTickMs: number, nowMs: number, codingActiveUntilMs: number, focused: boolean) {
+  const gapMs = nowMs - lastTickMs
+  // A missing heartbeat is not evidence that the user worked through suspension.
+  if (!focused || gapMs <= 0 || gapMs > WINDOW_STALE_MS) {
+    return { codingTodayMs: 0, thinkingTodayMs: 0 }
+  }
+  const now = new Date(nowMs)
+  const dayStartMs = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime()
+  const startMs = Math.max(lastTickMs, dayStartMs)
+  const codingTodayMs = Math.max(0, Math.min(nowMs, codingActiveUntilMs) - startMs)
+  return { codingTodayMs, thinkingTodayMs: nowMs - startMs - codingTodayMs }
+}
+
 export function readStatusVisible(context: vscode.ExtensionContext) {
   const savedStatusVisible = context.globalState.get<boolean>(STATUS_VISIBLE_KEY)
   return typeof savedStatusVisible === 'boolean' ? savedStatusVisible : true
