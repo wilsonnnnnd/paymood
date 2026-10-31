@@ -1,0 +1,7 @@
+packages:
+  - .
+  - vscode-extension
+
+allowBuilds:
+  esbuild: true
+  unrs-resolver: true

@@ -1,5 +1,9 @@
 # PayMood
 
+## 维护状态（2026-10-31）
+
+后续仅维护 [VS Code 插件](vscode-extension/README.md)。网站已归档、停止维护，源代码保留在原位置；此状态不表示网站已下线。本文其余网站说明及 `PROJECT.md` 中的网站背景保留作历史参考。插件仍依赖的共享计算模块继续按插件需求维护。
+
 PayMood 是一个安静的工作日进度与预估收入仪表盘，面向日常工作者。它以浏览器优先的 Next.js 应用运行，同时包含一个 VS Code 扩展，用于在编辑器里展示同一套工作进度/收入状态。
 
 ## 它做什么
@@ -42,25 +46,25 @@ PayMood 刻意保持简单。它不是工资系统、税务建议、HR 软件，
 安装依赖：
 
 ```bash
-npm install
+pnpm install
 ```
 
 本地运行网站：
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 运行测试：
 
 ```bash
-npm test
+pnpm test
 ```
 
 构建网站：
 
 ```bash
-npm run build
+pnpm build
 ```
 
 ## AdSense 部署开关
@@ -78,11 +82,9 @@ npm run build
 常用命令：
 
 ```bash
-cd vscode-extension
-npm install
-npm run typecheck
-npm run build
-npm test
+pnpm --filter paymood typecheck
+pnpm --filter paymood build
+pnpm --filter paymood test
 ```
 
 ## 开发注意事项

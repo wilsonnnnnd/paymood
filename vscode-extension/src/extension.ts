@@ -2,9 +2,11 @@ import * as vscode from 'vscode'
 import { randomUUID } from 'crypto'
 import { calculateWorkEarnings, getWorkWindowForNow } from '../../lib/earnings'
 import { currencySymbols } from '../../lib/settings'
-import { defaultSettings, sanitizeSettings, type Settings } from '../../lib/settingsModel'
+import { defaultSettings, type Settings } from '../../lib/settingsModel'
 import {
   addDailyActivity,
+  activityDelta,
+  applySettingsPatch,
   cleanupRuntimeState,
   countActiveWindows,
   getLocalDayKey,
@@ -490,19 +492,12 @@ export function activate(context: vscode.ExtensionContext) {
       }
     }
 
-    const deltaMs = nowMs - lastTickMs
-    let codingDeltaMs = 0
-    let thinkingDeltaMs = 0
-    if (deltaMs > 0 && focusStateAtLastTick) {
-      if (nowMs <= codingActiveUntilMs) {
-        codingDeltaMs = deltaMs
-        localWindowState.codingTodayMs += codingDeltaMs
-        localWindowState.codingSessionMs += deltaMs
-      } else {
-        thinkingDeltaMs = deltaMs
-        localWindowState.thinkingTodayMs += thinkingDeltaMs
-      }
-    }
+    const { codingTodayMs: codingDeltaMs, thinkingTodayMs: thinkingDeltaMs } = activityDelta(
+      lastTickMs, nowMs, codingActiveUntilMs, focusStateAtLastTick,
+    )
+    localWindowState.codingTodayMs += codingDeltaMs
+    localWindowState.codingSessionMs += codingDeltaMs
+    localWindowState.thinkingTodayMs += thinkingDeltaMs
     if (codingDeltaMs > 0 || thinkingDeltaMs > 0) {
       dailyActivityState = addDailyActivity(
         context,
@@ -528,8 +523,8 @@ export function activate(context: vscode.ExtensionContext) {
   }
 
   const markCodingActivity = () => {
+    collectTime()
     const nowMs = Date.now()
-    if (nowMs > codingActiveUntilMs) lastTickMs = nowMs
     codingActiveUntilMs = nowMs + CODING_ACTIVE_WINDOW_MS
     refresh()
   }
@@ -619,7 +614,7 @@ export function activate(context: vscode.ExtensionContext) {
             const patch = pickSettingsPatch(message.patch)
             if (Object.keys(patch).length === 0) return
             const current = readSettings(context)
-            const next = sanitizeSettings({ ...current, ...patch })
+            const next = applySettingsPatch(current, patch)
             await writeSettings(context, next)
             refresh()
             return

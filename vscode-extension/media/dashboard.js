@@ -105,16 +105,19 @@ function renderWorkDays(selected) {
 }
 
 let patchTimer = null
+let pendingPatch = {}
 
 function setPatch(patch) {
   if (!state.settings) return
   state.settings = { ...state.settings, ...patch }
+  pendingPatch = { ...pendingPatch, ...patch }
   persistState()
 
   if (patch.workDays) renderWorkDays(patch.workDays)
   if (patchTimer) clearTimeout(patchTimer)
   patchTimer = setTimeout(() => {
-    vscode.postMessage({ type: 'patchSettings', patch })
+    vscode.postMessage({ type: 'patchSettings', patch: pendingPatch })
+    pendingPatch = {}
     patchTimer = null
   }, 120)
 }
@@ -148,6 +151,9 @@ function bind() {
   })
 
   els.resetSettings.addEventListener('click', () => {
+    if (patchTimer) clearTimeout(patchTimer)
+    patchTimer = null
+    pendingPatch = {}
     vscode.postMessage({ type: 'resetSettings' })
   })
 }
@@ -161,18 +167,16 @@ function applySnapshot(snapshot) {
   if (!snapshot || typeof snapshot !== 'object' || !snapshot.settings) return
 
   state.snapshot = snapshot
-  state.settings = snapshot.settings
+  state.settings = { ...snapshot.settings, ...pendingPatch }
   persistState()
 
-  els.startTime.value = snapshot.settings.startTime || '09:00'
-  els.endTime.value = snapshot.settings.endTime || '17:00'
-  els.breakMinutes.value = String(snapshot.settings.breakMinutes ?? 0)
-  els.salaryType.value = snapshot.settings.salaryType || 'hourly'
-  els.salaryAmount.value = String(snapshot.settings.salaryAmount ?? 0)
-  els.currency.value = String(snapshot.settings.currency || 'AUD').toUpperCase()
-  if (els.lastPaydayDate) els.lastPaydayDate.value = snapshot.settings.lastPaydayDate || ''
-  if (els.publicHolidayEnabled) els.publicHolidayEnabled.checked = snapshot.settings.publicHolidayEnabled !== false
-  renderWorkDays(snapshot.settings.workDays || [])
+  for (const key of ['startTime', 'endTime', 'breakMinutes', 'salaryType', 'salaryAmount', 'currency', 'lastPaydayDate']) {
+    const el = els[key]
+    // Heartbeats and delayed save responses must not replace an edit in progress.
+    if (el && document.activeElement !== el) el.value = String(state.settings[key] ?? '')
+  }
+  if (els.publicHolidayEnabled) els.publicHolidayEnabled.checked = state.settings.publicHolidayEnabled !== false
+  renderWorkDays(state.settings.workDays || [])
 
   if (els.paydayStatus) {
     const value = snapshot.settings.lastPaydayDate

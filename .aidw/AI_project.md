@@ -26,12 +26,13 @@ The repository is packaged for npm distribution.
 - name: workday-earnings
 - version: 0.1.0
 - module type: module
+- package manager: pnpm@12.15.0
 - scripts:
-  - dev: npx next dev
-  - build: npx next build
-  - start: npx next start
-  - lint: npx eslint .
-  - test: npx vitest --dir test
+  - dev: next dev
+  - build: next build
+  - start: next start
+  - lint: eslint .
+  - test: vitest --dir test
 
 ## UI Design Context
 - Framework: React/Next.js
@@ -108,7 +109,7 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 - Language: TypeScript
 - Framework: Next.js (App Router)
 - Runtime: Browser-first (no backend)
-- Package manager: npm
+- Package manager: pnpm
 - Database: None (localStorage for settings)
 - Deployment: Static-compatible Next.js deploy (e.g. Vercel)
 
@@ -168,7 +169,7 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 - Language: TypeScript
 - Framework: Next.js App Router with React
 - Runtime: Browser-first static-compatible web app
-- Package Manager: npm
+- Package Manager: pnpm
 - Database: None; settings persist in localStorage
 - Deployment Environment: Static-compatible Next.js hosting such as Vercel
 
@@ -178,7 +179,7 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 - Dangerous operations: no destructive filesystem or git operations without direct confirmation.
 - Deployment boundaries: keep deploy output static-compatible and do not introduce server/database requirements.
 - Network restrictions: avoid Google fonts/analytics and fragile external resources; no new runtime API dependency without explicit scope.
-- Command restrictions: prefer `rck scan`, `rck scan --check`, `npm test`, `npm run lint`, and `npm run build` as relevant verification commands.
+- Command restrictions: prefer `rck scan`, `rck scan --check`, `pnpm test`, `pnpm lint`, and `pnpm build` as relevant verification commands.
 - MCP write policy: read connectors/resources when helpful; write through MCP or external systems only with explicit user confirmation.
 
 ### Development Workflow
@@ -200,7 +201,7 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 ### Bootstrap Guidance
 
 - Recommended scaffold: use the existing Next.js app structure; do not re-scaffold.
-- Manual setup steps: install dependencies with npm, run the app with `npm run dev`, and verify calculations with `npm test`.
+- Manual setup steps: install dependencies with pnpm, run the app with `pnpm dev`, and verify calculations with `pnpm test`.
 - Human-required setup: optional AdSense public env values and deployment settings are provided by the project owner.
 - Secrets/config setup expectations: keep env files private; runtime salary data remains in browser localStorage only.
 
@@ -230,7 +231,7 @@ Edit this file directly. repo-context-kit reads it during `scan` and summarizes 
 
 ### Stack Decisions
 
-- TypeScript, React, Next.js App Router, npm, Tailwind/PostCSS styling, Vitest, localStorage persistence, static-compatible deployment.
+- TypeScript, React, Next.js App Router, pnpm, Tailwind/PostCSS styling, Vitest, localStorage persistence, static-compatible deployment.
 
 ### Runtime Constraints
 

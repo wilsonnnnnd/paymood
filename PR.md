@@ -10,8 +10,8 @@ Files changed
 
 Verification
 
-- Run `npm install` then `npx next dev` and open the site.
-- Run `npx vitest --run` to execute unit tests for the calculation library.
+- Run `pnpm install` then `pnpm dev` and open the site.
+- Run `pnpm test` to execute unit tests for the calculation library.
 
 Notes
 
